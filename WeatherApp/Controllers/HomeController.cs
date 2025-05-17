@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Models;
+using WeatherApp.Services;
 
 namespace WeatherApp.Controllers
 {
     public class HomeController : Controller
     {
-        private WeatherContext db;
-        public HomeController(WeatherContext weatherContext)
+        private readonly WeatherService weatherService;
+        public HomeController(WeatherService weatherService)
         {
-            db = weatherContext;
+            this.weatherService = weatherService;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index(string city = "Krasylivka")
         {
-            return View();
+            var weather = await weatherService.GetCurrentWeatherAsync(city);
+            return View(weather);
         }
     }
 }

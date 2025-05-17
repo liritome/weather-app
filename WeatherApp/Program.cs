@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WeatherApp.Models;
+using WeatherApp.Services;
 
 namespace WeatherApp
 {
@@ -8,9 +9,8 @@ namespace WeatherApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            string connection = builder.Configuration.GetConnectionString("MsSqlServerConnection");
-            builder.Services.AddDbContext<WeatherContext>(op => op.UseSqlServer(connection));
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpClient<WeatherService>();
             var app = builder.Build();
 
             app.UseStaticFiles();
