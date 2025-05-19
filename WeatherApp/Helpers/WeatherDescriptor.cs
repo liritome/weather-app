@@ -36,22 +36,24 @@ namespace WeatherApp.Helpers
             { 99, "Thunderstorm with heavy hail" }
         };
 
-        public static string GetCondition(int code)
+        public static readonly string[] Directions =
+        {
+            "N", "NNE", "NE", "ENE",
+            "E", "ESE", "SE", "SSE",
+            "S", "SSW", "SW", "WSW",
+            "W", "WNW", "NW", "NNW"
+        };
+
+        public static string GetWeatherDescription(int code)
         {
             return CodeMap.TryGetValue(code, out var description) ? description : string.Empty;
         }
 
-        public static readonly string[] Directions =
-        {
-            "E", "ENE", "NE", "NNE", "N", "NNW", "NW", "WNW",
-            "W", "WSW", "SW", "SSW", "S", "SSE", "SE", "ESE"
-        };
-
         public static string GetWindDirection(int degrees)
         {
             int degreesMax = 360;
-            int sectionsCount = 16;
-            int section = (int)Math.Round(degrees / ((double)degreesMax / sectionsCount));
+            int sectionsCount = Directions.Length;
+            int section = (int)Math.Round(degrees / ((double)degreesMax / sectionsCount)) % sectionsCount;
             return Directions[section];
         }
 

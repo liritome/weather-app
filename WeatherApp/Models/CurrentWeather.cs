@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using WeatherApp.Helpers;
 
 namespace WeatherApp.Models
 {
@@ -22,7 +23,26 @@ namespace WeatherApp.Models
         [JsonPropertyName("wind_speed_10m")]
         public double WindSpeed { get; set; }
         [JsonPropertyName("wind_direction_10m")]
-        public int WindDirection { get; set; }
+        public int WindDirectionDegree { get; set; }
+        [JsonIgnore]
+        public string WindDirection { get; set; }
+
+        [JsonConstructor]
+        public CurrentWeather(string time, int interval, int code, double temperature, double apparentTemperature, int humidity, int cloudCover, double pressure, double presipitation, double windSpeed, int windDirectionDegree)
+        {
+            Time = time;
+            Interval = interval;
+            Code = code;
+            Temperature = Math.Round(temperature);
+            ApparentTemperature = Math.Round(apparentTemperature);
+            Humidity = humidity;
+            CloudCover = cloudCover;
+            Pressure = Math.Round(pressure);
+            Presipitation = presipitation;
+            WindSpeed = Math.Round(windSpeed);
+            WindDirectionDegree = windDirectionDegree;
+            WindDirection = WeatherDescriptor.GetWindDirection(windDirectionDegree);
+        }
     }
 
     public class CurrentUnits

@@ -87,22 +87,26 @@
         </div>
     </div>
     <div class="row p-2 rounded bg-white my-2">
-        <div class="col d-flex flex-column gap-3 text-white text-center" style="background-color:#4e99e4">
-            <div class="py-3" style="font-size: 20px">
+        <div class="col d-flex flex-column text-white text-center" style="background-color:#4e99e4">
+            <div class="my-3" style="font-size: 20px">
                 @CurrentDate.ToString("ddd, dd MMMM, HH:mm")
             </div>
-            <div>
-                <h1 style="font-size: 96px;">@(Model.CurrentWeather.Temperature > 0 ? "+" + Model.CurrentWeather.Temperature : Model.CurrentWeather.Temperature)</h1>
-                <h4 style="font-size: 16px;">Feels like @(Model.CurrentWeather.ApparentTemperature > 0 ? "+" + Model.CurrentWeather.ApparentTemperature : Model.CurrentWeather.ApparentTemperature)</h4>
-                <h2 style="font-size: 30px;">@WeatherDescriptor.GetCondition(Model.CurrentWeather.Code)</h2>
+            <div class="position-relative">
+                <div class="position-absolute top-50 start-50" style="transform: translate(-50%, 33%)">
+                    <h1 style="font-size: 96px;">@(Model.CurrentWeather.Temperature > 0 ? "+" + Model.CurrentWeather.Temperature : Model.CurrentWeather.Temperature)</h1>
+                    <h4 style="font-size: 16px;">Feels like @(Model.CurrentWeather.ApparentTemperature > 0 ? "+" + Model.CurrentWeather.ApparentTemperature : Model.CurrentWeather.ApparentTemperature)</h4>
+                    <h2 style="font-size: 30px;">@WeatherDescriptor.GetWeatherDescription(Model.CurrentWeather.Code)</h2>
+                </div>
             </div>
-            <div class="d-flex justify-content-center gap-2">
-                <div>
+            <div class="d-flex justify-content-center gap-2 mb-3">
+                <div class="d-flex flex-column justify-content-center">
                     <div>@Sunrise.ToString("HH:mm")</div>
                     <div>Sunrise</div>
                 </div>
-                <div>@WeatherDescriptor.DrawSunPosition(Sunrise.Hour, Sunset.Hour, CurrentDate.Hour)</div>
                 <div>
+                    <div style="background-image: url('/svg/sun.svg'); background-size: 350px 350px; transform: rotate(70deg); width: 350px; height: 350px;"></div>
+                </div>
+                <div class="d-flex flex-column justify-content-center">
                     <div>@Sunset.ToString("HH:mm")</div>
                     <div>Sunset</div>
                 </div>
@@ -112,7 +116,7 @@
                     <div>Wind</div>
                     <div>
                         <strong>@Model.CurrentWeather.WindSpeed</strong>
-                        <small>m/s @WeatherDescriptor.GetWindDirection(Model.CurrentWeather.WindDirection)</small>
+                        <small>m/s @Model.CurrentWeather.WindDirection</small>
                     </div>
                 </div>
                 <div class="col">

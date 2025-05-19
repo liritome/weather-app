@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:bx="https://boxy-svg.com">
+  <path style="stroke-linejoin: round; fill: rgb(255, 255, 255); stroke: rgb(255, 255, 255); paint-order: fill; stroke-width: 2px; stroke-dasharray: 32; transform-box: fill-box; transform-origin: 50% 50%;" d="M 17.421 212.076 A 239.884 239.884 0 1 1 17.421 253.89 A 239.884 239.884 0 1 0 17.421 212.076 Z" bx:shape="crescent 256.392 232.983 239.884 350 1 1@63a251bf" transform="matrix(-0.016333, 0.981108, -0.980976, -0.022216, -6.848583, 17.017023)"/>
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(255, 213, 0); paint-order: fill; stroke-width: 0px;" cx="250.669" cy="14.752" rx="6.179" ry="6.179"/>
+  <rect x="236.631" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0px; fill: rgb(255, 213, 0);" rx="0.988" ry="0.988" y="13.783"/>
+  <rect x="259.618" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0; fill: rgb(255, 213, 0);" rx="0.988" ry="0.988" y="13.87"/>
+  <rect x="132.585" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0; fill: rgb(255, 213, 0); transform-box: fill-box; transform-origin: 50% 50%;" rx="0.988" ry="0.988" y="23.565" transform="matrix(0, 1, -1, 0, 115.337754, 1.751555)"/>
+  <rect x="134.42" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0; fill: rgb(255, 213, 0); transform-origin: 137.19px 24.79px;" rx="0.988" ry="0.988" y="23.565" transform="matrix(0, 1, -1, 0, 113.656235, -21.541672)"/>
+  <rect x="136.866" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0; fill: rgb(255, 213, 0); transform-origin: 139.686px 24.79px;" rx="0.988" ry="0.988" y="23.565" transform="matrix(-0.707107, 0.707107, -0.707107, -0.707107, 119.556168, -18.080274)"/>
+  <rect x="127.283" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0; fill: rgb(255, 213, 0); transform-origin: 129.907px 24.79px;" rx="0.988" ry="0.988" y="23.565" transform="matrix(-0.707107, 0.707107, -0.707107, -0.707107, 112.538864, -1.461529)"/>
+  <rect x="136.211" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0; fill: rgb(255, 213, 0); transform-box: fill-box; transform-origin: 50% 50%;" rx="0.988" ry="0.988" y="23.231" transform="matrix(0.707107, 0.707107, -0.707107, 0.707107, 120.258724, -1.301293)"/>
+  <rect x="135.267" width="5.643" height="2.448" style="stroke: rgb(0, 0, 0); stroke-width: 0; fill: rgb(255, 213, 0); transform-origin: 137.933px 24.455px;" rx="0.988" ry="0.988" y="23.231" transform="matrix(0.707107, 0.707107, -0.707107, 0.707107, 104.552749, -17.764821)"/>
+</svg>

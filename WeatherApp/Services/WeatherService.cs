@@ -23,7 +23,8 @@ namespace WeatherApp.Services
                 $"latitude={lat.ToString(CultureInfo.InvariantCulture)}" +
                 $"&longitude={lon.ToString(CultureInfo.InvariantCulture)}" +
                 $"&daily=sunrise,sunset&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code," +
-                $"cloud_cover,surface_pressure,precipitation,wind_speed_10m,wind_direction_10m&timezone=auto&forecast_days=1";
+                $"cloud_cover,surface_pressure,precipitation,wind_speed_10m,wind_direction_10m" +
+                $"&timezone=auto&forecast_days=1&wind_speed_unit=ms";
 
             var res = await httpClient.GetAsync(url);
             if (!res.IsSuccessStatusCode)
