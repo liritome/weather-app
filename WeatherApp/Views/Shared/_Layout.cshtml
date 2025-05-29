@@ -80,47 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-2" style="height: 130px;">
-            <div class="col p-2 pt-1 d-flex flex-column text-white rounded-bottom-3" style="background-color:#4e99e4">
-                <div style="font-size: 16px" class="head-link-menu">
-                    <a href="#">Ukraine</a> / <a href="#">Kyiv oblast</a> / <a href="#">Brovary raion</a>
-                </div>
-                <div class="fw-bold" style="font-size: 24px">
-                    Cloudy in Krasylivka, +12 °C
-                </div>
-                <div class="flex-grow-1"></div>
-                <!-- MOVE STYLE -->
-                <style>
-                    .head-link-menu a {
-                        text-decoration: none;
-                        color: white;
-                        opacity: 1;
-                    }
-
-                    .head-link-menu a:hover {
-                        opacity: 0.6;
-                    }
-
-                    .head-link-menu .link-active{
-                        opacity: 1;
-                    }
-
-                    .head-link-menu .link-active:hover {
-                        opacity: 1;
-                    }
-                </style>
-                <!---->
-                <div class="d-flex gap-4 head-link-menu">
-                    <a class="link-active">Now</a>
-                    <a href="#">Today</a>
-                    <a href="#">Tomorrow</a>
-                    <a href="#">3 days</a>
-                    <a href="#">7 days</a>
-                    <a href="#">2 weeks</a>
-                    <a href="#">Month</a>
-                </div>
-            </div>
-        </div>
+        @await Html.PartialAsync("Menu")
     </header>
     <main class="flex-grow-1">
         @RenderBody()

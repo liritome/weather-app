@@ -57,24 +57,25 @@ namespace WeatherApp.Helpers
             return Directions[section];
         }
 
-        public static string DrawSunPosition(int sunrise, int sunset, int current)
+        public static double GetSunAngle(DateTime now, DateTime sunrise, DateTime sunset)
         {
-            bool space = true;
-            StringBuilder sb = new StringBuilder();
-            for(int i = sunrise; i < current; i++)
+            double angle = 0;
+            if (sunrise != sunset)
             {
-                sb.Append('-');
-            }
-            sb.Append("☀︎");
-            for (int i = current + 1; i < sunset; i++)
-            {
-                if(space)
-                    sb.Append(' ');
+                if (now >= sunrise && now <= sunset)
+                {
+                    angle = (now - sunrise) / (sunset - sunrise) * 180 - 90;
+                }
+                else if (now > sunset)
+                {
+                    angle = (now - sunset) / (sunrise.AddDays(1) - sunset) * 180 + 90;
+                }
                 else
-                    sb.Append('-');
-                space = !space;
+                {
+                    angle = (now - sunset.AddDays(-1)) / (sunrise - sunset.AddDays(-1)) * 180 + 90;
+                }
             }
-            return sb.ToString();
+            return angle;
         }
     }
 }

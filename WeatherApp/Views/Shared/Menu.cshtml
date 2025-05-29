@@ -1,0 +1,59 @@
+﻿@using WeatherApp.Helpers
+@model WeatherApp.Models.OpenMeteoResponse
+@{
+    Dictionary<string, string> tabs = new()
+        {
+            {"Now", ""},
+            {"Today", "today"},
+            {"Tomorrow", "tomorrow"},
+            {"3 days", "3days"},
+            {"7 days", "7days"},
+            {"2 weeks", "2weeks"},
+            {"Month", "month"}
+        };
+}
+
+<div class="row mb-2" style="height: 130px;">
+    <div class="col p-2 pt-1 d-flex flex-column text-white rounded-bottom-3" style="background-color:#4e99e4">
+        <div style="font-size: 16px" class="head-link-menu">
+            <a href="#">Ukraine</a> / <a href="#">Kyiv oblast</a> / <a href="#">Brovary raion</a>
+        </div>
+        <div class="fw-bold" style="font-size: 24px">
+            @WeatherDescriptor.GetWeatherDescription(Model.CurrentWeather.Code) in @ViewData["City"], @((Model.CurrentWeather.Temperature > 0 ? "+" : "") + Model.CurrentWeather.Temperature) °C
+        </div>
+        <div class="flex-grow-1"></div>
+        <div class="d-flex gap-4 head-link-menu">
+            @foreach (var tab in tabs)
+            {
+                if (ViewData["ActiveTab"]!.Equals(tab.Key))
+                {
+                    <a class="link-active">@tab.Key</a>
+                }
+                else
+                {
+                    <a href="@tab.Value">@tab.Key</a>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .head-link-menu a {
+        text-decoration: none;
+        color: white;
+        opacity: 1;
+    }
+
+        .head-link-menu a:hover {
+            opacity: 0.6;
+        }
+
+    .head-link-menu .link-active {
+        opacity: 1;
+    }
+
+        .head-link-menu .link-active:hover {
+            opacity: 1;
+        }
+</style>
