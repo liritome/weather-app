@@ -19,14 +19,14 @@ namespace WeatherApp.Controllers
             var weather = await weatherService.GetCurrentWeatherAsync(city);
             return View(weather);
         }
-        public IActionResult Current()
+
+        /*public IActionResult Current()
         {
             return PartialView();
         }
-        public async Task<IActionResult> Menu(string city = "Krasylivka")
+        public IActionResult Menu()
         {
-            var weather = await weatherService.GetCurrentWeatherAsync(city);
-            return PartialView(weather);
-        }
+            return PartialView();
+        }*/
     }
 }

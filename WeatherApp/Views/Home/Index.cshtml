@@ -1,84 +1,93 @@
 ﻿@using WeatherApp.Helpers
 @model WeatherApp.Models.OpenMeteoResponse
 
-<div class="container-fluid" style="width: 944px;">
-    <div class="row my-2" style="font-size: 24px">
+<div class="container-fluid p-0" style="width: 944px;">
+    <div class="my-2" style="font-size: 24px">
         <div class="col p-0">
             Weather now
         </div>
     </div>
-    <div class="row my-2 gap-2">
-        <div class="col p-2 pt-1 rounded bg-white" style="width: 230px; height: 110px;">
-            <div class="row" style="height: 100%;">
-                <div class="col-8 d-flex flex-column">
-                    <div style="height: 24px; font-size: 20px">Now</div>
-                    <div class="text-secondary" style="height: 20px;">@DateTime.Now.ToString("HH:mm")</div>
-                    <div class="flex-grow-1"></div>
-                    <div class="d-flex mt-2" style="font-size: 24px">
-                        <div class="text-center w-100 bg-success bg-opacity-50">+5</div>
+    <div class="d-flex my-2 gap-2">
+        <a href="yesterday" class="text-decoration-none text-black">
+            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
+                <div class="row h-100">
+                    <div class="col-8 d-flex flex-column">
+                        <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(-1).ToString("ddd, dd MMM")</div>
+                        <div class="text-secondary" style="height: 20px;">Yesterday</div>
+                        <div class="flex-grow-1"></div>
+                        <div class="d-flex mt-2" style="font-size: 24px">
+                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
+                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div>Partly cloudy</div>
+                        <div>No rain</div>
+                        <div class="text-primary">0 mm</div>
                     </div>
                 </div>
-                <div class="col-4 text-center">
-                    <div>Cloudy</div>
-                    <div>No rain</div>
-                    <div class="text-primary">0 mm</div>
-                </div>
             </div>
-        </div>
-        <div class="col p-2 pt-1 rounded bg-white" style="width: 230px; height: 110px;">
-            <div class="row" style="height: 100%;">
-                <div class="col-8 d-flex flex-column">
-                    <div style="height: 24px; font-size: 20px">@DateTime.Today.ToString("ddd, dd MMM")</div>
-                    <div class="text-secondary" style="height: 20px;">Today</div>
-                    <div class="flex-grow-1"></div>
-                    <div class="d-flex mt-2" style="font-size: 24px">
-                        <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
-                        <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
+        </a>
+        <a href="today" class="text-decoration-none text-black">
+            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
+                <div class="row h-100">
+                    <div class="col-8 d-flex flex-column">
+                        <div style="height: 24px; font-size: 20px">@DateTime.Today.ToString("ddd, dd MMM")</div>
+                        <div class="text-secondary" style="height: 20px;">Today</div>
+                        <div class="flex-grow-1"></div>
+                        <div class="d-flex mt-2" style="font-size: 24px">
+                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
+                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div>Partly cloudy</div>
+                        <div>No rain</div>
+                        <div class="text-primary">0 mm</div>
                     </div>
                 </div>
-                <div class="col-4 text-center">
-                    <div>Partly cloudy</div>
-                    <div>No rain</div>
-                    <div class="text-primary">0 mm</div>
-                </div>
             </div>
-        </div>
-        <div class="col p-2 pt-1 rounded bg-white" style="width: 230px; height: 110px;">
-            <div class="row" style="height: 100%;">
-                <div class="col-8 d-flex flex-column">
-                    <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(1).ToString("ddd, dd MMM")</div>
-                    <div class="text-secondary" style="height: 20px;">Tomorrow</div>
-                    <div class="flex-grow-1"></div>
-                    <div class="d-flex mt-2" style="font-size: 24px">
-                        <div class="text-center w-50 bg-success bg-opacity-50">+6</div>
-                        <div class="text-center w-50 bg-success bg-opacity-75">+14</div>
+        </a>
+        <a href="tomorrow" class="text-decoration-none text-black">
+            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
+                <div class="row h-100">
+                    <div class="col-8 d-flex flex-column">
+                        <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(1).ToString("ddd, dd MMM")</div>
+                        <div class="text-secondary" style="height: 20px;">Tomorrow</div>
+                        <div class="flex-grow-1"></div>
+                        <div class="d-flex mt-2" style="font-size: 24px">
+                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
+                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div>Partly cloudy</div>
+                        <div>No rain</div>
+                        <div class="text-primary">0 mm</div>
                     </div>
                 </div>
-                <div class="col-4 text-center">
-                    <div>Cloudy</div>
-                    <div>Light rain</div>
-                    <div class="text-primary">0.6 mm</div>
-                </div>
             </div>
-        </div>
-        <div class="col p-2 pt-1 rounded bg-white" style="width: 230px; height: 110px;">
-            <div class="row" style="height: 100%;">
-                <div class="col-8 d-flex flex-column">
-                    <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(2).ToString("ddd, dd MMM")</div>
-                    <div class="text-secondary" style="height: 20px;">in 2 days</div>
-                    <div class="flex-grow-1"></div>
-                    <div class="d-flex mt-2" style="font-size: 24px">
-                        <div class="text-center w-50 bg-success bg-opacity-50">+8</div>
-                        <div class="text-center w-50 bg-success bg-opacity-75">+17</div>
+        </a>
+        <a href="2days" class="text-decoration-none text-black">
+            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
+                <div class="row h-100">
+                    <div class="col-8 d-flex flex-column">
+                        <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(2).ToString("ddd, dd MMM")</div>
+                        <div class="text-secondary" style="height: 20px;">in 2 days</div>
+                        <div class="flex-grow-1"></div>
+                        <div class="d-flex mt-2" style="font-size: 24px">
+                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
+                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div>Partly cloudy</div>
+                        <div>No rain</div>
+                        <div class="text-primary">0 mm</div>
                     </div>
                 </div>
-                <div class="col-4 text-center">
-                    <div>Sun</div>
-                    <div>No rain</div>
-                    <div class="text-primary">0 mm</div>
-                </div>
             </div>
-        </div>
+        </a>
     </div>
-    @await Html.PartialAsync("Current", Model)
+    <partial name="Current" model="Model" />
 </div>

@@ -7,8 +7,8 @@
     double sunAngle = WeatherDescriptor.GetSunAngle(now, sunrise, sunset);
 }
 
-<div class="row p-2 rounded bg-white my-2">
-    <div class="col d-flex flex-column text-white text-center" style="background-color:#4e99e4">
+<div class="p-2 rounded bg-white my-2">
+    <div class="d-flex flex-column text-white text-center" style="background-color:#4e99e4">
         <div class="my-3" style="font-size: 20px">
             @now.ToString("ddd, dd MMMM, HH:mm")
         </div>
@@ -32,36 +32,36 @@
                 <div>Sunset</div>
             </div>
         </div>
-        <div class="row py-3" style="background-color:rgba(0, 0, 0, 0.10);">
-            <div class="col">
+        <div class="py-3 d-flex justify-content-around" style="background-color:rgba(0, 0, 0, 0.10);">
+            <div>
                 <div>Wind</div>
                 <div>
                     <strong>@Model.CurrentWeather.WindSpeed</strong>
                     <small>m/s @Model.CurrentWeather.WindDirection</small>
                 </div>
             </div>
-            <div class="col">
+            <div>
                 <div>Pressure</div>
                 <div>
                     <strong>@Model.CurrentWeather.Pressure</strong>
                     <small>mm Hg</small>
                 </div>
             </div>
-            <div class="col">
+            <div>
                 <div>Humidity</div>
                 <div>
                     <strong>@Model.CurrentWeather.Humidity</strong>
                     <small>%</small>
                 </div>
             </div>
-            <div class="col">
+            <div>
                 <div>Precipitation</div>
                 <div>
                     <strong>@Model.CurrentWeather.Presipitation</strong>
                     <small>mm</small>
                 </div>
             </div>
-            <div class="col">
+            <div>
                 <div>Clouds</div>
                 <div>
                     <strong>@Model.CurrentWeather.CloudCover</strong>
