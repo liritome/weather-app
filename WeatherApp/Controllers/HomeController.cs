@@ -16,8 +16,8 @@ namespace WeatherApp.Controllers
         {
             ViewData["ActiveTab"] = "Now";
             ViewData["City"] = city;
-            var weather = await weatherService.GetCurrentWeatherAsync(city);
-            return View(weather);
+            var data = await weatherService.GetOpenMeteoData(city);
+            return View(data);
         }
 
         /*public IActionResult Current()

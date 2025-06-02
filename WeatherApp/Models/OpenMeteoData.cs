@@ -2,7 +2,7 @@
 
 namespace WeatherApp.Models
 {
-    public class OpenMeteoResponse
+    public class OpenMeteoData
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
@@ -15,12 +15,16 @@ namespace WeatherApp.Models
         public string TimezoneAbbreviation { get; set; }
         public double Elevation { get; set; }
         [JsonPropertyName("current_units")]
-        public CurrentUnits CurrentUnits { get; set; }
+        public CurrentWeatherUnits CurrentWeatherUnits { get; set; }
         [JsonPropertyName("current")]
-        public CurrentWeather CurrentWeather { get; set; }
+        public CurrentWeatherData CurrentWeather { get; set; }
+        [JsonPropertyName("hourly_units")]
+        public HourlyWeatherUnits HourlyWeatherUnits { get; set; }
+        [JsonPropertyName("hourly")]
+        public HourlyWeatherData HourlyWeatherData { get; set; }
         [JsonPropertyName("daily_units")]
-        public DailyUnits DailyUnits { get; set; }
+        public DailyWeatherUnits DailyWeatherUnits { get; set; }
         [JsonPropertyName("daily")]
-        public DailyWeather DailyWeather { get; set; }
+        public DailyWeatherData DailyWeatherData { get; set; }
     }
 }

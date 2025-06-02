@@ -1,5 +1,16 @@
 ﻿@using WeatherApp.Helpers
-@model WeatherApp.Models.OpenMeteoResponse
+
+@model WeatherApp.Models.OpenMeteoData
+
+@{
+    Dictionary<string, string> tabs = new()
+        {
+            {"Yesterday", "yesterday"},
+            {"Today", "today"},
+            {"Tomorrow", "tomorrow"},
+            {"in 2 days", "2day"},
+        };
+}
 
 <div class="container-fluid p-0" style="width: 944px;">
     <div class="my-2" style="font-size: 24px">
@@ -8,86 +19,29 @@
         </div>
     </div>
     <div class="d-flex my-2 gap-2">
-        <a href="yesterday" class="text-decoration-none text-black">
-            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
-                <div class="row h-100">
-                    <div class="col-8 d-flex flex-column">
-                        <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(-1).ToString("ddd, dd MMM")</div>
-                        <div class="text-secondary" style="height: 20px;">Yesterday</div>
-                        <div class="flex-grow-1"></div>
-                        <div class="d-flex mt-2" style="font-size: 24px">
-                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
-                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
+        @for (int i = -1; i <= 2; i++)
+        {
+            <a href="@tabs.ElementAt(i + 1).Value" class="text-decoration-none text-black">
+                <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
+                    <div class="d-flex flex-row h-100">
+                        <div class="d-flex flex-column w-75">
+                            <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(i).ToString("ddd, dd MMM")</div>
+                            <div class="text-secondary" style="height: 20px;">@tabs.ElementAt(i + 1).Key</div>
+                            <div class="flex-grow-1"></div>
+                            <div class="d-flex mt-2" style="font-size: 24px">
+                                <div class="text-center w-50 bg-success bg-opacity-50">@((Model.DailyWeatherData.GetDailyWeatherByDate(DateTime.Today.AddDays(i)).TemperatureMin > 0 ? "+" : "") + Model.DailyWeatherData.GetDailyWeatherByDate(DateTime.Today.AddDays(i)).TemperatureMin)</div>
+                                <div class="text-center w-50 bg-success bg-opacity-75">@((Model.DailyWeatherData.GetDailyWeatherByDate(DateTime.Today.AddDays(i)).TemperatureMax > 0 ? "+" : "") + Model.DailyWeatherData.GetDailyWeatherByDate(DateTime.Today.AddDays(i)).TemperatureMax)</div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column text-center w-15">
+                            <div>@Model.DailyWeatherData.GetDailyWeatherByDate(DateTime.Today.AddDays(i)).WeatherDescription</div>
+                            <div class="flex-grow-1"></div>
+                            <div class="text-primary">@Model.DailyWeatherData.GetDailyWeatherByDate(DateTime.Today.AddDays(i)).PrecipitationSum mm</div>
                         </div>
                     </div>
-                    <div class="col-4 text-center">
-                        <div>Partly cloudy</div>
-                        <div>No rain</div>
-                        <div class="text-primary">0 mm</div>
-                    </div>
                 </div>
-            </div>
-        </a>
-        <a href="today" class="text-decoration-none text-black">
-            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
-                <div class="row h-100">
-                    <div class="col-8 d-flex flex-column">
-                        <div style="height: 24px; font-size: 20px">@DateTime.Today.ToString("ddd, dd MMM")</div>
-                        <div class="text-secondary" style="height: 20px;">Today</div>
-                        <div class="flex-grow-1"></div>
-                        <div class="d-flex mt-2" style="font-size: 24px">
-                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
-                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
-                        </div>
-                    </div>
-                    <div class="col-4 text-center">
-                        <div>Partly cloudy</div>
-                        <div>No rain</div>
-                        <div class="text-primary">0 mm</div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="tomorrow" class="text-decoration-none text-black">
-            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
-                <div class="row h-100">
-                    <div class="col-8 d-flex flex-column">
-                        <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(1).ToString("ddd, dd MMM")</div>
-                        <div class="text-secondary" style="height: 20px;">Tomorrow</div>
-                        <div class="flex-grow-1"></div>
-                        <div class="d-flex mt-2" style="font-size: 24px">
-                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
-                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
-                        </div>
-                    </div>
-                    <div class="col-4 text-center">
-                        <div>Partly cloudy</div>
-                        <div>No rain</div>
-                        <div class="text-primary">0 mm</div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="2days" class="text-decoration-none text-black">
-            <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
-                <div class="row h-100">
-                    <div class="col-8 d-flex flex-column">
-                        <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(2).ToString("ddd, dd MMM")</div>
-                        <div class="text-secondary" style="height: 20px;">in 2 days</div>
-                        <div class="flex-grow-1"></div>
-                        <div class="d-flex mt-2" style="font-size: 24px">
-                            <div class="text-center w-50 bg-success bg-opacity-50">+5</div>
-                            <div class="text-center w-50 bg-success bg-opacity-75">+12</div>
-                        </div>
-                    </div>
-                    <div class="col-4 text-center">
-                        <div>Partly cloudy</div>
-                        <div>No rain</div>
-                        <div class="text-primary">0 mm</div>
-                    </div>
-                </div>
-            </div>
-        </a>
+            </a>
+        }
     </div>
     <partial name="Current" model="Model" />
 </div>

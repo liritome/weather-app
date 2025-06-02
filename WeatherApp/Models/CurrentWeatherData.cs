@@ -3,9 +3,9 @@ using WeatherApp.Helpers;
 
 namespace WeatherApp.Models
 {
-    public class CurrentWeather
+    public class CurrentWeatherData
     {
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public int Interval { get; set; }
         [JsonPropertyName("weather_code")]
         public int Code { get; set; }
@@ -26,9 +26,13 @@ namespace WeatherApp.Models
         public int WindDirectionDegree { get; set; }
         [JsonIgnore]
         public string WindDirection { get; set; }
+        [JsonIgnore]
+        public string WeatherDescription {  get; set; }
 
         [JsonConstructor]
-        public CurrentWeather(string time, int interval, int code, double temperature, double apparentTemperature, int humidity, int cloudCover, double pressure, double presipitation, double windSpeed, int windDirectionDegree)
+        public CurrentWeatherData(DateTime time, int interval, int code, double temperature,
+            double apparentTemperature, int humidity, int cloudCover, double pressure,
+            double presipitation, double windSpeed, int windDirectionDegree)
         {
             Time = time;
             Interval = interval;
@@ -37,15 +41,17 @@ namespace WeatherApp.Models
             ApparentTemperature = Math.Round(apparentTemperature);
             Humidity = humidity;
             CloudCover = cloudCover;
-            Pressure = Math.Round(pressure);
+            // hPa to mmhg
+            Pressure = Math.Round(pressure * 0.75);
             Presipitation = presipitation;
             WindSpeed = Math.Round(windSpeed);
             WindDirectionDegree = windDirectionDegree;
-            WindDirection = WeatherDescriptor.GetWindDirection(windDirectionDegree);
+            WindDirection = WeatherHelper.GetWindDirection(windDirectionDegree);
+            WeatherDescription = WeatherHelper.GetWeatherDescription(code);
         }
     }
 
-    public class CurrentUnits
+    public class CurrentWeatherUnits
     {
         public string Time { get; set; }
         public string Interval { get; set; }

@@ -2,7 +2,7 @@
 
 namespace WeatherApp.Helpers
 {
-    public static class WeatherDescriptor
+    public static class WeatherHelper
     {
         public static readonly Dictionary<int, string> CodeMap = new()
         {

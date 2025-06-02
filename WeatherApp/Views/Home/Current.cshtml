@@ -1,10 +1,13 @@
 ﻿@using WeatherApp.Helpers
-@model WeatherApp.Models.OpenMeteoResponse
+@using WeatherApp.Models
+
+@model WeatherApp.Models.OpenMeteoData
 @{
     DateTime now = DateTime.Now;
-    DateTime sunrise = Model.DailyWeather.Sunrise.First();
-    DateTime sunset = Model.DailyWeather.Sunset.First();
-    double sunAngle = WeatherDescriptor.GetSunAngle(now, sunrise, sunset);
+    DailyWeather weatherToday = Model.DailyWeatherData.GetDailyWeatherByDate(now);
+    DateTime sunrise = weatherToday.Sunrise;
+    DateTime sunset = weatherToday.Sunset;
+    double sunAngle = WeatherHelper.GetSunAngle(now, sunrise, sunset);
 }
 
 <div class="p-2 rounded bg-white my-2">
@@ -13,10 +16,10 @@
             @now.ToString("ddd, dd MMMM, HH:mm")
         </div>
         <div class="position-relative">
-            <div class="position-absolute top-50 start-50" style="transform: translate(-50%, 35%)">
-                <h1 style="font-size: 96px;">@((Model.CurrentWeather.Temperature > 0 ? "+" : "") + Model.CurrentWeather.Temperature)</h1>
-                <h4 style="font-size: 16px;">Feels like @((Model.CurrentWeather.ApparentTemperature > 0 ? "+" : "") + Model.CurrentWeather.ApparentTemperature)</h4>
-                <h2 style="font-size: 30px;">@WeatherDescriptor.GetWeatherDescription(Model.CurrentWeather.Code)</h2>
+            <div class="position-absolute top-50 start-50" style="transform: translate(-50%, 33%)">
+                <div class="lh-1 mb-3" style="font-size: 120px; font-weight: 500; letter-spacing: -5px;">@((Model.CurrentWeather.Temperature > 0 ? "+" : "") + Model.CurrentWeather.Temperature)</div>
+                <div class="p-1 rounded" style="font-size: 18px; background-color:rgba(255, 255, 255, 0.10);">Feels like @((Model.CurrentWeather.ApparentTemperature > 0 ? "+" : "") + Model.CurrentWeather.ApparentTemperature)</div>
+                <div style="font-size: 32px;">@Model.CurrentWeather.WeatherDescription</div>
             </div>
         </div>
         <div class="d-flex justify-content-center gap-2 mb-3">
@@ -25,47 +28,47 @@
                 <div>Sunrise</div>
             </div>
             <div>
-                <div style="background-image: url('/svg/sun.svg'); background-size: 350px 350px; transform: rotate(@(sunAngle)deg); width: 350px; height: 350px;"></div>
+                <div style="background-image: url('/svg/sun.svg'); background-size: 380px 380px; transform: rotate(@(sunAngle)deg); width: 380px; height: 380px;"></div>
             </div>
             <div class="d-flex flex-column justify-content-center">
                 <div>@sunset.ToString("HH:mm")</div>
                 <div>Sunset</div>
             </div>
         </div>
-        <div class="py-3 d-flex justify-content-around" style="background-color:rgba(0, 0, 0, 0.10);">
+        <div class="py-3 d-flex justify-content-around text-start" style="background-color:rgba(0, 0, 0, 0.10);">
             <div>
-                <div>Wind</div>
-                <div>
-                    <strong>@Model.CurrentWeather.WindSpeed</strong>
-                    <small>m/s @Model.CurrentWeather.WindDirection</small>
+                <div style="font-size: 16px;">Wind</div>
+                <div class="d-flex align-items-end lh-1">
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.WindSpeed</div>
+                    <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">m/s @Model.CurrentWeather.WindDirection</div>
                 </div>
             </div>
             <div>
-                <div>Pressure</div>
-                <div>
-                    <strong>@Model.CurrentWeather.Pressure</strong>
-                    <small>mm Hg</small>
+                <div style="font-size: 16px;">Pressure</div>
+                <div class="d-flex align-items-end lh-1">
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.Pressure</div>
+                    <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">mm Hg</div>
                 </div>
             </div>
             <div>
-                <div>Humidity</div>
-                <div>
-                    <strong>@Model.CurrentWeather.Humidity</strong>
-                    <small>%</small>
+                <div style="font-size: 16px;">Humidity</div>
+                <div class="d-flex align-items-end lh-1">
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.Humidity</div>
+                    <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">%</div>
                 </div>
             </div>
             <div>
-                <div>Precipitation</div>
-                <div>
-                    <strong>@Model.CurrentWeather.Presipitation</strong>
-                    <small>mm</small>
+                <div style="font-size: 16px;">Precipitation</div>
+                <div class="d-flex align-items-end lh-1">
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.Presipitation</div>
+                    <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">mm</div>
                 </div>
             </div>
             <div>
-                <div>Clouds</div>
-                <div>
-                    <strong>@Model.CurrentWeather.CloudCover</strong>
-                    <small>%</small>
+                <div style="font-size: 16px;">Clouds</div>
+                <div class="d-flex align-items-end lh-1">
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.CloudCover</div>
+                    <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">%</div>
                 </div>
             </div>
         </div>

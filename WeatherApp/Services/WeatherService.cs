@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using System.Text.Json;
+﻿using System.Text.Json;
 using WeatherApp.Models;
+using WeatherApp.Helpers;
 
 namespace WeatherApp.Services
 {
@@ -15,28 +15,28 @@ namespace WeatherApp.Services
             this.config = config;
         }
 
-        public async Task<OpenMeteoResponse> GetCurrentWeatherAsync(string city)
+        public async Task<OpenMeteoData> GetOpenMeteoData(string city)
         {
             double lat = 50.51;
             double lon = 30.91;
             string url = $"https://api.open-meteo.com/v1/forecast?" +
                 $"latitude={lat}" +
                 $"&longitude={lon}" +
-                $"&daily=sunrise,sunset&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code," +
-                $"cloud_cover,surface_pressure,precipitation,wind_speed_10m,wind_direction_10m" +
-                $"&timezone=auto&forecast_days=1&wind_speed_unit=ms";
+                $"&daily=sunrise,sunset,weather_code,temperature_2m_max,wind_speed_10m_max,temperature_2m_min,wind_direction_10m_dominant,uv_index_max,precipitation_sum" +
+                $"&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,surface_pressure,cloud_cover,wind_speed_10m,wind_direction_10m,uv_index" +
+                $"&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,cloud_cover,surface_pressure,precipitation,wind_speed_10m,wind_direction_10m" +
+                $"&timezone=auto" +
+                $"&past_days=1" +
+                $"&forecast_days=14" +
+                $"&wind_speed_unit=ms";
 
             var res = await httpClient.GetAsync(url);
-            if (!res.IsSuccessStatusCode)
-            {
-                return null;
-            }
             var json = await res.Content.ReadAsStringAsync();
-            var deserialized = JsonSerializer.Deserialize<OpenMeteoResponse>(json, new JsonSerializerOptions
+            var data = JsonSerializer.Deserialize<OpenMeteoData>(json, new JsonSerializerOptions
             {
-                PropertyNameCaseInsensitive = true
+                PropertyNameCaseInsensitive = true,
             });
-            return deserialized;
+            return data;
         }
     }
 }

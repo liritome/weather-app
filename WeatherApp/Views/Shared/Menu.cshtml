@@ -1,8 +1,10 @@
 ﻿@using WeatherApp.Helpers
-@model WeatherApp.Models.OpenMeteoResponse
+
+@model WeatherApp.Models.OpenMeteoData
 @{
     Dictionary<string, string> tabs = new()
         {
+            {"Yesterday", "yesterday"},
             {"Now", ""},
             {"Today", "today"},
             {"Tomorrow", "tomorrow"},
@@ -19,7 +21,7 @@
             <a href="#">Ukraine</a> / <a href="#">Kyiv oblast</a> / <a href="#">Brovary raion</a>
         </div>
         <div class="fw-bold" style="font-size: 24px">
-            @WeatherDescriptor.GetWeatherDescription(Model.CurrentWeather.Code) in @ViewData["City"], @((Model.CurrentWeather.Temperature > 0 ? "+" : "") + Model.CurrentWeather.Temperature) °C
+            @Model.CurrentWeather.WeatherDescription in @ViewData["City"], @((Model.CurrentWeather.Temperature > 0 ? "+" : "") + Model.CurrentWeather.Temperature) °C
         </div>
         <div class="flex-grow-1"></div>
         <div class="d-flex gap-4 head-link-menu">
