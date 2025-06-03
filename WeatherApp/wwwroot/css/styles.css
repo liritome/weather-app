@@ -47,11 +47,9 @@
 
 .head-link-menu .link-active {
     opacity: 1;
+    pointer-events: none;
+    cursor: default;
 }
-
-    .head-link-menu .link-active:hover {
-        opacity: 1;
-    }
 
 .hover-shadow {
     transition: box-shadow 0.2s ease;

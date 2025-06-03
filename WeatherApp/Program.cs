@@ -34,7 +34,7 @@ namespace WeatherApp
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}");
+                pattern: "{controller=Weather}/{action=Now}");
 
             app.Run();
         }

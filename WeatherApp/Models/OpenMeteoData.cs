@@ -17,7 +17,7 @@ namespace WeatherApp.Models
         [JsonPropertyName("current_units")]
         public CurrentWeatherUnits CurrentWeatherUnits { get; set; }
         [JsonPropertyName("current")]
-        public CurrentWeatherData CurrentWeather { get; set; }
+        public CurrentWeatherData CurrentWeatherData { get; set; }
         [JsonPropertyName("hourly_units")]
         public HourlyWeatherUnits HourlyWeatherUnits { get; set; }
         [JsonPropertyName("hourly")]

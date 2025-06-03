@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Home\Menu.cshtml" />
+    <Content Remove="Views\Weather\Menu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Home\Menu.cshtml" />
+    <UpToDateCheckInput Remove="Views\Weather\Menu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Home\Menu.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Weather\Menu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

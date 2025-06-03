@@ -2,6 +2,7 @@
 @using WeatherApp.Models
 
 @model WeatherApp.Models.OpenMeteoData
+
 @{
     DateTime now = DateTime.Now;
     DailyWeather weatherToday = Model.DailyWeatherData.GetDailyWeatherByDate(now);
@@ -17,9 +18,14 @@
         </div>
         <div class="position-relative">
             <div class="position-absolute top-50 start-50" style="transform: translate(-50%, 33%)">
-                <div class="lh-1 mb-3" style="font-size: 120px; font-weight: 500; letter-spacing: -5px;">@((Model.CurrentWeather.Temperature > 0 ? "+" : "") + Model.CurrentWeather.Temperature)</div>
-                <div class="p-1 rounded" style="font-size: 18px; background-color:rgba(255, 255, 255, 0.10);">Feels like @((Model.CurrentWeather.ApparentTemperature > 0 ? "+" : "") + Model.CurrentWeather.ApparentTemperature)</div>
-                <div style="font-size: 32px;">@Model.CurrentWeather.WeatherDescription</div>
+                <div class="lh-1 mb-3" style="font-size: 120px; font-weight: 500; letter-spacing: -5px;">
+                    <temperature value="@Model.CurrentWeatherData.Temperature"></temperature>
+                </div>
+                <div class="d-inline-flex py-1 px-2 rounded" style="font-size: 18px; background-color:rgba(255, 255, 255, 0.10);">
+                    Feels like&nbsp;
+                    <temperature value="@Model.CurrentWeatherData.ApparentTemperature"></temperature>
+                </div>
+                <div style="font-size: 32px;">@Model.CurrentWeatherData.WeatherDescription</div>
             </div>
         </div>
         <div class="d-flex justify-content-center gap-2 mb-3">
@@ -39,35 +45,35 @@
             <div>
                 <div style="font-size: 16px;">Wind</div>
                 <div class="d-flex align-items-end lh-1">
-                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.WindSpeed</div>
-                    <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">m/s @Model.CurrentWeather.WindDirection</div>
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeatherData.WindSpeed</div>
+                    <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">m/s @Model.CurrentWeatherData.WindDirection</div>
                 </div>
             </div>
             <div>
                 <div style="font-size: 16px;">Pressure</div>
                 <div class="d-flex align-items-end lh-1">
-                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.Pressure</div>
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeatherData.Pressure</div>
                     <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">mm Hg</div>
                 </div>
             </div>
             <div>
                 <div style="font-size: 16px;">Humidity</div>
                 <div class="d-flex align-items-end lh-1">
-                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.Humidity</div>
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeatherData.Humidity</div>
                     <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">%</div>
                 </div>
             </div>
             <div>
                 <div style="font-size: 16px;">Precipitation</div>
                 <div class="d-flex align-items-end lh-1">
-                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.Presipitation</div>
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeatherData.Presipitation</div>
                     <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">mm</div>
                 </div>
             </div>
             <div>
                 <div style="font-size: 16px;">Clouds</div>
                 <div class="d-flex align-items-end lh-1">
-                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeather.CloudCover</div>
+                    <div style="font-size: 32px; font-weight: 500;">@Model.CurrentWeatherData.CloudCover</div>
                     <div class="ms-1" style="font-size: 16px; margin-bottom: 1.7px;">%</div>
                 </div>
             </div>
