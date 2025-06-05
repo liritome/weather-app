@@ -22,10 +22,10 @@ namespace WeatherApp.Models
         public List<double> UvIndexMax { get; set; }
         [JsonPropertyName("precipitation_sum")]
         public List<double> PrecipitationSum { get; set; }
-        [JsonIgnore]
-        public List<string> WindDirectionDominant { get; set; }
-        [JsonIgnore]
-        public List<string> WeatherDescription { get; set; }
+
+        public List<string> WindDirectionDominant => WindDirectionDegreeDominant.Select(t => WeatherHelper.GetWindDirection(t)).ToList();
+
+        public List<string> WeatherDescription => Code.Select(t => WeatherHelper.GetWeatherDescription(t)).ToList();
 
         public DailyWeatherData(List<DateTime> time, List<DateTime> sunrise, List<DateTime> sunset, List<int> code,
             List<double> temperatureMax, List<double> windSpeedMax, List<double> temperatureMin,
@@ -41,8 +41,6 @@ namespace WeatherApp.Models
             WindDirectionDegreeDominant = windDirectionDegreeDominant;
             UvIndexMax = uvIndexMax;
             PrecipitationSum = precipitationSum;
-            WindDirectionDominant = WindDirectionDegreeDominant.Select(t => WeatherHelper.GetWindDirection(t)).ToList();
-            WeatherDescription = code.Select(t => WeatherHelper.GetWeatherDescription(t)).ToList();
         }
 
         public DailyWeather GetDailyWeatherByDate(DateTime dateTime)
@@ -77,7 +75,6 @@ namespace WeatherApp.Models
 
     public class DailyWeather
     {
-
         public DateTime Time { get; set; }
         public DateTime Sunrise { get; set; }
         public DateTime Sunset { get; set; }

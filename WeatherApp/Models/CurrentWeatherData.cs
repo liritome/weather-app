@@ -24,10 +24,10 @@ namespace WeatherApp.Models
         public double WindSpeed { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public int WindDirectionDegree { get; set; }
-        [JsonIgnore]
-        public string WindDirection { get; set; }
-        [JsonIgnore]
-        public string WeatherDescription {  get; set; }
+
+        public string WindDirection => WeatherHelper.GetWindDirection(WindDirectionDegree);
+
+        public string WeatherDescription => WeatherHelper.GetWeatherDescription(Code);
 
         [JsonConstructor]
         public CurrentWeatherData(DateTime time, int interval, int code, double temperature,
@@ -46,8 +46,6 @@ namespace WeatherApp.Models
             Presipitation = presipitation;
             WindSpeed = Math.Round(windSpeed);
             WindDirectionDegree = windDirectionDegree;
-            WindDirection = WeatherHelper.GetWindDirection(windDirectionDegree);
-            WeatherDescription = WeatherHelper.GetWeatherDescription(code);
         }
     }
 

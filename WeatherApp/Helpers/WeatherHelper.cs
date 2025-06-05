@@ -4,7 +4,7 @@ namespace WeatherApp.Helpers
 {
     public static class WeatherHelper
     {
-        public static readonly Dictionary<int, string> CodeMap = new()
+        public static readonly Dictionary<int, string> CodeDescriptionMap = new()
         {
             { 0, "Clear" },
             { 1, "Mainly clear" },
@@ -36,6 +36,38 @@ namespace WeatherApp.Helpers
             { 99, "Thunderstorm with heavy hail" }
         };
 
+        public static readonly Dictionary<int, WeatherSvg> CodeSvgMap = new()
+        {
+            { 0, new("clear") },
+            { 1, new("cloud1") },
+            { 2, new("cloud2") },
+            { 3, new("cloud3") },
+            { 45, new("fog") },
+            { 48, new("fog") },
+            { 51, new("cloud1", "rain1") },
+            { 53, new("cloud2", "rain2") },
+            { 55, new("cloud3", "rain3") },
+            { 56, new("cloud1", "rain-snow1") },
+            { 57, new("cloud3", "rain-snow3") },
+            { 61, new("cloud1", "rain1") },
+            { 63, new("cloud2", "rain2") },
+            { 65, new("cloud3", "rain3") },
+            { 66, new("cloud1", "rain-snow1") },
+            { 67, new("cloud3", "rain-snow3") },
+            { 71, new("cloud1", "snow1") },
+            { 73, new("cloud2", "snow2") },
+            { 75, new("cloud3", "snow3") },
+            { 77, new("cloud3", "hail2") },
+            { 80, new("cloud1", "rain1") },
+            { 81, new("cloud2", "rain2") },
+            { 82, new("cloud3", "rain3") },
+            { 85, new("cloud1", "snow1") },
+            { 86, new("cloud3", "snow3") },
+            { 95, new("cloud3", "storm") },
+            { 96, new("cloud3", "hail1") },
+            { 99, new("cloud3", "hail3") }
+        };
+
         public static readonly string[] Directions =
         {
             "N", "NNE", "NE", "ENE",
@@ -46,7 +78,12 @@ namespace WeatherApp.Helpers
 
         public static string GetWeatherDescription(int code)
         {
-            return CodeMap.TryGetValue(code, out var description) ? description : string.Empty;
+            return CodeDescriptionMap.TryGetValue(code, out var description) ? description : "Unknown";
+        }
+
+        public static WeatherSvg GetWeatherSvg(int code)
+        {
+            return CodeSvgMap.TryGetValue(code, out var svg) ? svg : new WeatherSvg("unknown");
         }
 
         public static string GetWindDirection(int degrees)
@@ -78,4 +115,6 @@ namespace WeatherApp.Helpers
             return angle;
         }
     }
+
+    public record WeatherSvg(string Condition, string? Precipitation = null);
 }

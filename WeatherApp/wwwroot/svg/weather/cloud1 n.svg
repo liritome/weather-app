@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-55.074 0 589.004 501.895" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:export>
+      <bx:file format="svg"/>
+    </bx:export>
+  </defs>
+  <path style="fill: rgb(136, 153, 170); stroke-linejoin: round; stroke: rgb(136, 153, 170); stroke-width: 6.00731px;" d="M 367.013 9.913 C 259.636 27.174 205.45 143.474 251.761 234.718 C 269.215 225.013 289.311 219.486 310.697 219.486 C 369.401 219.486 418.376 261.13 429.695 316.487 C 464.848 307.811 497.426 286.902 520.335 254.022 C 407.42 282.852 305.637 178.637 337.127 66.434 C 342.952 45.68 353.141 26.411 367.013 9.913 Z"/>
+  <ellipse style="stroke: rgba(0, 0, 0, 0); fill: rgb(224, 224, 224); stroke-width: 1;" cx="151.019" cy="412.393" rx="85.807" ry="85.807"/>
+  <ellipse style="stroke: rgba(0, 0, 0, 0); fill: rgb(224, 224, 224); stroke-width: 1;" cx="197.919" cy="352.358" rx="67.572" ry="67.572"/>
+  <rect style="stroke: rgba(0, 0, 0, 0); fill: rgb(224, 224, 224); stroke-width: 1;" x="70.516" y="345.529" width="374.17" height="152.668" rx="76.334" ry="76.334"/>
+  <ellipse style="fill: rgb(224, 224, 224); stroke-width: 1; stroke: rgba(255, 0, 0, 0);" cx="310.697" cy="340.948" rx="88.64" ry="88.64"/>
+</svg>

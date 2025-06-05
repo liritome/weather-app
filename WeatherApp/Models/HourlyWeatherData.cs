@@ -27,10 +27,10 @@ namespace WeatherApp.Models
         public List<double> WindSpeed { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public List<int> WindDirectionDegree { get; set; }
-        [JsonIgnore]
-        public List<string> WindDirection { get; set; }
-        [JsonIgnore]
-        public List<string> WeatherDescription { get; set; }
+
+        public List<string> WindDirection => WindDirectionDegree.Select(t => WeatherHelper.GetWindDirection(t)).ToList();
+
+        public List<string> WeatherDescription => Code.Select(t => WeatherHelper.GetWeatherDescription(t)).ToList();
 
         public HourlyWeatherData(List<DateTime> time, List<double> temperature, List<int> humidity, List<double> apparentTemperature,
             List<int> precipitationProbability, List<double> precipitation, List<int> code, List<double> pressure,
@@ -49,8 +49,6 @@ namespace WeatherApp.Models
             UvIndex = uvIndex;
             WindSpeed = windSpeed.Select(t => Math.Round(t)).ToList();
             WindDirectionDegree = windDirectionDegree;
-            WindDirection = windDirectionDegree.Select(t => WeatherHelper.GetWindDirection(t)).ToList();
-            WeatherDescription = code.Select(t => WeatherHelper.GetWeatherDescription(t)).ToList();
         }
     }
 

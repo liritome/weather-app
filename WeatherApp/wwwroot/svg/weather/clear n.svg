@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-55.074 0 589.004 501.895" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:export>
+      <bx:file format="svg"/>
+    </bx:export>
+  </defs>
+  <path style="fill: rgb(136, 153, 170); stroke-linejoin: round; stroke: rgb(136, 153, 170); stroke-width: 6.00731px; transform-origin: 619.279px 510.625px;" transform="matrix(-0.704828, 0.44269, 0.442693, 0.704824, -380.325943, -250.426405)" d="M 495.869 337.455 A 188.125 188.125 0 1 1 495.869 683.795 A 181.886 181.886 0 0 0 495.869 337.455 Z" bx:shape="crescent 569.375 510.625 188.125 226 0.64 1@7a220a6b"/>
+</svg>
