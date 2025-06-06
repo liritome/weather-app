@@ -46,7 +46,7 @@ namespace WeatherApp.Models
         public DailyWeather GetDailyWeatherByDate(DateTime dateTime)
         {
             int index = Time.IndexOf(dateTime.Date);
-            return new DailyWeather(dateTime, Sunrise[index], Sunset[index], TemperatureMax[index],
+            return new DailyWeather(dateTime, Sunrise[index], Sunset[index], Code[index], TemperatureMax[index],
                 TemperatureMin[index], WindSpeedMax[index], UvIndexMax[index], PrecipitationSum[index],
                 WindDirectionDominant[index], WeatherDescription[index]);
         }
@@ -78,6 +78,7 @@ namespace WeatherApp.Models
         public DateTime Time { get; set; }
         public DateTime Sunrise { get; set; }
         public DateTime Sunset { get; set; }
+        public int Code { get; set; }
         public double TemperatureMax { get; set; }
         public double TemperatureMin { get; set; }
         public double WindSpeedMax { get; set; }
@@ -85,13 +86,14 @@ namespace WeatherApp.Models
         public double PrecipitationSum { get; set; }
         public string WindDirectionDominant { get; set; }
         public string WeatherDescription { get; set; }
-        public DailyWeather(DateTime time, DateTime sunrise, DateTime sunset,
+        public DailyWeather(DateTime time, DateTime sunrise, DateTime sunset, int code,
             double temperatureMax, double temperatureMin, double windSpeedMax, double uvIndexMax,
             double precipitationSum, string windDirectionDominant, string weatherDescription)
         {
             Time = time;
             Sunrise = sunrise;
             Sunset = sunset;
+            Code = code;
             TemperatureMax = temperatureMax;
             TemperatureMin = temperatureMin;
             WindSpeedMax = windSpeedMax;

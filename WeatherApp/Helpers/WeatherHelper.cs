@@ -36,7 +36,7 @@ namespace WeatherApp.Helpers
             { 99, "Thunderstorm with heavy hail" }
         };
 
-        public static readonly Dictionary<int, WeatherSvg> CodeSvgMap = new()
+        public static readonly Dictionary<int, WeatherSvgPair> CodeSvgMap = new()
         {
             { 0, new("clear") },
             { 1, new("cloud1") },
@@ -81,9 +81,9 @@ namespace WeatherApp.Helpers
             return CodeDescriptionMap.TryGetValue(code, out var description) ? description : "Unknown";
         }
 
-        public static WeatherSvg GetWeatherSvg(int code)
+        public static WeatherSvgPair GetWeatherSvg(int code)
         {
-            return CodeSvgMap.TryGetValue(code, out var svg) ? svg : new WeatherSvg("unknown");
+            return CodeSvgMap.TryGetValue(code, out var svg) ? svg : new WeatherSvgPair("unknown");
         }
 
         public static string GetWindDirection(int degrees)
@@ -116,5 +116,5 @@ namespace WeatherApp.Helpers
         }
     }
 
-    public record WeatherSvg(string Condition, string? Precipitation = null);
+    public record WeatherSvgPair(string Condition, string? Precipitation = "none");
 }

@@ -29,9 +29,24 @@ namespace WeatherApp.Services
                 $"&past_days=1" +
                 $"&forecast_days=14" +
                 $"&wind_speed_unit=ms";
-
-            var res = await httpClient.GetAsync(url);
-            var json = await res.Content.ReadAsStringAsync();
+            string json = null;
+            try
+            {
+                var res = await httpClient.GetAsync(url);
+                if (res.IsSuccessStatusCode)
+                {
+                    json = await res.Content.ReadAsStringAsync();
+                }
+            }
+            catch
+            {
+                // todo: WeatherService try..catch
+            }
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                string fallbackPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "fallback.json");
+                json = await File.ReadAllTextAsync(fallbackPath);
+            }
             var data = JsonSerializer.Deserialize<OpenMeteoData>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
