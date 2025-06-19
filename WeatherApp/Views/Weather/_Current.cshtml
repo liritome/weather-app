@@ -1,5 +1,5 @@
-﻿@using WeatherApp.Helpers
-@using WeatherApp.Models
+﻿@using WeatherApp.Models
+@using WeatherApp.Helpers
 
 @model WeatherApp.Models.OpenMeteoData
 
@@ -14,7 +14,7 @@
     bool isDay = now >= sunrise && now <= sunset;
 }
 
-<div class="p-2 rounded bg-white my-2">
+<div class="p-2 rounded bg-white mb-2">
     <div class="d-flex flex-column text-white text-center" style="background-color:#4e99e4;">
         <div class="d-flex">
             <div class="p-3" style="width: 310px; background-color:rgba(0, 0, 0, 0.10);">
@@ -71,17 +71,21 @@
                 </div>
             </div>
             <div class="position-relative d-flex flex-column align-items-center flex-fill">
-                <div class="position-absolute d-flex gap-1 start-50" style="transform: translate(-50%, 15%)">
+                <div class="position-absolute d-flex gap-1 start-50" style="transform: translate(-50%, 16%)">
                     <div class="d-flex flex-column justify-content-center">
                         <div>@sunrise.ToString("HH:mm")</div>
-                        <div>Sunrise</div>
+                        <div>
+                            <img src="~/svg/sunrise.svg" width="65" />
+                        </div>
                     </div>
                     <div>
                         <div style="background-image: url('/svg/sun.svg'); background-size: 380px 380px; transform: rotate(@(sunAngle)deg); width: 380px; height: 380px;"></div>
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                         <div>@sunset.ToString("HH:mm")</div>
-                        <div>Sunset</div>
+                        <div>
+                            <img src="~/svg/sunset.svg" width="65" />
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex flex-column justify-content-center flex-fill">

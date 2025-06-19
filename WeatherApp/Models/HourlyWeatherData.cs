@@ -50,6 +50,16 @@ namespace WeatherApp.Models
             WindSpeed = windSpeed.Select(t => Math.Round(t)).ToList();
             WindDirectionDegree = windDirectionDegree;
         }
+
+        public HourlyWeather GetHourlyWeatherByDate(DateTime dateTime)
+        {
+            int index = Time.IndexOf(dateTime);
+            return new HourlyWeather(Time.GetRange(index, 24), Code.GetRange(index, 24), Temperature.GetRange(index, 24),
+                ApparentTemperature.GetRange(index, 24), Humidity.GetRange(index, 24), PrecipitationProbability.GetRange(index, 24),
+                Precipitation.GetRange(index, 24), Pressure.GetRange(index, 24), CloudCover.GetRange(index, 24),
+                UvIndex.GetRange(index, 24), WindSpeed.GetRange(index, 24), WindDirectionDegree.GetRange(index, 24),
+                WindDirection.GetRange(index, 24), WeatherDescription.GetRange(index, 24));
+        }
     }
 
     public class HourlyWeatherUnits
@@ -76,5 +86,45 @@ namespace WeatherApp.Models
         public string WindSpeed { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public string WindDirectionDegree { get; set; }
+    }
+
+    public class HourlyWeather
+    {
+        public List<DateTime> Time { get; set; }
+        public List<int> Code { get; set; }
+        public List<double> Temperature { get; set; }
+        public List<double> ApparentTemperature { get; set; }
+        public List<int> Humidity { get; set; }
+        public List<int> PrecipitationProbability { get; set; }
+        public List<double> Precipitation { get; set; }
+        public List<double> Pressure { get; set; }
+        public List<int> CloudCover { get; set; }
+        public List<double> UvIndex { get; set; }
+        public List<double> WindSpeed { get; set; }
+        public List<int> WindDirectionDegree { get; set; }
+        public List<string> WindDirection {  get; set; }
+        public List<string> WeatherDescription {  get; set; }
+
+        public HourlyWeather(List<DateTime> time, List<int> code, List<double> temperature,
+            List<double> apparentTemperature, List<int> humidity, List<int> precipitationProbability,
+            List<double> precipitation, List<double> pressure, List<int> cloudCover,
+            List<double> uvIndex, List<double> windSpeed, List<int> windDirectionDegree,
+            List<string> windDirection, List<string> weatherDescription)
+        {
+            Time = time;
+            Code = code;
+            Temperature = temperature;
+            ApparentTemperature = apparentTemperature;
+            Humidity = humidity;
+            PrecipitationProbability = precipitationProbability;
+            Precipitation = precipitation;
+            Pressure = pressure;
+            CloudCover = cloudCover;
+            UvIndex = uvIndex;
+            WindSpeed = windSpeed;
+            WindDirectionDegree = windDirectionDegree;
+            WindDirection = windDirection;
+            WeatherDescription = weatherDescription;
+        }
     }
 }

@@ -14,10 +14,10 @@
         </div>
         <div class="flex-grow-1"></div>
         <div class="d-flex gap-4 head-link-menu" id="navLinks" data-activetab="@ViewData["ActiveTab"]">
-            <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="0" id="Yesterday">Yesterday</a>
+            <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="-1" id="Yesterday">Yesterday</a>
             <a asp-action="Now" asp-route-city="@ViewData["City"]" id="Now">Now</a>
-            <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="1" id="Today">Today</a>
-            <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="2" id="Tomorrow">Tomorrow</a>
+            <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="0" id="Today">Today</a>
+            <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="1" id="Tomorrow">Tomorrow</a>
             <a asp-action="ThreeDays" asp-route-city="@ViewData["City"]" id="ThreeDays">3 days</a>
             <a asp-action="SevenDays" asp-route-city="@ViewData["City"]" id="SevenDays">7 days</a>
             <a asp-action="TwoWeeks" asp-route-city="@ViewData["City"]" id="TwoWeeks">2 weeks</a>

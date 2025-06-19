@@ -1,64 +1,20 @@
 ﻿@using WeatherApp.Helpers
+@using WeatherApp.ViewModels
 
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    Dictionary<string, int> tabs = new()
-        {
-            {"Yesterday", 0},
-            {"Today", 1},
-            {"Tomorrow", 2},
-            {"in 2 days", 3},
-            {"in 3 days", 4},
-            {"in 4 days", 5},
-            {"in 5 days", 6},
-            {"in 6 days", 7},
-            {"in 7 days", 8},
-            {"in 8 days", 9},
-            {"in 9 days", 10},
-            {"in 10 days", 11},
-            {"in 11 days", 12},
-            {"in 12 days", 13},
-            {"in 13 days", 14}
-        };
+    var tabs = WeatherHelper.Days;
+    int dayNumber = int.TryParse(Context.Request.Query["day"], out var result) ? result : 0;
+    var dayTabsModel = new DayTabsViewModel(Model, dayNumber);
 }
 
 <div class="container-fluid p-0" style="width: 944px;">
     <div class="mt-2 mb-3" style="font-size: 24px">
         <div class="p-0">
-            Weather now
+            Weather @tabs[dayNumber]
         </div>
     </div>
-    <div class="d-flex my-2 gap-2">
-        @for (int i = -1; i <= 2; i++)
-        {
-            var day = Model.DailyWeatherData.GetDailyWeatherByDate(DateTime.Today.AddDays(i));
-
-            <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@tabs.ElementAt(i + 1).Value" class="text-decoration-none text-black">
-                <div class="p-2 pt-1 rounded bg-white hover-shadow" style="width: 230px; height: 110px;">
-                    <div class="d-flex justify-content-between h-100">
-                        <div class="d-flex flex-column me-2">
-                            <div style="height: 24px; font-size: 20px">@DateTime.Today.AddDays(i).ToString("ddd, dd MMM")</div>
-                            <div class="text-secondary" style="height: 20px;">@tabs.ElementAt(i + 1).Key</div>
-                            <div class="flex-grow-1"></div>
-                            <div class="d-flex" style="font-size: 24px">
-                                <div class="text-center bg-success bg-opacity-50" style="width: 65px">
-                                    <temperature value="@day.TemperatureMin"></temperature>
-                                </div>
-                                <div class="text-center bg-success bg-opacity-75" style="width: 65px">
-                                    <temperature value="@day.TemperatureMax"></temperature>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-column flex-grow-1 text-center">
-                            <div>@day.WeatherDescription</div>
-                            <div class="flex-grow-1"></div>
-                            <div class="text-primary">@day.PrecipitationSum mm</div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        }
-    </div>
-    <partial name="Current" model="Model" />
+    <partial name="_DayTabs" model="dayTabsModel" />
+    <partial name="_Daily" model="Model" />
 </div>

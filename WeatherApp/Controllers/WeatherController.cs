@@ -20,13 +20,13 @@ namespace WeatherApp.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> Day(string city = "Krasylivka", int day = 1)
+        public async Task<IActionResult> Day(string city = "Krasylivka", int day = 0)
         {
             ViewData["ActiveTab"] = day switch
             {
-                0 => "Yesterday",
-                1 => "Today",
-                2 => "Tomorrow",
+                -1 => "Yesterday",
+                0 => "Today",
+                1 => "Tomorrow",
                 _ => ""
             };
             ViewData["City"] = city;

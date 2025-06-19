@@ -86,6 +86,7 @@ namespace WeatherApp.Models
         public double PrecipitationSum { get; set; }
         public string WindDirectionDominant { get; set; }
         public string WeatherDescription { get; set; }
+
         public DailyWeather(DateTime time, DateTime sunrise, DateTime sunset, int code,
             double temperatureMax, double temperatureMin, double windSpeedMax, double uvIndexMax,
             double precipitationSum, string windDirectionDominant, string weatherDescription)
