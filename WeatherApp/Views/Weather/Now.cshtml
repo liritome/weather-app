@@ -1,12 +1,6 @@
 ﻿@using WeatherApp.Helpers
-@using WeatherApp.ViewModels
 
 @model WeatherApp.Models.OpenMeteoData
-
-@{
-    int dayNumber = int.TryParse(Context.Request.Query["day"], out var result) ? result : 0;
-    var dayTabsModel = new DayTabsViewModel(Model, dayNumber);
-}
 
 <div class="container-fluid p-0" style="width: 944px;">
     <div class="mt-2 mb-3" style="font-size: 24px">
@@ -14,6 +8,6 @@
             Weather now
         </div>
     </div>
-    <partial name="_DayTabs" model="dayTabsModel" />
+    <partial name="_DayTabs" model="Model" />
     <partial name="_Current" model="Model" />
 </div>

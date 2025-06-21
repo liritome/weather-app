@@ -1,10 +1,34 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 
 namespace WeatherApp.Helpers
 {
     public static class WeatherHelper
     {
-        public static readonly Dictionary<int, string> CodeDescriptionMap = new()
+        private static readonly double maxTemperaturePossible = 60;
+        private static readonly double minTemperaturePossible = -90;
+
+        private static readonly Color violet = Color.FromArgb(255, 90, 255);
+        private static readonly Color deepBlue = Color.FromArgb(0, 0, 225);
+        private static readonly Color lightBlue = Color.FromArgb(0, 174, 255);
+        private static readonly Color green = Color.FromArgb(0, 204, 0);
+        private static readonly Color yellow = Color.FromArgb(235, 234, 0);
+        private static readonly Color red = Color.FromArgb(240, 39, 0);
+        private static readonly Color magenta = Color.FromArgb(184, 0, 156);
+
+        private static readonly List<(double Value, Color Color)> TemperatureColorRanges = new()
+        {
+            (-90, red),
+            (-50, violet),
+            (-20, deepBlue),
+            (0, lightBlue),
+            (10, green),
+            (20, yellow),
+            (40, red),
+            (60, magenta)
+        };
+
+        private static readonly Dictionary<int, string> CodeDescriptionMap = new()
         {
             { 0, "Clear" },
             { 1, "Mainly clear" },
@@ -36,7 +60,7 @@ namespace WeatherApp.Helpers
             { 99, "Thunderstorm with heavy hail" }
         };
 
-        public static readonly Dictionary<int, WeatherSvgPair> CodeSvgMap = new()
+        private static readonly Dictionary<int, WeatherSvgPair> CodeSvgMap = new()
         {
             { 0, new("clear") },
             { 1, new("cloud1") },
@@ -45,20 +69,20 @@ namespace WeatherApp.Helpers
             { 45, new("fog") },
             { 48, new("fog") },
             { 51, new("cloud1", "rain1") },
-            { 53, new("cloud2", "rain2") },
-            { 55, new("cloud3", "rain3") },
+            { 53, new("cloud1", "rain2") },
+            { 55, new("cloud2", "rain3") },
             { 56, new("cloud1", "rain-snow1") },
             { 57, new("cloud3", "rain-snow3") },
-            { 61, new("cloud1", "rain1") },
+            { 61, new("cloud2", "rain1") },
             { 63, new("cloud2", "rain2") },
             { 65, new("cloud3", "rain3") },
-            { 66, new("cloud1", "rain-snow1") },
+            { 66, new("cloud2", "rain-snow1") },
             { 67, new("cloud3", "rain-snow3") },
             { 71, new("cloud1", "snow1") },
             { 73, new("cloud2", "snow2") },
             { 75, new("cloud3", "snow3") },
             { 77, new("cloud3", "hail2") },
-            { 80, new("cloud1", "rain1") },
+            { 80, new("cloud2", "rain2") },
             { 81, new("cloud2", "rain2") },
             { 82, new("cloud3", "rain3") },
             { 85, new("cloud1", "snow1") },
@@ -68,7 +92,7 @@ namespace WeatherApp.Helpers
             { 99, new("cloud3", "hail3") }
         };
 
-        public static readonly string[] Directions =
+        private static readonly string[] Directions =
         {
             "N", "NNE", "NE", "ENE",
             "E", "ESE", "SE", "SSE",
@@ -132,6 +156,32 @@ namespace WeatherApp.Helpers
                 }
             }
             return angle;
+        }
+
+        public static string GetTemperatureColor(double temperature)
+        {
+            temperature = Math.Clamp(temperature, minTemperaturePossible, maxTemperaturePossible);
+            for (int i = 0; i < TemperatureColorRanges.Count - 1; i++)
+            {
+                var (t1, c1) = TemperatureColorRanges[i];
+                var (t2, c2) = TemperatureColorRanges[i + 1];
+
+                if (temperature >= t1 && temperature <= t2)
+                {
+                    double normalized = (temperature - t1) / (t2 - t1);
+                    var result = InterpolateColor(c1, c2, normalized);
+                    return $"rgba({result.R}, {result.G}, {result.B}, 0.3)";
+                }
+            }
+            return "rgba(128, 128, 128, 0.3)";
+        }
+
+        private static Color InterpolateColor(Color c1, Color c2, double t)
+        {
+            return Color.FromArgb(
+                (int)(c1.R + (c2.R - c1.R) * t),
+                (int)(c1.G + (c2.G - c1.G) * t),
+                (int)(c1.B + (c2.B - c1.B) * t));
         }
     }
 

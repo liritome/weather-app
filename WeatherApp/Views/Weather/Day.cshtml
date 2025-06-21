@@ -1,20 +1,26 @@
 ﻿@using WeatherApp.Helpers
-@using WeatherApp.ViewModels
 
 @model WeatherApp.Models.OpenMeteoData
 
 @{
     var tabs = WeatherHelper.Days;
-    int dayNumber = int.TryParse(Context.Request.Query["day"], out var result) ? result : 0;
-    var dayTabsModel = new DayTabsViewModel(Model, dayNumber);
+    int dayNumber = (int)(ViewData["DayNumber"] ?? 0);
+    DateTime dayDate = DateTime.Today.AddDays(dayNumber);
 }
 
 <div class="container-fluid p-0" style="width: 944px;">
     <div class="mt-2 mb-3" style="font-size: 24px">
         <div class="p-0">
-            Weather @tabs[dayNumber]
+            @if (dayNumber <= 1 && dayNumber >= -1)
+            {
+                <span>Weather @tabs[dayNumber]</span>
+            }
+            else
+            {
+                <span>Weather @dayDate.ToString("dd MMM")</span>
+            }
         </div>
     </div>
-    <partial name="_DayTabs" model="dayTabsModel" />
+    <partial name="_DayTabs" model="Model" />
     <partial name="_Daily" model="Model" />
 </div>
