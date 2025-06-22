@@ -4,14 +4,14 @@
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    DateTime now = DateTime.Now;
-    DailyWeather weatherToday = Model.DailyWeatherData.GetDailyWeatherByDate(now);
-    CurrentWeatherData current = Model.CurrentWeatherData;
-    WeatherSvgPair weatherSvgPair = WeatherHelper.GetWeatherSvg(current.Code);
+    DateTime currentLocalTime = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DailyWeather weatherToday = Model.DailyWeatherData.GetDailyWeatherByDate(currentLocalTime);
+    CurrentWeatherData currentWeather = Model.CurrentWeatherData;
+    WeatherSvgPair weatherSvgPair = WeatherHelper.GetWeatherSvg(currentWeather.Code);
     DateTime sunrise = weatherToday.Sunrise;
     DateTime sunset = weatherToday.Sunset;
-    double sunAngle = WeatherHelper.GetSunAngle(now, sunrise, sunset);
-    bool isDay = now >= sunrise && now <= sunset;
+    double sunAngle = WeatherHelper.GetSunAngle(currentLocalTime, sunrise, sunset);
+    bool isDay = currentLocalTime >= sunrise && currentLocalTime <= sunset;
 }
 
 <div class="p-2 rounded bg-white mb-2">
@@ -19,7 +19,7 @@
         <div class="d-flex">
             <div class="p-3" style="width: 310px; background-color:rgba(0, 0, 0, 0.10);">
                 <div class="mb-2" style="font-size: 20px">
-                    @now.ToString("ddd, dd MMMM, HH:mm")
+                    @currentLocalTime.ToString("ddd, dd MMMM, HH:mm")
                 </div>
                 <div>
                     <div>
@@ -29,44 +29,44 @@
                         <img src="~/svg/weather/@(weatherSvgPair.Precipitation).svg" width="65" />
                     </div>
                 </div>
-                <div class="d-flex flex-column justify-content-center" style="font-size: 24px; min-height: 75px;">@current.WeatherDescription</div>
+                <div class="d-flex flex-column justify-content-center" style="font-size: 24px; min-height: 75px;">@currentWeather.WeatherDescription</div>
                 <div class="d-flex flex-column gap-3 text-start">
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Wind</div>
                         <div class="d-flex gap-1 align-items-end lh-1">
-                            <div style="font-size: 32px; font-weight: 500;">@current.WindSpeed</div>
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.WindSpeed</div>
                             <div style="font-size: 16px; margin-bottom: 1.7px;">m/s</div>
                             <div style="margin-bottom: 1.7px; width: fit-content;">
-                                <img src="~/svg/arrow.svg" width="25" style="transform: rotate(@(current.WindDirectionDegree)deg);" />
+                                <img src="~/svg/arrow.svg" width="25" style="transform: rotate(@(currentWeather.WindDirectionDegree)deg);" />
                             </div>
-                            <div style="font-size: 16px; margin-bottom: 1.7px;">@current.WindDirection</div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">@currentWeather.WindDirection</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Pressure</div>
                         <div class="d-flex gap-1 align-items-end lh-1">
-                            <div style="font-size: 32px; font-weight: 500;">@current.Pressure</div>
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.Pressure</div>
                             <div style="font-size: 16px; margin-bottom: 1.7px;">mm Hg</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Humidity</div>
                         <div class="d-flex gap-1 align-items-end lh-1">
-                            <div style="font-size: 32px; font-weight: 500;">@current.Humidity</div>
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.Humidity</div>
                             <div style="font-size: 16px; margin-bottom: 1.7px;">%</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Precipitation</div>
                         <div class="d-flex gap-1 align-items-end lh-1">
-                            <div style="font-size: 32px; font-weight: 500;">@current.Presipitation</div>
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.Presipitation</div>
                             <div style="font-size: 16px; margin-bottom: 1.7px;">mm</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Clouds</div>
                         <div class="d-flex gap-1 align-items-end lh-1">
-                            <div style="font-size: 32px; font-weight: 500;">@current.CloudCover</div>
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.CloudCover</div>
                             <div style="font-size: 16px; margin-bottom: 1.7px;">%</div>
                         </div>
                     </div>
@@ -93,11 +93,11 @@
                 <div class="d-flex flex-column justify-content-center flex-fill">
                     <div>
                         <div class="lh-1 mb-3" style="font-size: 120px; font-weight: 500; letter-spacing: -5px;">
-                            <temperature value="@current.Temperature"></temperature>
+                            <temperature value="@currentWeather.Temperature"></temperature>
                         </div>
                         <div class="d-inline-flex py-1 px-2 rounded" style="font-size: 18px; background-color:rgba(255, 255, 255, 0.10);">
                             Feels like&nbsp;
-                            <temperature value="@current.ApparentTemperature"></temperature>
+                            <temperature value="@currentWeather.ApparentTemperature"></temperature>
                         </div>
                     </div>
                 </div>

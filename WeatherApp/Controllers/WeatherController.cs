@@ -30,7 +30,7 @@ namespace WeatherApp.Controllers
                 _ => ""
             };
             ViewData["City"] = city;
-            ViewData["DayNumber"] = day;
+            ViewData["DayOffset"] = day;
             var data = await weatherService.GetOpenMeteoData(city);
             return View(data);
         }

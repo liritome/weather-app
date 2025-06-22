@@ -100,24 +100,24 @@ namespace WeatherApp.Helpers
             "W", "WNW", "NW", "NNW"
         };
 
-        public static Dictionary<int, string> Days = new()
-    {
-        { -1, "Yesterday" },
-        { 0, "Today" },
-        { 1, "Tomorrow" },
-        { 2, "in 2 days" },
-        { 3, "in 3 days" },
-        { 4, "in 4 days" },
-        { 5, "in 5 days" },
-        { 6, "in 6 days" },
-        { 7, "in 7 days" },
-        { 8, "in 8 days" },
-        { 9, "in 9 days" },
-        { 10, "in 10 days" },
-        { 11, "in 11 days" },
-        { 12, "in 12 days" },
-        { 13, "in 13 days" }
-    };
+        public static readonly Dictionary<int, string> DayLabelByOffset = new()
+        {
+            { -1, "Yesterday" },
+            { 0, "Today" },
+            { 1, "Tomorrow" },
+            { 2, "in 2 days" },
+            { 3, "in 3 days" },
+            { 4, "in 4 days" },
+            { 5, "in 5 days" },
+            { 6, "in 6 days" },
+            { 7, "in 7 days" },
+            { 8, "in 8 days" },
+            { 9, "in 9 days" },
+            { 10, "in 10 days" },
+            { 11, "in 11 days" },
+            { 12, "in 12 days" },
+            { 13, "in 13 days" }
+        };
 
         public static string GetWeatherDescription(int code)
         {

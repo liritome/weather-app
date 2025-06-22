@@ -4,8 +4,10 @@
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    int dayNumber = (int)(ViewData["DayNumber"] ?? 0);
-    DateTime dayDate = DateTime.Today.AddDays(dayNumber);
+    int dayNumber = (int)(ViewData["DayOffset"] ?? 0);
+    DateTime currentLocalDate= DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DateTime dayDate = currentLocalDate.AddDays(dayNumber).Date;
+
 
     DailyWeather weatherDay = Model.DailyWeatherData.GetDailyWeatherByDate(dayDate);
     DateTime sunrise = weatherDay.Sunrise;
@@ -13,18 +15,19 @@
 
     HourlyWeather hourlyWeather = Model.HourlyWeatherData.GetHourlyWeatherByDate(dayDate);
 
-    int itemsInRow = 12;
+    int hourStep = 2;
+    int itemsInRow = 24 / hourStep;
 }
 
 <div class="p-2 rounded bg-white mb-2">
     <div class="d-flex flex-column">
         <div class="d-grid gap-2 pb-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-            @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 24 / itemsInRow)
+            @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
             {
                 var time = hourlyWeather.Time[hour];
                 bool isDay = time >= sunrise && time <= sunset;
 
-                <div class="text-center">
+                <div class="text-center rounded-5 @(currentLocalDate < dayDate.AddHours(hour) ? "bg-light" : "bg-secondary" )">
                     <div>
                         <span>@time.ToString("HH:mm")</span>
                     </div>
@@ -32,7 +35,7 @@
             }
         </div>
         <div class="d-grid gap-2 pb-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-            @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 24 / itemsInRow)
+            @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
             {
                 WeatherSvgPair weatherSvgPair = WeatherHelper.GetWeatherSvg(hourlyWeather.Code[hour]);
                 var time = hourlyWeather.Time[hour];
@@ -59,7 +62,7 @@
                 int tempBoxHeight = 30;
             }
             <div class="d-grid" style="grid-template-columns: repeat(@itemsInRow, 1fr); height: @(tempBoxHeight + tempDifferenceDay * 2)px">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="position-relative">
                         @{
@@ -77,7 +80,7 @@
         <div class="pb-2">
             <p class="px-2 my-1">Wind direction</p>
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="text-center">
                         <div>
@@ -93,7 +96,7 @@
         <div class="pb-2">
             <p class="px-2 my-1">Wind speed, m/s</p>
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="text-center" style="font-size: 20px;">
                         <span>@hourlyWeather.WindSpeed[hour]</span>
@@ -104,7 +107,7 @@
         <div class="pb-2">
             <p class="px-2 my-1">Precipitation probability, %</p>
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="text-center" style="font-size: 20px;">
                         <span>@hourlyWeather.PrecipitationProbability[hour]</span>
@@ -115,7 +118,7 @@
         <div class="pb-2">
             <p class="px-2 my-1">Precipitation, mm</p>
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="text-center" style="font-size: 20px;">
                         <span>@hourlyWeather.Precipitation[hour]</span>
@@ -126,7 +129,7 @@
         <div class="pb-2">
             <p class="px-2 my-1">Pressure, mmhg</p>
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="text-center" style="font-size: 20px;">
                         <span>@hourlyWeather.Pressure[hour]</span>
@@ -137,7 +140,7 @@
         <div class="pb-2">
             <p class="px-2 my-1">Humidity, %</p>
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="text-center" style="font-size: 20px;">
                         <span>@hourlyWeather.Humidity[hour]</span>
@@ -148,7 +151,7 @@
         <div class="pb-2">
             <p class="px-2 my-1">Ultraviolet index</p>
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
-                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += 2)
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
                     <div class="text-center" style="font-size: 20px;">
                         <span>@hourlyWeather.UvIndex[hour]</span>

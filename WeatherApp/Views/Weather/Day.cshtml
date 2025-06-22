@@ -3,9 +3,10 @@
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    var tabs = WeatherHelper.Days;
-    int dayNumber = (int)(ViewData["DayNumber"] ?? 0);
-    DateTime dayDate = DateTime.Today.AddDays(dayNumber);
+    var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffset;
+    int dayNumber = (int)(ViewData["DayOffset"] ?? 0);
+    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DateTime dayDate = currentLocalDate.AddDays(dayNumber).Date;
 }
 
 <div class="container-fluid p-0" style="width: 944px;">
@@ -13,7 +14,7 @@
         <div class="p-0">
             @if (dayNumber <= 1 && dayNumber >= -1)
             {
-                <span>Weather @tabs[dayNumber]</span>
+                <span>Weather @dayLabelByOffsetDict[dayNumber]</span>
             }
             else
             {

@@ -3,12 +3,14 @@
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    int dayNumber = (int)(ViewData["DayNumber"] ?? 0);
-    DateTime dayDate = DateTime.Today.AddDays(dayNumber);
-    var days = WeatherHelper.Days;
+    int dayNumber = (int)(ViewData["DayOffset"] ?? 0);
+    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DateTime dayDate = currentLocalDate.AddDays(dayNumber).Date;
 
-    int minDayIndex = days.Keys.First();
-    int maxDayIndex = days.Keys.Last();
+    var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffset;
+
+    int minDayIndex = dayLabelByOffsetDict.Keys.First();
+    int maxDayIndex = dayLabelByOffsetDict.Keys.Last();
     int startDayIndex = -1;
     if (dayNumber < minDayIndex + 1)
     {
@@ -28,13 +30,13 @@
         var svgPair = WeatherHelper.GetWeatherSvg(day.Code);
 
         <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@(dayNumber + i)" class="text-decoration-none text-black">
-            <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayNumber"] != null ? "active-day-tab" : "day-tab")">
+            <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayOffset"] != null ? "active-day-tab" : "day-tab")">
                 <div class="d-flex justify-content-between h-100">
                     <div class="d-flex flex-column me-2">
                         <div style="height: 24px; font-size: 20px">@dayDate.AddDays(i).ToString("ddd, dd MMM")</div>
                         @{
                             var dayIndex = dayNumber + i;
-                            var dayLabel = days.ContainsKey(dayIndex) ? days[dayIndex] : "";
+                            var dayLabel = dayLabelByOffsetDict.ContainsKey(dayIndex) ? dayLabelByOffsetDict[dayIndex] : "";
                         }
                         <div class="text-secondary" style="height: 20px;">@dayLabel</div>
                         <div class="flex-grow-1"></div>
