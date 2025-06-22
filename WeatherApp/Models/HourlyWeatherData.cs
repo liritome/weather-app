@@ -5,6 +5,7 @@ namespace WeatherApp.Models
 {
     public class HourlyWeatherData
     {
+        [JsonPropertyName("time")]
         public List<DateTime> Time { get; set; }
         [JsonPropertyName("weather_code")]
         public List<int> Code { get; set; }
@@ -16,6 +17,7 @@ namespace WeatherApp.Models
         public List<int> Humidity { get; set; }
         [JsonPropertyName("precipitation_probability")]
         public List<int> PrecipitationProbability { get; set; }
+        [JsonPropertyName("precipitation")]
         public List<double> Precipitation { get; set; }
         [JsonPropertyName("surface_pressure")]
         public List<double> Pressure { get; set; }
@@ -25,6 +27,8 @@ namespace WeatherApp.Models
         public List<double> UvIndex { get; set; }
         [JsonPropertyName("wind_speed_10m")]
         public List<double> WindSpeed { get; set; }
+        [JsonPropertyName("wind_gusts_10m")]
+        public List<double> WindGusts { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public List<int> WindDirectionDegree { get; set; }
 
@@ -34,7 +38,7 @@ namespace WeatherApp.Models
 
         public HourlyWeatherData(List<DateTime> time, List<double> temperature, List<int> humidity, List<double> apparentTemperature,
             List<int> precipitationProbability, List<double> precipitation, List<int> code, List<double> pressure,
-            List<int> cloudCover, List<double> windSpeed, List<int> windDirectionDegree, List<double> uvIndex)
+            List<int> cloudCover, List<double> windSpeed, List<double> windGusts, List<int> windDirectionDegree, List<double> uvIndex)
         {
             Time = time;
             Temperature = temperature.Select(t => Math.Round(t)).ToList();
@@ -46,8 +50,9 @@ namespace WeatherApp.Models
             // hPa to mmhg
             Pressure = pressure.Select(t => Math.Round(t * 0.75)).ToList();
             CloudCover = cloudCover;
-            UvIndex = uvIndex;
+            UvIndex = uvIndex.Select(t => Math.Round(t)).ToList();
             WindSpeed = windSpeed.Select(t => Math.Round(t)).ToList();
+            WindGusts = windGusts.Select(t => Math.Round(t)).ToList();
             WindDirectionDegree = windDirectionDegree;
         }
 
@@ -57,13 +62,14 @@ namespace WeatherApp.Models
             return new HourlyWeather(Time.GetRange(index, 24), Code.GetRange(index, 24), Temperature.GetRange(index, 24),
                 ApparentTemperature.GetRange(index, 24), Humidity.GetRange(index, 24), PrecipitationProbability.GetRange(index, 24),
                 Precipitation.GetRange(index, 24), Pressure.GetRange(index, 24), CloudCover.GetRange(index, 24),
-                UvIndex.GetRange(index, 24), WindSpeed.GetRange(index, 24), WindDirectionDegree.GetRange(index, 24),
+                UvIndex.GetRange(index, 24), WindSpeed.GetRange(index, 24), WindGusts.GetRange(index, 24), WindDirectionDegree.GetRange(index, 24),
                 WindDirection.GetRange(index, 24), WeatherDescription.GetRange(index, 24));
         }
     }
 
     public class HourlyWeatherUnits
     {
+        [JsonPropertyName("time")]
         public string Time { get; set; }
         [JsonPropertyName("temperature_2m")]
         public string Temperature { get; set; }
@@ -73,6 +79,7 @@ namespace WeatherApp.Models
         public string ApparentTemperature { get; set; }
         [JsonPropertyName("precipitation_probability")]
         public string PrecipitationProbability { get; set; }
+        [JsonPropertyName("precipitation")]
         public string Precipitation { get; set; }
         [JsonPropertyName("weather_code")]
         public string Code { get; set; }
@@ -84,6 +91,8 @@ namespace WeatherApp.Models
         public string UvIndex { get; set; }
         [JsonPropertyName("wind_speed_10m")]
         public string WindSpeed { get; set; }
+        [JsonPropertyName("wind_gusts_10m")]
+        public string WindGusts { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public string WindDirectionDegree { get; set; }
     }
@@ -101,14 +110,15 @@ namespace WeatherApp.Models
         public List<int> CloudCover { get; set; }
         public List<double> UvIndex { get; set; }
         public List<double> WindSpeed { get; set; }
+        public List<double> WindGusts { get; set; }
         public List<int> WindDirectionDegree { get; set; }
-        public List<string> WindDirection {  get; set; }
-        public List<string> WeatherDescription {  get; set; }
+        public List<string> WindDirection { get; set; }
+        public List<string> WeatherDescription { get; set; }
 
         public HourlyWeather(List<DateTime> time, List<int> code, List<double> temperature,
             List<double> apparentTemperature, List<int> humidity, List<int> precipitationProbability,
             List<double> precipitation, List<double> pressure, List<int> cloudCover,
-            List<double> uvIndex, List<double> windSpeed, List<int> windDirectionDegree,
+            List<double> uvIndex, List<double> windSpeed, List<double> windGusts, List<int> windDirectionDegree,
             List<string> windDirection, List<string> weatherDescription)
         {
             Time = time;
@@ -122,6 +132,7 @@ namespace WeatherApp.Models
             CloudCover = cloudCover;
             UvIndex = uvIndex;
             WindSpeed = windSpeed;
+            WindGusts = windGusts;
             WindDirectionDegree = windDirectionDegree;
             WindDirection = windDirection;
             WeatherDescription = weatherDescription;

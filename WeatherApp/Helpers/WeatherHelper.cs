@@ -5,30 +5,103 @@ namespace WeatherApp.Helpers
 {
     public static class WeatherHelper
     {
+        // Temperature
         private static readonly double maxTemperaturePossible = 60;
         private static readonly double minTemperaturePossible = -90;
 
-        private static readonly Color violet = Color.FromArgb(255, 90, 255);
-        private static readonly Color deepBlue = Color.FromArgb(0, 0, 225);
-        private static readonly Color lightBlue = Color.FromArgb(0, 174, 255);
-        private static readonly Color green = Color.FromArgb(0, 204, 0);
-        private static readonly Color yellow = Color.FromArgb(235, 234, 0);
-        private static readonly Color red = Color.FromArgb(240, 39, 0);
-        private static readonly Color magenta = Color.FromArgb(184, 0, 156);
+        private static readonly Color violetT = Color.FromArgb(255, 90, 255);
+        private static readonly Color deepBlueT = Color.FromArgb(0, 0, 225);
+        private static readonly Color lightBlueT = Color.FromArgb(0, 174, 255);
+        private static readonly Color greenT = Color.FromArgb(0, 204, 0);
+        private static readonly Color yellowT = Color.FromArgb(235, 234, 0);
+        private static readonly Color redT = Color.FromArgb(240, 39, 0);
+        private static readonly Color magentaT = Color.FromArgb(184, 0, 156);
 
         private static readonly List<(double Value, Color Color)> TemperatureColorRanges = new()
         {
-            (-90, red),
-            (-50, violet),
-            (-20, deepBlue),
-            (0, lightBlue),
-            (10, green),
-            (20, yellow),
-            (40, red),
-            (60, magenta)
+            (-90, redT),
+            (-50, violetT),
+            (-20, deepBlueT),
+            (0, lightBlueT),
+            (10, greenT),
+            (20, yellowT),
+            (40, redT),
+            (60, magentaT)
         };
 
-        private static readonly Dictionary<int, string> CodeDescriptionMap = new()
+        // Wind
+        private static readonly double maxWindPossible = 32;
+        private static readonly double minWindPossible = 0;
+
+        private static readonly Color whiteW = Color.FromArgb(255, 255, 255);
+        private static readonly Color lightGrayW = Color.FromArgb(236, 237, 238);
+        private static readonly Color yellowW = Color.FromArgb(255, 235, 168);
+        private static readonly Color lightRedW = Color.FromArgb(255, 168, 168);
+        private static readonly Color redW = Color.FromArgb(235, 0, 0);
+        private static readonly Color darkRedW = Color.FromArgb(148, 0, 0);
+        private static readonly Color darkGrayW = Color.FromArgb(102, 102, 102);
+
+        private static readonly List<(double Value, Color Color)> WindColorRanges = new()
+        {
+            (0, whiteW),
+            (5, lightGrayW),
+            (10, yellowW),
+            (15, lightRedW),
+            (20, redW),
+            (25, darkRedW),
+            (32, darkGrayW)
+        };
+
+        // Pressure
+        private static readonly double maxPressurePossible = 800;
+        private static readonly double minPressurePossible = 700;
+
+        private static readonly Color blueP = Color.FromArgb(121, 161, 255);
+        private static readonly Color violetP = Color.FromArgb(208, 120, 255);
+        private static readonly Color pinkP = Color.FromArgb(255, 120, 183);
+
+        private static readonly List<(double Value, Color Color)> PressureColorRanges = new()
+        {
+            (700, blueP),
+            (760, violetP),
+            (800, pinkP)
+        };
+
+        // Humidity
+        private static readonly double maxHumidityPossible = 100;
+        private static readonly double minHumidityPossible = 0;
+
+        private static readonly Color whiteH = Color.FromArgb(255, 255, 255);
+        private static readonly Color blueH = Color.FromArgb(131, 199, 255);
+
+        private static readonly List<(double Value, Color Color)> HumidityColorRanges = new()
+        {
+            (0, whiteH),
+            (100, blueH)
+        };
+
+        // UV
+        private static readonly double maxUvPossible = 20;
+        private static readonly double minUvPossible = 0;
+
+        private static readonly Color whiteUV = Color.FromArgb(255, 255, 255);
+        private static readonly Color grayUV = Color.FromArgb(242, 242, 242);
+        private static readonly Color yellowUV = Color.FromArgb(250, 236, 171);
+        private static readonly Color orangeUV = Color.FromArgb(255, 153, 0);
+        private static readonly Color redUV = Color.FromArgb(255, 42, 0);
+        private static readonly Color violetUV = Color.FromArgb(212, 0, 149);
+
+        private static readonly List<(double Value, Color Color)> UvColorRanges = new()
+        {
+            (0, whiteUV),
+            (4, grayUV),
+            (6, yellowUV),
+            (9, orangeUV),
+            (12, redUV),
+            (20, violetUV)
+        };
+
+        private static readonly Dictionary<int, string> WeatherCodeDescriptionMap = new()
         {
             { 0, "Clear" },
             { 1, "Mainly clear" },
@@ -60,7 +133,7 @@ namespace WeatherApp.Helpers
             { 99, "Thunderstorm with heavy hail" }
         };
 
-        private static readonly Dictionary<int, WeatherSvgPair> CodeSvgMap = new()
+        private static readonly Dictionary<int, WeatherSvgPair> WeatherCodeSvgMap = new()
         {
             { 0, new("clear") },
             { 1, new("cloud1") },
@@ -100,7 +173,7 @@ namespace WeatherApp.Helpers
             "W", "WNW", "NW", "NNW"
         };
 
-        public static readonly Dictionary<int, string> DayLabelByOffset = new()
+        public static readonly Dictionary<int, string> DayLabelByOffsetMap = new()
         {
             { -1, "Yesterday" },
             { 0, "Today" },
@@ -121,12 +194,12 @@ namespace WeatherApp.Helpers
 
         public static string GetWeatherDescription(int code)
         {
-            return CodeDescriptionMap.TryGetValue(code, out var description) ? description : "Unknown";
+            return WeatherCodeDescriptionMap.TryGetValue(code, out var description) ? description : "Unknown";
         }
 
         public static WeatherSvgPair GetWeatherSvg(int code)
         {
-            return CodeSvgMap.TryGetValue(code, out var svg) ? svg : new WeatherSvgPair("unknown");
+            return WeatherCodeSvgMap.TryGetValue(code, out var svg) ? svg : new WeatherSvgPair("unknown");
         }
 
         public static string GetWindDirection(int degrees)
@@ -158,22 +231,47 @@ namespace WeatherApp.Helpers
             return angle;
         }
 
-        public static string GetTemperatureColor(double temperature)
+        private static string MapValueToColorGradient(double value, double min, double max, List<(double, Color)> colors, double opacity)
         {
-            temperature = Math.Clamp(temperature, minTemperaturePossible, maxTemperaturePossible);
-            for (int i = 0; i < TemperatureColorRanges.Count - 1; i++)
+            value = Math.Clamp(value, min, max);
+            for (int i = 0; i < colors.Count - 1; i++)
             {
-                var (t1, c1) = TemperatureColorRanges[i];
-                var (t2, c2) = TemperatureColorRanges[i + 1];
+                var (v1, c1) = colors[i];
+                var (v2, c2) = colors[i + 1];
 
-                if (temperature >= t1 && temperature <= t2)
+                if (value >= v1 && value <= v2)
                 {
-                    double normalized = (temperature - t1) / (t2 - t1);
+                    double normalized = (value - v1) / (v2 - v1);
                     var result = InterpolateColor(c1, c2, normalized);
-                    return $"rgba({result.R}, {result.G}, {result.B}, 0.3)";
+                    return $"rgba({result.R}, {result.G}, {result.B}, {opacity})";
                 }
             }
             return "rgba(128, 128, 128, 0.3)";
+        }
+
+        public static string GetTemperatureColor(double temperature)
+        {
+            return MapValueToColorGradient(temperature, minTemperaturePossible, maxTemperaturePossible, TemperatureColorRanges, 0.3);
+        }
+
+        public static string GetWindColor(double wind)
+        {
+            return MapValueToColorGradient(wind, minWindPossible, maxWindPossible, WindColorRanges, 1);
+        }
+
+        public static string GetPressureColor(double pressure)
+        {
+            return MapValueToColorGradient(pressure, minPressurePossible, maxPressurePossible, PressureColorRanges, 0.4);
+        }
+
+        public static string GetHumidityColor(double humidity)
+        {
+            return MapValueToColorGradient(humidity, minHumidityPossible, maxHumidityPossible, HumidityColorRanges, 1);
+        }
+
+        public static string GetUvColor(double uv)
+        {
+            return MapValueToColorGradient(uv, minUvPossible, maxUvPossible, UvColorRanges, 1);
         }
 
         private static Color InterpolateColor(Color c1, Color c2, double t)

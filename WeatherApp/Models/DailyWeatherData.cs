@@ -5,8 +5,11 @@ namespace WeatherApp.Models
 {
     public class DailyWeatherData
     {
+        [JsonPropertyName("time")]
         public List<DateTime> Time { get; set; }
+        [JsonPropertyName("sunrise")]
         public List<DateTime> Sunrise { get; set; }
+        [JsonPropertyName("sunset")]
         public List<DateTime> Sunset { get; set; }
         [JsonPropertyName("weather_code")]
         public List<int> Code { get; set; }
@@ -54,8 +57,11 @@ namespace WeatherApp.Models
 
     public class DailyWeatherUnits
     {
+        [JsonPropertyName("time")]
         public string Time { get; set; }
+        [JsonPropertyName("sunrise")]
         public string Sunrise { get; set; }
+        [JsonPropertyName("sunset")]
         public string Sunset { get; set; }
         [JsonPropertyName("weather_code")]
         public string Code { get; set; }

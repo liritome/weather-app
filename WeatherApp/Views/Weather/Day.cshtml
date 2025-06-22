@@ -3,7 +3,7 @@
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffset;
+    var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffsetMap;
     int dayNumber = (int)(ViewData["DayOffset"] ?? 0);
     DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
     DateTime dayDate = currentLocalDate.AddDays(dayNumber).Date;

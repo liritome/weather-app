@@ -7,7 +7,7 @@
     DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
     DateTime dayDate = currentLocalDate.AddDays(dayNumber).Date;
 
-    var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffset;
+    var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffsetMap;
 
     int minDayIndex = dayLabelByOffsetDict.Keys.First();
     int maxDayIndex = dayLabelByOffsetDict.Keys.Last();
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="flex-grow-1"></div>
-                        <div class="text-primary">@day.PrecipitationSum mm</div>
+                        <div style="color:#1c97fc;">@day.PrecipitationSum mm</div>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,9 @@ namespace WeatherApp.Models
 {
     public class CurrentWeatherData
     {
+        [JsonPropertyName("time")]
         public DateTime Time { get; set; }
+        [JsonPropertyName("interval")]
         public int Interval { get; set; }
         [JsonPropertyName("weather_code")]
         public int Code { get; set; }
@@ -19,7 +21,8 @@ namespace WeatherApp.Models
         public int CloudCover { get; set; }
         [JsonPropertyName("surface_pressure")]
         public double Pressure { get; set; }
-        public double Presipitation { get; set; }
+        [JsonPropertyName("precipitation")]
+        public double Precipitation { get; set; }
         [JsonPropertyName("wind_speed_10m")]
         public double WindSpeed { get; set; }
         [JsonPropertyName("wind_direction_10m")]
@@ -32,7 +35,7 @@ namespace WeatherApp.Models
         [JsonConstructor]
         public CurrentWeatherData(DateTime time, int interval, int code, double temperature,
             double apparentTemperature, int humidity, int cloudCover, double pressure,
-            double presipitation, double windSpeed, int windDirectionDegree)
+            double precipitation, double windSpeed, int windDirectionDegree)
         {
             Time = time;
             Interval = interval;
@@ -43,7 +46,7 @@ namespace WeatherApp.Models
             CloudCover = cloudCover;
             // hPa to mmhg
             Pressure = Math.Round(pressure * 0.75);
-            Presipitation = presipitation;
+            Precipitation = precipitation;
             WindSpeed = Math.Round(windSpeed);
             WindDirectionDegree = windDirectionDegree;
         }
@@ -51,7 +54,9 @@ namespace WeatherApp.Models
 
     public class CurrentWeatherUnits
     {
+        [JsonPropertyName("time")]
         public string Time { get; set; }
+        [JsonPropertyName("interval")]
         public string Interval { get; set; }
         [JsonPropertyName("weather_code")]
         public string Code { get; set; }
@@ -65,7 +70,8 @@ namespace WeatherApp.Models
         public string CloudCover { get; set; }
         [JsonPropertyName("surface_pressure")]
         public string Pressure { get; set; }
-        public string Presipitation { get; set; }
+        [JsonPropertyName("precipitation")]
+        public string Precipitation { get; set; }
         [JsonPropertyName("wind_speed_10m")]
         public string WindSpeed { get; set; }
         [JsonPropertyName("wind_direction_10m")]
