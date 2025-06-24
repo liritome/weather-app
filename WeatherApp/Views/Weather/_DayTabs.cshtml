@@ -27,7 +27,7 @@
     @for (int i = startDayIndex; i < endDayIndex; i++)
     {
         var day = Model.DailyWeatherData.GetDailyWeatherByDate(dayDate.AddDays(i));
-        var svgPair = WeatherHelper.GetWeatherSvg(day.Code);
+        var svgPair = WeatherHelper.GetWeatherSvgPair(day.Code);
 
         <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@(dayNumber + i)" class="text-decoration-none text-black">
             <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayOffset"] != null ? "active-day-tab" : "day-tab")">
@@ -56,7 +56,7 @@
                     <div class="d-flex flex-column flex-grow-1 text-center">
                         <div title="@day.WeatherDescription">
                             <div>
-                                <img src="~/svg/weather/@($"{svgPair.Condition} d").svg" width="65" />
+                                <img src="~/svg/weather/@($"{svgPair.Clouds} d").svg" width="65" />
                             </div>
                             <div>
                                 <img src="~/svg/weather/@($"{svgPair.Precipitation}").svg" width="42" />

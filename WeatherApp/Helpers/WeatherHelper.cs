@@ -80,6 +80,21 @@ namespace WeatherApp.Helpers
             (100, blueH)
         };
 
+        // Precipitation Probability
+        private static readonly double maxPrecipProbPossible = 100;
+        private static readonly double minPrecipProbPossible = 0;
+
+        private static readonly Color grayPP = Color.FromArgb(173, 173, 173);
+        private static readonly Color bluePP = Color.FromArgb(28, 151, 252);
+        private static readonly Color darkBluePP = Color.FromArgb(0, 76, 201);
+
+        private static readonly List<(double Value, Color Color)> PrecipProbColorRanges = new()
+        {
+            (0, grayPP),
+            (70, bluePP),
+            (100, darkBluePP)
+        };
+
         // UV
         private static readonly double maxUvPossible = 20;
         private static readonly double minUvPossible = 0;
@@ -99,6 +114,21 @@ namespace WeatherApp.Helpers
             (9, orangeUV),
             (12, redUV),
             (20, violetUV)
+        };
+
+        // Cloud cover
+        private static readonly double maxCloudCoverPossible = 100;
+        private static readonly double minCloudCoverPossible = 0;
+
+        private static readonly Color blueCC = Color.FromArgb(131, 199, 255);
+        private static readonly Color whiteCC = Color.FromArgb(255, 255, 255);
+        private static readonly Color grayCC = Color.FromArgb(168, 168, 168);
+
+        private static readonly List<(double Value, Color Color)> CloudCoverColorRanges = new()
+        {
+            (0, blueCC),
+            (50, whiteCC),
+            (100, grayCC)
         };
 
         private static readonly Dictionary<int, string> WeatherCodeDescriptionMap = new()
@@ -133,7 +163,7 @@ namespace WeatherApp.Helpers
             { 99, "Thunderstorm with heavy hail" }
         };
 
-        private static readonly Dictionary<int, WeatherSvgPair> WeatherCodeSvgMap = new()
+        private static readonly Dictionary<int, WeatherConditionSvgPair> WeatherCodeSvgPairMap = new()
         {
             { 0, new("clear") },
             { 1, new("cloud1") },
@@ -163,6 +193,38 @@ namespace WeatherApp.Helpers
             { 95, new("cloud3", "storm") },
             { 96, new("cloud3", "hail1") },
             { 99, new("cloud3", "hail3") }
+        };
+
+        private static readonly Dictionary<int, string> WeatherCodeImageMap = new()
+        {
+            { 0, "clear" },
+            { 1, "cloud1" },
+            { 2, "cloud2" },
+            { 3, "cloud3" },
+            { 45, "fog" },
+            { 48, "fog" },
+            { 51, "cloud1-rain1" },
+            { 53, "cloud1-rain1" },
+            { 55, "cloud2-rain2" },
+            { 56, "cloud1-rain1" },
+            { 57, "cloud3-rain2" },
+            { 61, "cloud2-rain1" },
+            { 63, "cloud2-rain1" },
+            { 65, "cloud3-rain2" },
+            { 66, "cloud2-rain1" },
+            { 67, "cloud3-rain2" },
+            { 71, "cloud1-snow1" },
+            { 73, "cloud2-snow1" },
+            { 75, "cloud3-snow2" },
+            { 77, "cloud3-hail1" },
+            { 80, "cloud2-rain2" },
+            { 81, "cloud2-rain2" },
+            { 82, "cloud3-rain3" },
+            { 85, "cloud1-snow1" },
+            { 86, "cloud3-snow2" },
+            { 95, "cloud3-storm1" },
+            { 96, "cloud3-hail1" },
+            { 99, "cloud3-hail2" }
         };
 
         private static readonly string[] Directions =
@@ -197,9 +259,14 @@ namespace WeatherApp.Helpers
             return WeatherCodeDescriptionMap.TryGetValue(code, out var description) ? description : "Unknown";
         }
 
-        public static WeatherSvgPair GetWeatherSvg(int code)
+        public static WeatherConditionSvgPair GetWeatherSvgPair(int code)
         {
-            return WeatherCodeSvgMap.TryGetValue(code, out var svg) ? svg : new WeatherSvgPair("unknown");
+            return WeatherCodeSvgPairMap.TryGetValue(code, out var svg) ? svg : new WeatherConditionSvgPair("unknown");
+        }
+
+        public static string GetWeatherImage(int code)
+        {
+            return WeatherCodeImageMap.TryGetValue(code, out var image) ? image : "unknown";
         }
 
         public static string GetWindDirection(int degrees)
@@ -249,6 +316,14 @@ namespace WeatherApp.Helpers
             return "rgba(128, 128, 128, 0.3)";
         }
 
+        private static Color InterpolateColor(Color c1, Color c2, double t)
+        {
+            return Color.FromArgb(
+                (int)(c1.R + (c2.R - c1.R) * t),
+                (int)(c1.G + (c2.G - c1.G) * t),
+                (int)(c1.B + (c2.B - c1.B) * t));
+        }
+
         public static string GetTemperatureColor(double temperature)
         {
             return MapValueToColorGradient(temperature, minTemperaturePossible, maxTemperaturePossible, TemperatureColorRanges, 0.3);
@@ -269,19 +344,21 @@ namespace WeatherApp.Helpers
             return MapValueToColorGradient(humidity, minHumidityPossible, maxHumidityPossible, HumidityColorRanges, 1);
         }
 
+        public static string GetPrecipProbColor(double prob)
+        {
+            return MapValueToColorGradient(prob, minPrecipProbPossible, maxPrecipProbPossible, PrecipProbColorRanges, 1);
+        }
+
         public static string GetUvColor(double uv)
         {
             return MapValueToColorGradient(uv, minUvPossible, maxUvPossible, UvColorRanges, 1);
         }
 
-        private static Color InterpolateColor(Color c1, Color c2, double t)
+        public static string GetCloudCoverColor(double uv)
         {
-            return Color.FromArgb(
-                (int)(c1.R + (c2.R - c1.R) * t),
-                (int)(c1.G + (c2.G - c1.G) * t),
-                (int)(c1.B + (c2.B - c1.B) * t));
+            return MapValueToColorGradient(uv, minCloudCoverPossible, maxCloudCoverPossible, CloudCoverColorRanges, 1);
         }
     }
 
-    public record WeatherSvgPair(string Condition, string? Precipitation = "none");
+    public record WeatherConditionSvgPair(string Clouds, string? Precipitation = "none");
 }

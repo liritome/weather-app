@@ -37,17 +37,17 @@
         <div class="d-grid gap-2 pb-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
             @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
             {
-                WeatherSvgPair weatherSvgPair = WeatherHelper.GetWeatherSvg(hourlyWeather.Code[hour]);
+                WeatherConditionSvgPair weatherPair = WeatherHelper.GetWeatherSvgPair(hourlyWeather.Code[hour]);
                 var time = hourlyWeather.Time[hour];
                 bool isDay = time >= sunrise && time <= sunset;
 
                 <div class="text-center">
                     <div title="@hourlyWeather.WeatherDescription[hour]">
                         <div>
-                            <img src="~/svg/weather/@($"{weatherSvgPair.Condition} {(isDay ? "d" : "n")}").svg" width="50" />
+                            <img src="~/svg/weather/@($"{weatherPair.Clouds} {(isDay ? "d" : "n")}").svg" width="50" />
                         </div>
                         <div>
-                            <img src="~/svg/weather/@(weatherSvgPair.Precipitation).svg" width="32" />
+                            <img src="~/svg/weather/@(weatherPair.Precipitation).svg" width="32" />
                         </div>
                     </div>
                 </div>
@@ -112,11 +112,11 @@
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
                 @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
-                    double wind = hourlyWeather.WindGusts[hour];
-                    string windColor = WeatherHelper.GetWindColor(wind);
+                    double windGusts = hourlyWeather.WindGusts[hour];
+                    string windColor = WeatherHelper.GetWindColor(windGusts);
 
                     <div class="text-center" style="font-size: 20px; background: linear-gradient(to right, white, @windColor); transform: skew(-12deg);">
-                        <span>@hourlyWeather.WindGusts[hour]</span>
+                        <span>@windGusts</span>
                     </div>
                 }
             </div>
@@ -126,8 +126,10 @@
             <div class="d-grid gap-2" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
                 @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
                 {
+                    var precipProb = hourlyWeather.PrecipitationProbability[hour];
+                    var precipProbTextColor = WeatherHelper.GetPrecipProbColor(precipProb);
                     <div class="text-center" style="font-size: 20px;">
-                        <span>@hourlyWeather.PrecipitationProbability[hour]</span>
+                        <span style="color: @(precipProbTextColor)">@precipProb</span>
                     </div>
                 }
             </div>
@@ -184,7 +186,7 @@
                     var humidity = hourlyWeather.Humidity[hour];
                     var humidityBoxColor = WeatherHelper.GetHumidityColor(humidity);
                     <div class="text-center" style="font-size: 20px; background-color: @humidityBoxColor;">
-                        <span>@hourlyWeather.Humidity[hour]</span>
+                        <span>@humidity</span>
                     </div>
                 }
             </div>
@@ -198,6 +200,19 @@
                     var uvBoxColor = WeatherHelper.GetUvColor(uv);
                     <div class="text-center" style="font-size: 20px; background-color: @uvBoxColor;">
                         <span>@uv</span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="pb-2">
+            <p class="px-2 my-1">Cloud cover</p>
+            <div class="d-grid" style="grid-template-columns: repeat(@itemsInRow, 1fr);">
+                @for (int hour = 0; hour < hourlyWeather.Time.Count; hour += hourStep)
+                {
+                    var cloudCover = hourlyWeather.CloudCover[hour];
+                    var cloudCoverColor = WeatherHelper.GetCloudCoverColor(cloudCover);
+                    <div class="text-center" style="font-size: 20px; background-color: @cloudCoverColor;">
+                        <span>@cloudCover</span>
                     </div>
                 }
             </div>

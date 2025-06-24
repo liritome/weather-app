@@ -19,12 +19,14 @@ namespace WeatherApp.Models
         public int Humidity { get; set; }
         [JsonPropertyName("cloud_cover")]
         public int CloudCover { get; set; }
-        [JsonPropertyName("surface_pressure")]
+        [JsonPropertyName("pressure_msl")]
         public double Pressure { get; set; }
         [JsonPropertyName("precipitation")]
         public double Precipitation { get; set; }
         [JsonPropertyName("wind_speed_10m")]
         public double WindSpeed { get; set; }
+        [JsonPropertyName("wind_gusts_10m")]
+        public double WindGusts { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public int WindDirectionDegree { get; set; }
 
@@ -35,7 +37,7 @@ namespace WeatherApp.Models
         [JsonConstructor]
         public CurrentWeatherData(DateTime time, int interval, int code, double temperature,
             double apparentTemperature, int humidity, int cloudCover, double pressure,
-            double precipitation, double windSpeed, int windDirectionDegree)
+            double precipitation, double windSpeed, double windGusts, int windDirectionDegree)
         {
             Time = time;
             Interval = interval;
@@ -48,6 +50,7 @@ namespace WeatherApp.Models
             Pressure = Math.Round(pressure * 0.75);
             Precipitation = precipitation;
             WindSpeed = Math.Round(windSpeed);
+            WindGusts = Math.Round(windGusts);
             WindDirectionDegree = windDirectionDegree;
         }
     }
@@ -74,6 +77,8 @@ namespace WeatherApp.Models
         public string Precipitation { get; set; }
         [JsonPropertyName("wind_speed_10m")]
         public string WindSpeed { get; set; }
+        [JsonPropertyName("wind_gusts_10m")]
+        public string WindGusts { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public string WindDirection { get; set; }
     }

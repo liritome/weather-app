@@ -19,7 +19,7 @@ namespace WeatherApp.Models
         public List<int> PrecipitationProbability { get; set; }
         [JsonPropertyName("precipitation")]
         public List<double> Precipitation { get; set; }
-        [JsonPropertyName("surface_pressure")]
+        [JsonPropertyName("pressure_msl")]
         public List<double> Pressure { get; set; }
         [JsonPropertyName("cloud_cover")]
         public List<int> CloudCover { get; set; }
