@@ -1,0 +1,38 @@
+﻿@using WeatherApp.Helpers
+@using WeatherApp.ViewModels
+
+@model WeatherApp.Models.OpenMeteoData
+
+@{
+    HourlyViewModel hourlyViewModel;
+    int daysCount = (int)(ViewData["Days"] ?? 0);
+    int hourStep = 1;
+    if (daysCount == 3) hourStep = 6;
+    else if (daysCount == 7) hourStep = 12;
+    hourlyViewModel = new HourlyViewModel
+            {
+                OpenMeteoData = Model,
+                FirstDayOffset = 0,
+                HourStep = hourStep,
+                DaysCount = daysCount
+            };
+}
+
+<div class="container-fluid p-0" style="width: 944px;">
+    <div class="mt-2 mb-3" style="font-size: 24px">
+        <div class="p-0 d-flex justify-content-between">
+            <span>Weather for @ViewData["Days"] days</span>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
+                    <img src="/svg/arrow-left.svg" width="32" height="16" />
+                </button>
+                <button type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
+                    <img src="/svg/arrow-right.svg" width="32" height="16" />
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="p-2 rounded bg-white mb-2">
+        <partial name="_Hourly" model="hourlyViewModel" />
+    </div>
+</div>

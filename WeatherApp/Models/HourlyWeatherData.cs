@@ -56,14 +56,15 @@ namespace WeatherApp.Models
             WindDirectionDegree = windDirectionDegree;
         }
 
-        public HourlyWeather GetHourlyWeatherByDate(DateTime dateTime)
+        public HourlyWeather GetHourlyWeatherByDate(DateTime dateTime, int days)
         {
+            int hours = days * 24;
             int index = Time.IndexOf(dateTime);
-            return new HourlyWeather(Time.GetRange(index, 24), Code.GetRange(index, 24), Temperature.GetRange(index, 24),
-                ApparentTemperature.GetRange(index, 24), Humidity.GetRange(index, 24), PrecipitationProbability.GetRange(index, 24),
-                Precipitation.GetRange(index, 24), Pressure.GetRange(index, 24), CloudCover.GetRange(index, 24),
-                UvIndex.GetRange(index, 24), WindSpeed.GetRange(index, 24), WindGusts.GetRange(index, 24), WindDirectionDegree.GetRange(index, 24),
-                WindDirection.GetRange(index, 24), WeatherDescription.GetRange(index, 24));
+            return new HourlyWeather(Time.GetRange(index, hours), Code.GetRange(index, hours), Temperature.GetRange(index, hours),
+                ApparentTemperature.GetRange(index, hours), Humidity.GetRange(index, hours), PrecipitationProbability.GetRange(index, hours),
+                Precipitation.GetRange(index, hours), Pressure.GetRange(index, hours), CloudCover.GetRange(index, hours),
+                UvIndex.GetRange(index, hours), WindSpeed.GetRange(index, hours), WindGusts.GetRange(index, hours), WindDirectionDegree.GetRange(index, hours),
+                WindDirection.GetRange(index, hours), WeatherDescription.GetRange(index, hours));
         }
     }
 

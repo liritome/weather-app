@@ -3,22 +3,22 @@
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    int dayNumber = (int)(ViewData["DayOffset"] ?? 0);
+    int dayOffset = (int)(ViewData["DayOffset"] ?? 0);
     DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
-    DateTime dayDate = currentLocalDate.AddDays(dayNumber).Date;
+    DateTime dayDate = currentLocalDate.AddDays(dayOffset).Date;
 
     var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffsetMap;
 
     int minDayIndex = dayLabelByOffsetDict.Keys.First();
     int maxDayIndex = dayLabelByOffsetDict.Keys.Last();
     int startDayIndex = -1;
-    if (dayNumber < minDayIndex + 1)
+    if (dayOffset < minDayIndex + 1)
     {
         startDayIndex = 0;
     }
-    if (dayNumber > maxDayIndex - 2)
+    if (dayOffset > maxDayIndex - 2)
     {
-        startDayIndex = maxDayIndex - 3 - dayNumber;
+        startDayIndex = maxDayIndex - 3 - dayOffset;
     }
     int endDayIndex = startDayIndex + 4;
 }
@@ -29,13 +29,13 @@
         var day = Model.DailyWeatherData.GetDailyWeatherByDate(dayDate.AddDays(i));
         var svgPair = WeatherHelper.GetWeatherSvgPair(day.Code);
 
-        <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@(dayNumber + i)" class="text-decoration-none text-black">
+        <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@(dayOffset + i)" class="text-decoration-none text-black">
             <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayOffset"] != null ? "active-day-tab" : "day-tab")">
                 <div class="d-flex justify-content-between h-100">
                     <div class="d-flex flex-column me-2">
                         <div style="height: 24px; font-size: 20px">@dayDate.AddDays(i).ToString("ddd, dd MMM")</div>
                         @{
-                            var dayIndex = dayNumber + i;
+                            var dayIndex = dayOffset + i;
                             var dayLabel = dayLabelByOffsetDict.ContainsKey(dayIndex) ? dayLabelByOffsetDict[dayIndex] : "";
                         }
                         <div class="text-secondary" style="height: 20px;">@dayLabel</div>

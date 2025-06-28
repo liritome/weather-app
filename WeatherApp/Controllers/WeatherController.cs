@@ -14,7 +14,7 @@ namespace WeatherApp.Controllers
 
         public async Task<IActionResult> Now(string city = "Krasylivka")
         {
-            ViewData["ActiveTab"] = "Now";
+            ViewData["ActiveTab"] = "now";
             ViewData["City"] = city;
             var data = await weatherService.GetOpenMeteoData(city);
             return View(data);
@@ -24,15 +24,33 @@ namespace WeatherApp.Controllers
         {
             ViewData["ActiveTab"] = day switch
             {
-                -1 => "Yesterday",
-                0 => "Today",
-                1 => "Tomorrow",
+                -1 => "yesterday",
+                0 => "today",
+                1 => "tomorrow",
                 _ => ""
             };
             ViewData["City"] = city;
             ViewData["DayOffset"] = day;
             var data = await weatherService.GetOpenMeteoData(city);
             return View(data);
+        }
+
+        public async Task<IActionResult> ThreeDays(string city = "Krasylivka")
+        {
+            ViewData["ActiveTab"] = "threeDays";
+            ViewData["City"] = city;
+            ViewData["Days"] = 3;
+            var data = await weatherService.GetOpenMeteoData(city);
+            return View(data);
+        }
+
+        public async Task<IActionResult> SevenDays(string city = "Krasylivka")
+        {
+            ViewData["ActiveTab"] = "sevenDays";
+            ViewData["City"] = city;
+            ViewData["Days"] = 7;
+            var data = await weatherService.GetOpenMeteoData(city);
+            return View("Daily", data);
         }
     }
 }

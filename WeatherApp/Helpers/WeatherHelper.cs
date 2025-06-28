@@ -237,9 +237,9 @@ namespace WeatherApp.Helpers
 
         public static readonly Dictionary<int, string> DayLabelByOffsetMap = new()
         {
-            { -1, "Yesterday" },
-            { 0, "Today" },
-            { 1, "Tomorrow" },
+            { -1, "yesterday" },
+            { 0, "today" },
+            { 1, "tomorrow" },
             { 2, "in 2 days" },
             { 3, "in 3 days" },
             { 4, "in 4 days" },

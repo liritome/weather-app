@@ -1,20 +1,29 @@
 ﻿@using WeatherApp.Helpers
+@using WeatherApp.ViewModels
 
 @model WeatherApp.Models.OpenMeteoData
 
 @{
     var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffsetMap;
-    int dayNumber = (int)(ViewData["DayOffset"] ?? 0);
+    int dayOffset = (int)(ViewData["DayOffset"] ?? 0);
     DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
-    DateTime dayDate = currentLocalDate.AddDays(dayNumber).Date;
+    DateTime dayDate = currentLocalDate.AddDays(dayOffset).Date;
+
+    var hourlyViewModel = new HourlyViewModel
+            {
+                OpenMeteoData = Model,
+                FirstDayOffset = dayOffset,
+                HourStep = 2,
+                DaysCount = 1
+            };
 }
 
 <div class="container-fluid p-0" style="width: 944px;">
     <div class="mt-2 mb-3" style="font-size: 24px">
         <div class="p-0">
-            @if (dayNumber <= 1 && dayNumber >= -1)
+            @if (dayOffset <= 1 && dayOffset >= -1)
             {
-                <span>Weather @dayLabelByOffsetDict[dayNumber]</span>
+                <span>Weather @dayLabelByOffsetDict[dayOffset]</span>
             }
             else
             {
@@ -23,5 +32,7 @@
         </div>
     </div>
     <partial name="_DayTabs" model="Model" />
-    <partial name="_Hourly" model="Model" />
+    <div class="p-2 rounded bg-white mb-2">
+        <partial name="_Hourly" model="hourlyViewModel" />
+    </div>
 </div>
