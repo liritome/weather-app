@@ -11,8 +11,6 @@ namespace WeatherApp.TagHelpers
         {
             string temperature = (Value > 0 ? "+" : "") + Value;
             output.TagName = "div";
-            output.Attributes.SetAttribute("class", output.Attributes["class"]?.Value ?? "");
-            output.Attributes.SetAttribute("style", output.Attributes["style"]?.Value ?? "");
             output.Content.SetContent(temperature);
         }
     }

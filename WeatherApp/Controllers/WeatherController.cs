@@ -39,7 +39,6 @@ namespace WeatherApp.Controllers
         {
             ViewData["ActiveTab"] = "threeDays";
             ViewData["City"] = city;
-            ViewData["Days"] = 3;
             var data = await weatherService.GetOpenMeteoData(city);
             return View(data);
         }

@@ -1,13 +1,126 @@
-﻿@using WeatherApp.Helpers
+﻿@using WeatherApp.Models
+@using WeatherApp.Helpers
 
 @model WeatherApp.Models.OpenMeteoData
 
-<div class="container-fluid p-0" style="width: 944px;">
+@{
+    DateTime currentLocalTime = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DailyWeather weatherToday = Model.DailyWeatherData.GetDailyWeatherByDate(currentLocalTime);
+
+    DateTime sunrise = weatherToday.Sunrise;
+    DateTime sunset = weatherToday.Sunset;
+    double sunAngle = WeatherHelper.GetSunAngle(currentLocalTime, sunrise, sunset);
+    bool isDay = currentLocalTime >= sunrise && currentLocalTime <= sunset;
+
+    CurrentWeatherData currentWeather = Model.CurrentWeatherData;
+    WeatherConditionSvgPair weatherConditionPair = WeatherHelper.GetWeatherSvgPair(currentWeather.Code);
+    string weatherImage = WeatherHelper.GetWeatherImage(currentWeather.Code);
+}
+
+<div class="container-fluid p-0" style="width: 1016px;">
     <div class="mt-2 mb-3" style="font-size: 24px">
         <div class="p-0">
             Weather now
         </div>
     </div>
+
     <partial name="_DayTabs" model="Model" />
-    <partial name="_Current" model="Model" />
+
+    <div class="p-2 rounded bg-white mb-2">
+        <div class="d-flex text-white text-center rounded overflow-hidden" style="background-image: url('/images/weather/@($"{weatherImage} {(isDay ? "d" : "n")}").jpg'); background-size: cover;">
+
+            <div class="p-3" style="width: 310px; background-color:rgba(0, 0, 0, 0.30);">
+                <div class="mb-2" style="font-size: 20px">
+                    @currentLocalTime.ToString("ddd, dd MMMM, HH:mm")
+                </div>
+                <div>
+                    <div>
+                        <img src="~/svg/weather/@($"{weatherConditionPair.Clouds} {(isDay ? "d" : "n")}").svg" width="100" />
+                    </div>
+                    <div>
+                        <img src="~/svg/weather/@(weatherConditionPair.Precipitation).svg" width="65" />
+                    </div>
+                </div>
+                <div class="d-flex flex-column justify-content-center" style="font-size: 24px; min-height: 75px;">@currentWeather.WeatherDescription</div>
+                <div class="d-flex flex-column gap-3 text-start">
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div style="font-size: 16px;">Wind</div>
+                        <div class="d-flex gap-1 align-items-end lh-1">
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.WindSpeed</div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">m/s</div>
+                            <div style="margin-bottom: 1.7px; width: fit-content;">
+                                <img src="~/svg/arrow.svg" width="25" style="transform: rotate(@(currentWeather.WindDirectionDegree)deg);" />
+                            </div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">@currentWeather.WindDirection</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div style="font-size: 16px;">Wind gusts</div>
+                        <div class="d-flex gap-1 align-items-end lh-1">
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.WindGusts</div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">m/s</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div style="font-size: 16px;">Pressure</div>
+                        <div class="d-flex gap-1 align-items-end lh-1">
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.Pressure</div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">mm Hg</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div style="font-size: 16px;">Humidity</div>
+                        <div class="d-flex gap-1 align-items-end lh-1">
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.Humidity</div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">%</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div style="font-size: 16px;">Precipitation</div>
+                        <div class="d-flex gap-1 align-items-end lh-1">
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.Precipitation</div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">mm</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div style="font-size: 16px;">Clouds</div>
+                        <div class="d-flex gap-1 align-items-end lh-1">
+                            <div style="font-size: 32px; font-weight: 500;">@currentWeather.CloudCover</div>
+                            <div style="font-size: 16px; margin-bottom: 1.7px;">%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="position-relative d-flex flex-column align-items-center flex-fill" style="background-color:rgba(0, 0, 0, 0.1);">
+                <div class="position-absolute d-flex gap-1 start-50" style="transform: translate(-50%, 22%)">
+                    <div class="d-flex flex-column justify-content-center">
+                        <div>@sunrise.ToString("HH:mm")</div>
+                        <div>
+                            <img src="~/svg/sunrise.svg" width="65" />
+                        </div>
+                    </div>
+                    <div>
+                        <div style="background-image: url('/svg/sun.svg'); background-size: 380px 380px; transform: rotate(@(sunAngle)deg); width: 380px; height: 380px;"></div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div>@sunset.ToString("HH:mm")</div>
+                        <div>
+                            <img src="~/svg/sunset.svg" width="65" />
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column justify-content-center flex-fill">
+                    <div>
+                        <div class="lh-1 mb-3" style="font-size: 120px; font-weight: 500; letter-spacing: -5px;">
+                            <temperature value="@currentWeather.Temperature"></temperature>
+                        </div>
+                        <div class="d-inline-flex py-1 px-2 rounded" style="font-size: 18px; background-color:rgba(255, 255, 255, 0.10);">
+                            Feels like&nbsp;
+                            <temperature value="@currentWeather.ApparentTemperature"></temperature>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
