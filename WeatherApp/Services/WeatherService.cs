@@ -38,7 +38,7 @@ namespace WeatherApp.Services
                 $"latitude={lat}" +
                 $"&longitude={lon}" +
                 $"&daily=sunrise,sunset,weather_code,temperature_2m_max,wind_speed_10m_max,temperature_2m_min,wind_direction_10m_dominant,uv_index_max,precipitation_sum" +
-                $"&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,pressure_msl,cloud_cover,wind_speed_10m,wind_direction_10m,uv_index,wind_gusts_10m" +
+                $"&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,pressure_msl,cloud_cover,wind_speed_10m,wind_direction_10m,uv_index,wind_gusts_10m,is_day" +
                 $"&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,cloud_cover,pressure_msl,precipitation,wind_speed_10m,wind_direction_10m,wind_gusts_10m" +
                 $"&timezone=auto" +
                 $"&past_days=1" +

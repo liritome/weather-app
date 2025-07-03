@@ -31,6 +31,8 @@ namespace WeatherApp.Models
         public List<double> WindGusts { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public List<int> WindDirectionDegree { get; set; }
+        [JsonPropertyName("is_day")]
+        public List<byte> IsDay { get; set; }
 
         public List<string> WindDirection => WindDirectionDegree.Select(t => WeatherHelper.GetWindDirection(t)).ToList();
 
@@ -38,7 +40,7 @@ namespace WeatherApp.Models
 
         public HourlyWeatherData(List<DateTime> time, List<double> temperature, List<int> humidity, List<double> apparentTemperature,
             List<int> precipitationProbability, List<double> precipitation, List<int> code, List<double> pressure,
-            List<int> cloudCover, List<double> windSpeed, List<double> windGusts, List<int> windDirectionDegree, List<double> uvIndex)
+            List<int> cloudCover, List<double> windSpeed, List<double> windGusts, List<int> windDirectionDegree, List<double> uvIndex, List<byte> isDay)
         {
             Time = time;
             Temperature = temperature.Select(t => Math.Round(t)).ToList();
@@ -54,6 +56,7 @@ namespace WeatherApp.Models
             WindSpeed = windSpeed.Select(t => Math.Round(t)).ToList();
             WindGusts = windGusts.Select(t => Math.Round(t)).ToList();
             WindDirectionDegree = windDirectionDegree;
+            IsDay = isDay;
         }
 
         public HourlyWeather GetHourlyWeatherByDate(DateTime dateTime, int days)
@@ -64,7 +67,7 @@ namespace WeatherApp.Models
                 ApparentTemperature.GetRange(index, hours), Humidity.GetRange(index, hours), PrecipitationProbability.GetRange(index, hours),
                 Precipitation.GetRange(index, hours), Pressure.GetRange(index, hours), CloudCover.GetRange(index, hours),
                 UvIndex.GetRange(index, hours), WindSpeed.GetRange(index, hours), WindGusts.GetRange(index, hours), WindDirectionDegree.GetRange(index, hours),
-                WindDirection.GetRange(index, hours), WeatherDescription.GetRange(index, hours));
+                WindDirection.GetRange(index, hours), WeatherDescription.GetRange(index, hours), IsDay.GetRange(index, hours));
         }
     }
 
@@ -96,6 +99,8 @@ namespace WeatherApp.Models
         public string WindGusts { get; set; }
         [JsonPropertyName("wind_direction_10m")]
         public string WindDirectionDegree { get; set; }
+        [JsonPropertyName("is_day")]
+        public string IsDay { get; set; }
     }
 
     public class HourlyWeather
@@ -115,12 +120,13 @@ namespace WeatherApp.Models
         public List<int> WindDirectionDegree { get; set; }
         public List<string> WindDirection { get; set; }
         public List<string> WeatherDescription { get; set; }
+        public List<byte> IsDay { get; set; }
 
         public HourlyWeather(List<DateTime> time, List<int> code, List<double> temperature,
             List<double> apparentTemperature, List<int> humidity, List<int> precipitationProbability,
             List<double> precipitation, List<double> pressure, List<int> cloudCover,
             List<double> uvIndex, List<double> windSpeed, List<double> windGusts, List<int> windDirectionDegree,
-            List<string> windDirection, List<string> weatherDescription)
+            List<string> windDirection, List<string> weatherDescription, List<byte> isDay)
         {
             Time = time;
             Code = code;
@@ -137,6 +143,7 @@ namespace WeatherApp.Models
             WindDirectionDegree = windDirectionDegree;
             WindDirection = windDirection;
             WeatherDescription = weatherDescription;
+            IsDay = isDay;
         }
     }
 }

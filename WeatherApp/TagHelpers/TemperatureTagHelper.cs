@@ -7,6 +7,7 @@ namespace WeatherApp.TagHelpers
     {
         [HtmlAttributeName("value")]
         public double Value { get; set; }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string temperature = (Value > 0 ? "+" : "") + Value;
