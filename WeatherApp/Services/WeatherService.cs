@@ -17,17 +17,22 @@ namespace WeatherApp.Services
 
         public async Task<OpenMeteoData> GetOpenMeteoData(string city)
         {
-            // Canberra
-            /*double lat = -36;
-            double lon = 147;*/
-
-            // New York
-            /*double lat = 40.59;
-            double lon = -73.97;*/
-
-            // Krasylivka
-            double lat = 50.51;
-            double lon = 30.91;
+            double lat = 0;
+            double lon = 0;
+            if(city == "Canberra")
+            {
+                lat = -36;
+                lon = 147;
+            }
+            else if(city == "New-York")
+            {
+                lat = 40.59;
+                lon = -73.97;
+            }
+            else if(city == "Krasylivka"){
+                lat = 50.51;
+                lon = 30.91;
+            }
 
             string url = $"https://api.open-meteo.com/v1/forecast?" +
                 $"latitude={lat}" +

@@ -18,11 +18,10 @@
                     <input class="form-control border-0" style="background-color:#ededed" type="text" placeholder="Search location" autocomplete="off" />
                 </div>
                 <div>
-                    <div class="d-flex gap-3 head-location-menu">
-                        <a class="location-active">Krasylivka</a>
-                        <a href="#">Brovary</a>
-                        <a href="#">Kyiv</a>
-                        <a href="#">New-York</a>
+                    <div class="d-flex gap-3 head-location-menu" id="locationLinks" data-active-city="@ViewData["City"]">
+                        <a asp-route-city="Krasylivka" id="Krasylivka">Krasylivka</a>
+                        <a asp-route-city="New-York" id="New-York">New-York</a>
+                        <a asp-route-city="Canberra" id="Canberra">Canberra</a>
                     </div>
                 </div>
             </div>
@@ -59,6 +58,14 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById("locationLinks");
+            const activeCity = container.dataset.activeCity;
+            const link = container.querySelector(`#${activeCity}`);
+            link.classList.add("location-active");
+        });
+    </script>
     @RenderSection("Scripts", false)
 </body>
 </html>

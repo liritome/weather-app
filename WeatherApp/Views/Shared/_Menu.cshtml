@@ -24,7 +24,7 @@
             <div>&nbsp;°C</div>
         </div>
         <div class="flex-grow-1"></div>
-        <div class="d-flex gap-4 head-link-menu" id="navLinks" data-activetab="@ViewData["ActiveTab"]">
+        <div class="d-flex gap-4 head-link-menu" id="navLinks" data-active-tab="@ViewData["ActiveTab"]">
             <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="-1" id="yesterday">Yesterday</a>
             <a asp-action="Now" asp-route-city="@ViewData["City"]" id="now">Now</a>
             <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="0" id="today">Today</a>
@@ -39,7 +39,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const container = document.getElementById("navLinks");
-        const activeTab = container.dataset.activetab;
+        const activeTab = container.dataset.activeTab;
         const link = container.querySelector(`#${activeTab}`);
         link.classList.add("link-active");
     });

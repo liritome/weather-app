@@ -12,7 +12,7 @@ namespace WeatherApp.Controllers
             this.weatherService = weatherService;
         }
 
-        public async Task<IActionResult> Now(string city = "Krasylivka")
+        public async Task<IActionResult> Now(string city)
         {
             ViewData["ActiveTab"] = "now";
             ViewData["City"] = city;
@@ -20,7 +20,7 @@ namespace WeatherApp.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> Day(string city = "Krasylivka", int day = 0)
+        public async Task<IActionResult> Day(string city, int day = 0)
         {
             ViewData["ActiveTab"] = day switch
             {
@@ -35,7 +35,7 @@ namespace WeatherApp.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> ThreeDays(string city = "Krasylivka")
+        public async Task<IActionResult> ThreeDays(string city)
         {
             ViewData["ActiveTab"] = "threeDays";
             ViewData["City"] = city;
@@ -43,7 +43,7 @@ namespace WeatherApp.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> SevenDays(string city = "Krasylivka")
+        public async Task<IActionResult> SevenDays(string city)
         {
             ViewData["ActiveTab"] = "sevenDays";
             ViewData["City"] = city;
