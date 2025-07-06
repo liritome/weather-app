@@ -30,10 +30,6 @@ namespace WeatherApp.Models
         [JsonPropertyName("wind_direction_10m")]
         public int WindDirectionDegree { get; set; }
 
-        public string WindDirection => WeatherHelper.GetWindDirection(WindDirectionDegree);
-
-        public string WeatherDescription => WeatherHelper.GetWeatherDescription(Code);
-
         [JsonConstructor]
         public CurrentWeatherData(DateTime time, int interval, int code, double temperature,
             double apparentTemperature, int humidity, int cloudCover, double pressure,

@@ -43,47 +43,15 @@
                 <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" current-local-date="currentLocalDate" day-date="dayDate"></time-grid>
             </div>
             <div class="pt-2">
-                <icon-grid data="hourlyWeather.Code" is-day="hourlyWeather.IsDay" description="hourlyWeather.WeatherDescription" step="hourStep" item-width="itemWidth"></icon-grid>
+                <icon-grid data="hourlyWeather.Code" step="hourStep" item-width="itemWidth" is-day="hourlyWeather.IsDay"></icon-grid>
             </div>
             <div class="pt-2">
                 <p class="px-2 my-1">Air temperature, °C</p>
-                @{
-                    double minTemp = hourlyWeather.Temperature.Min();
-                    double maxTemp = hourlyWeather.Temperature.Max();
-                    double tempDifferenceDay = maxTemp - minTemp;
-                    int tempBoxHeight = 30;
-                }
-                <div class="d-grid" style="grid-template-columns: repeat(@itemsTotal, 1fr); height: @(tempBoxHeight + tempDifferenceDay * 2)px">
-                    @for (int hour = 0; hour < hours; hour += hourStep)
-                    {
-                        <div class="position-relative">
-                            @{
-                                double temp = hourlyWeather.Temperature[hour];
-                                int positionFromTop = (int)(maxTemp - temp) * 2;
-                                string tempBoxColor = WeatherHelper.GetTemperatureColor(temp);
-                            }
-                            <div class="position-absolute w-100 text-center" style="background-color: @tempBoxColor; font-size: 20px; height: @(tempBoxHeight)px; top: @(positionFromTop)px;">
-                                <temperature value="@temp"></temperature>
-                            </div>
-                        </div>
-                    }
-                </div>
+                <temperature-grid data="hourlyWeather.Temperature" step="hourStep" item-width="itemWidth"></temperature-grid>
             </div>
             <div class="pt-2">
                 <p class="px-2 my-1">Wind direction</p>
-                <div class="d-grid " style="grid-template-columns: repeat(@itemsTotal, 1fr);">
-                    @for (int hour = 0; hour < hours; hour += hourStep)
-                    {
-                        <div class="text-center">
-                            <div>
-                                <img src="/svg/arrow-gray.svg" width="25" style="transform: rotate(@(hourlyWeather.WindDirectionDegree[hour])deg);" />
-                            </div>
-                            <div style="font-size: 14px;">
-                                <span>@hourlyWeather.WindDirection[hour]</span>
-                            </div>
-                        </div>
-                    }
-                </div>
+                <wind-direction-grid data="hourlyWeather.WindDirectionDegree" step="hourStep" item-width="itemWidth"></wind-direction-grid>
             </div>
             <div class="pt-2">
                 <p class="px-2 my-1">Wind speed, m/s</p>

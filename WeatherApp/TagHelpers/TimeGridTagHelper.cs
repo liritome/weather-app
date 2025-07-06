@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.VisualBasic;
 using System.Text;
-using WeatherApp.Models;
 
 namespace WeatherApp.TagHelpers
 {
@@ -9,7 +7,7 @@ namespace WeatherApp.TagHelpers
     public class TimeGridTagHelper : TagHelper
     {
         [HtmlAttributeName("data")]
-        public List<DateTime> Times { get; set; }
+        public List<DateTime> Time { get; set; }
 
         [HtmlAttributeName("step")]
         public int Step { get; set; }
@@ -27,14 +25,14 @@ namespace WeatherApp.TagHelpers
         {
             output.TagName = "div";
             output.Attributes.SetAttribute("class", "d-grid");
-            int hours = Times.Count;
+            int hours = Time.Count;
             int itemsTotal = (int)Math.Ceiling(hours / (double)Step);
             output.Attributes.SetAttribute("style", $"grid-template-columns: repeat({itemsTotal}, {ItemWidth}px);");
 
             var content = new StringBuilder();
             for (int hour = 0; hour < hours; hour += Step)
             {
-                var time = Times[hour];
+                var time = Time[hour];
                 var backgroundColor = CurrentLocalDate > DayDate.AddHours(hour) ? "#ededed" : "transparent";
                 content.Append($@"
                     <div class=""text-center"" style=""background-color:{backgroundColor}"">

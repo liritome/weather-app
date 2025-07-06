@@ -11,7 +11,7 @@ namespace WeatherApp.TagHelpers
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string temperature = (Value > 0 ? "+" : "") + Value;
-            output.TagName = "div";
+            output.TagName = "span";
             output.Content.SetContent(temperature);
         }
     }

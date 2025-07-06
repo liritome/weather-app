@@ -11,6 +11,7 @@
     DateTime sunrise = weatherToday.Sunrise;
     DateTime sunset = weatherToday.Sunset;
     bool isDay = currentLocalTime >= sunrise && currentLocalTime <= sunset;
+    string weatherDescription = WeatherHelper.GetWeatherDescription(currentWeather.Code);
 }
 
 <div class="mb-2 rounded-bottom-3 overflow-hidden" style="height: 130px; background-image: url('/images/weather/@($"{weatherImage} {(isDay ? "d" : "n")}").jpg'); background-size: cover; background-position: 0px -400px">
@@ -19,7 +20,7 @@
             <a href="#">Ukraine</a> / <a href="#">Kyiv oblast</a> / <a href="#">Brovary raion</a>
         </div>
         <div class="d-flex fw-bold" style="font-size: 24px">
-            <div>@currentWeather.WeatherDescription in @ViewData["City"],&nbsp;</div>
+            <div>@weatherDescription in @ViewData["City"],&nbsp;</div>
             <temperature value="@currentWeather.Temperature"></temperature>
             <div>&nbsp;°C</div>
         </div>
