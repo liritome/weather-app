@@ -19,6 +19,8 @@
 
     double parentWidth = 1000;
     double itemWidth = parentWidth / itemsTotal;
+
+    List<(int, byte)> iconData = hourlyWeather.Code.Zip(hourlyWeather.IsDay, (c, d) => (c, d)).ToList();
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -43,7 +45,7 @@
                 <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" current-local-date="currentLocalDate" day-date="dayDate"></time-grid>
             </div>
             <div class="pt-2">
-                <icon-grid data="hourlyWeather.Code" step="hourStep" item-width="itemWidth" is-day="hourlyWeather.IsDay"></icon-grid>
+                <icon-grid data="iconData" step="hourStep" item-width="itemWidth"></icon-grid>
             </div>
             <div class="pt-2">
                 <p class="px-2 my-1">Air temperature, °C</p>
