@@ -1,0 +1,131 @@
+﻿@using WeatherApp.Helpers
+@using WeatherApp.Models
+
+@model WeatherApp.Models.OpenMeteoData
+
+@{
+    var openMeteoData = Model;
+
+    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
+    DateTime dayDate = currentLocalDate.Date;
+
+    int days = 14;
+    int daysVisible = 3;
+    HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(dayDate, days);
+
+    int hourStep = 4;
+    int hours = days * 24;
+    double parentWidth = 1000;
+    double dayWidth = parentWidth / (double)daysVisible;
+    int itemsTotal = (int)Math.Ceiling(24.0 / hourStep) * days;
+    int itemsPerDay = itemsTotal / days;
+    double itemWidth = dayWidth / itemsPerDay;
+
+    List<(int, byte)> iconData = hourlyWeather.Code.Zip(hourlyWeather.IsDay, (c, d) => (c, d)).ToList();
+
+}
+
+<div class="container-fluid p-0" style="width: 1016px;">
+    <div class="mt-2 mb-3" style="font-size: 24px">
+        <div class="p-0 d-flex justify-content-between">
+            <span>Weather for 3 days</span>
+            <div class="d-flex gap-2">
+                <button id="btnLeft" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
+                    <img src="/svg/arrow-left.svg" width="32" height="16" />
+                </button>
+                <button id="btnRight" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
+                    <img src="/svg/arrow-right.svg" width="32" height="16" />
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="p-2 rounded bg-white mb-2">
+        <div id="grid-container" data-days="@days" data-day-width="@dayWidth" data-days-visible="@daysVisible" class="position-relative overflow-hidden">
+            <div class="position-absolute" style="left: 33.33%; transform: translateX(-50%); z-index: 9999;">
+                <img src="/svg/divider.svg" height="1200" />
+            </div>
+            <div class="position-absolute" style="left: 66.66%; transform: translateX(-50%); z-index: 9999;">
+                <img src="/svg/divider.svg" height="1200" />
+            </div>
+            <div class="slider d-grid" style="grid-template-columns: repeat(@days, @(dayWidth + "px"));">
+                @for (int day = 0; day < days; day++)
+                {
+                    var date = dayDate.AddDays(day);
+                    <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@day" class="text-decoration-none text-black">
+                        <div class="ps-2" style="font-size: 18px;">
+                            <date date="@date" format="dayWeekdayMonthLong"></date>
+                        </div>
+                    </a>
+                }
+            </div>
+            <div class="slider pt-2">
+                <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" current-local-date="currentLocalDate" day-date="dayDate"></time-grid>
+            </div>
+            <div class="slider pt-2">
+                <icon-grid data="iconData" step="hourStep" item-width="itemWidth" width="50"></icon-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Air temperature, °C</p>
+                <div class="slider">
+                    <temperature-grid data="hourlyWeather.Temperature" step="hourStep" item-width="itemWidth"></temperature-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind direction</p>
+                <div class="slider">
+                    <wind-direction-grid data="hourlyWeather.WindDirectionDegree" step="hourStep" item-width="itemWidth"></wind-direction-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind speed, m/s</p>
+                <div class="slider">
+                    <wind-grid data="hourlyWeather.WindSpeed" step="hourStep" item-width="itemWidth"></wind-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind gusts, m/s</p>
+                <div class="slider">
+                    <wind-grid data="hourlyWeather.WindGusts" step="hourStep" item-width="itemWidth"></wind-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Precipitation probability, %</p>
+                <div class="slider">
+                    <precip-probab-grid data="hourlyWeather.PrecipitationProbability" step="hourStep" item-width="itemWidth"></precip-probab-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Precipitation, mm</p>
+                <div class="slider">
+                    <precipitation-grid data="hourlyWeather.Precipitation" step="hourStep" item-width="itemWidth"></precipitation-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Pressure, mmhg</p>
+                <div class="slider">
+                    <pressure-grid data="hourlyWeather.Pressure" step="hourStep" item-width="itemWidth"></pressure-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Humidity, %</p>
+                <div class="slider">
+                    <humidity-grid data="hourlyWeather.Humidity" step="hourStep" item-width="itemWidth"></humidity-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">UV index</p>
+                <div class="slider">
+                    <uv-index-grid data="hourlyWeather.UvIndex" step="hourStep" item-width="itemWidth"></uv-index-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Cloud cover</p>
+                <div class="slider">
+                    <cloud-cover-grid data="hourlyWeather.CloudCover" step="hourStep" item-width="itemWidth"></cloud-cover-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/slider-controller.js" asp-append-version="true"></script>

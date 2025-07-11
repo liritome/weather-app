@@ -1,0 +1,92 @@
+﻿@using WeatherApp.Helpers
+@using WeatherApp.Models
+
+@model WeatherApp.Models.OpenMeteoData
+
+@{
+    var openMeteoData = Model;
+
+    int dayOffset = (int)(ViewData["DayOffset"] ?? 0);
+    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DateTime dayDate = currentLocalDate.AddDays(dayOffset).Date;
+
+    int days = 1;
+    HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(dayDate, days);
+
+    int hourStep = 2;
+    int hours = days * 24;
+    int itemsTotal = (int)Math.Ceiling(24.0 / hourStep) * days;
+
+    double parentWidth = 1000;
+    double itemWidth = parentWidth / itemsTotal;
+
+    List<(int, byte)> iconData = hourlyWeather.Code.Zip(hourlyWeather.IsDay, (c, d) => (c, d)).ToList();
+}
+
+<div class="container-fluid p-0" style="width: 1016px;">
+    <div class="mt-2 mb-3" style="font-size: 24px">
+        <div class="p-0">
+            @if (dayOffset <= 1 && dayOffset >= -1)
+            {
+                <span>Weather @WeatherHelper.DayLabelByOffsetMap[dayOffset]</span>
+            }
+            else
+            {
+                <span>Weather @dayDate.ToString("dd MMM")</span>
+            }
+        </div>
+    </div>
+
+    <partial name="_DayTabs" model="openMeteoData" />
+
+    <div class="p-2 rounded bg-white mb-2">
+        <div class="position-relative">
+            <div>
+                <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" current-local-date="currentLocalDate" day-date="dayDate"></time-grid>
+            </div>
+            <div class="pt-2">
+                <icon-grid data="iconData" step="hourStep" item-width="itemWidth" width="50"></icon-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Air temperature, °C</p>
+                <temperature-grid data="hourlyWeather.Temperature" step="hourStep" item-width="itemWidth"></temperature-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind direction</p>
+                <wind-direction-grid data="hourlyWeather.WindDirectionDegree" step="hourStep" item-width="itemWidth"></wind-direction-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind speed, m/s</p>
+                <wind-grid data="hourlyWeather.WindSpeed" step="hourStep" item-width="itemWidth"></wind-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind gusts, m/s</p>
+                <wind-grid data="hourlyWeather.WindGusts" step="hourStep" item-width="itemWidth"></wind-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Precipitation probability, %</p>
+                <precip-probab-grid data="hourlyWeather.PrecipitationProbability" step="hourStep" item-width="itemWidth"></precip-probab-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Precipitation, mm</p>
+                <precipitation-grid data="hourlyWeather.Precipitation" step="hourStep" item-width="itemWidth"></precipitation-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Pressure, mmhg</p>
+                <pressure-grid data="hourlyWeather.Pressure" step="hourStep" item-width="itemWidth"></pressure-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Humidity, %</p>
+                <humidity-grid data="hourlyWeather.Humidity" step="hourStep" item-width="itemWidth"></humidity-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">UV index</p>
+                <uv-index-grid data="hourlyWeather.UvIndex" step="hourStep" item-width="itemWidth"></uv-index-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Cloud cover</p>
+                <cloud-cover-grid data="hourlyWeather.CloudCover" step="hourStep" item-width="itemWidth"></cloud-cover-grid>
+            </div>
+        </div>
+    </div>
+</div>

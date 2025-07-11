@@ -1,0 +1,74 @@
+﻿.head-location-menu a {
+    text-decoration: none;
+    color: black;
+    opacity: 0.6;
+}
+
+    .head-location-menu a:hover {
+        color: black;
+        opacity: 1;
+    }
+
+.head-location-menu .location-active {
+    opacity: 1;
+    pointer-events: none;
+    cursor: default;
+}
+
+.dropdown-toggle:focus,
+.dropdown-toggle:active,
+.dropdown-toggle.show {
+    border-color: transparent !important;
+}
+
+.dropdown-menu {
+    --bs-dropdown-min-width: 60px;
+}
+
+    .dropdown-menu .dropdown-item:active,
+    .dropdown-menu .dropdown-item.active,
+    .dropdown-menu .dropdown-item:focus {
+        background-color: #ededed;
+        color: black;
+    }
+
+.head-link-menu a {
+    text-decoration: none;
+    color: white;
+    opacity: 1;
+}
+
+    .head-link-menu a:hover {
+        opacity: 0.6;
+    }
+
+.head-link-menu .link-active {
+    opacity: 1;
+    pointer-events: none;
+    cursor: default;
+}
+
+.day-tab {
+    transition: box-shadow 0.2s ease;
+    width: 248px;
+    height: 120px;
+}
+
+    .day-tab:hover {
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+    }
+
+.active-day-tab {
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 16px !important;
+    width: 248px;
+    height: 128px;
+    position: relative;
+}
+
+img {
+    user-select: none;
+    -webkit-user-drag: none;
+}

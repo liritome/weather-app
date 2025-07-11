@@ -1,0 +1,119 @@
+﻿@using WeatherApp.Helpers
+@using WeatherApp.Models
+
+@model WeatherApp.Models.OpenMeteoData
+
+@{
+    var openMeteoData = Model;
+
+    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
+    DateTime dayDate = currentLocalDate.Date;
+
+    int days = 14;
+    int dayStep = 1;
+    int daysVisible = 12;
+    DailyWeather dailyWeather = openMeteoData.DailyWeatherData.GetDailyWeather(dayDate, days);
+
+    double parentWidth = 1000;
+    double dayWidth = parentWidth / (double)daysVisible;
+
+    List<(int, byte)> iconData = dailyWeather.Code.Zip(Enumerable.Repeat((byte)1, 14), (c, d) => (c, d)).ToList();
+    List<(double, double)> minmaxTempData = dailyWeather.TemperatureMin.Zip(dailyWeather.TemperatureMax, (n, x) => (n, x)).ToList();
+
+}
+
+<div class="container-fluid p-0" style="width: 1016px;">
+    <div class="mt-2 mb-3" style="font-size: 24px">
+        <div class="p-0 d-flex justify-content-between">
+            <span>Weather for 3 days</span>
+            <div class="d-flex gap-2">
+                <button id="btnLeft" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
+                    <img src="/svg/arrow-left.svg" width="32" height="16" />
+                </button>
+                <button id="btnRight" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
+                    <img src="/svg/arrow-right.svg" width="32" height="16" />
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="p-2 rounded bg-white mb-2">
+        <div id="grid-container" data-days="@days" data-day-width="@dayWidth" data-days-visible="@daysVisible" class="position-relative overflow-hidden">
+            <div class="slider d-grid" style="grid-template-columns: repeat(@days, @(dayWidth + "px"));">
+                @for (int day = 0; day < days; day++)
+                {
+                    var date = dayDate.AddDays(day);
+                    <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@day" class="text-decoration-none text-black">
+                        <div class="text-center" style="font-size: 18px;">
+                            <date date="date" format="dayWeekday"></date>
+                        </div>
+                    </a>
+                }
+            </div>
+            <div class="slider pt-2">
+                <icon-grid data="iconData" step="dayStep" item-width="dayWidth" width="50"></icon-grid>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Air temperature, °C</p>
+                <div class="slider">
+                    <min-max-temperature-grid data="minmaxTempData" step="dayStep" item-width="dayWidth"></min-max-temperature-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind direction</p>
+                <div class="slider">
+                    <wind-direction-grid data="dailyWeather.WindDirectionDegreeDominant" step="dayStep" item-width="dayWidth"></wind-direction-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind speed, m/s</p>
+                <div class="slider">
+                    <wind-grid data="dailyWeather.WindSpeedMax" step="dayStep" item-width="dayWidth"></wind-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Wind gusts, m/s</p>
+                <div class="slider">
+                    <wind-grid data="dailyWeather.WindGustsMax" step="dayStep" item-width="dayWidth"></wind-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Precipitation probability, %</p>
+                <div class="slider">
+                    <precip-probab-grid data="dailyWeather.PrecipitationProbabilityMax" step="dayStep" item-width="dayWidth"></precip-probab-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Precipitation, mm</p>
+                <div class="slider">
+                    <precipitation-grid data="dailyWeather.PrecipitationSum" step="dayStep" item-width="dayWidth"></precipitation-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Pressure, mmhg</p>
+                <div class="slider">
+                    <pressure-grid data="dailyWeather.PressureMax" step="dayStep" item-width="dayWidth"></pressure-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Humidity, %</p>
+                <div class="slider">
+                    <humidity-grid data="dailyWeather.Humidity" step="dayStep" item-width="dayWidth"></humidity-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">UV index</p>
+                <div class="slider">
+                    <uv-index-grid data="dailyWeather.UvIndexMax" step="dayStep" item-width="dayWidth"></uv-index-grid>
+                </div>
+            </div>
+            <div class="pt-2">
+                <p class="px-2 my-1">Cloud cover</p>
+                <div class="slider">
+                    <cloud-cover-grid data="dailyWeather.CloudCover" step="dayStep" item-width="dayWidth"></cloud-cover-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/slider-controller.js" asp-append-version="true"></script>
