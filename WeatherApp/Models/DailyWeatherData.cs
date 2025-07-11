@@ -107,7 +107,7 @@ namespace WeatherApp.Models
                 Humidity.GetRange(index, days),
                 CloudCover.GetRange(index, days)
             );
-        }
+    }
     }
 
     public class DailyWeatherUnits

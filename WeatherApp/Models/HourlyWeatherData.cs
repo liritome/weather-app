@@ -47,6 +47,8 @@ namespace WeatherApp.Models
         [JsonPropertyName("is_day")]
         public List<byte> IsDay { get; set; }
 
+        public List<string> WeatherDescription => Code.Select(t => WeatherHelper.GetWeatherDescription(t)).ToList();
+
         public HourlyWeatherData(List<DateTime> time, List<double> temperature, List<int> humidity, List<double> apparentTemperature,
             List<int> precipitationProbability, List<double> precipitation, List<int> code, List<double> pressure,
             List<int> cloudCover, List<double> windSpeed, List<double> windGusts, List<int> windDirectionDegree, List<double> uvIndex, List<byte> isDay)

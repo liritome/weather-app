@@ -43,7 +43,6 @@ namespace WeatherApp.Controllers
             return View(data);
         }
 
-        // todo: daily temperature and pressure tag helpers with min-max values
         public async Task<IActionResult> SevenDays(string city)
         {
             ViewData["ActiveTab"] = "sevenDays";
