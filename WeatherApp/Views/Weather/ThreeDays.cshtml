@@ -16,6 +16,7 @@
     int hourStep = 4;
     int hours = days * 24;
     double parentWidth = 1000;
+    double dayWidth = parentWidth / (double)daysVisible;
     int itemsTotal = (int)Math.Ceiling(24.0 / hourStep) * days;
     int itemsPerDay = itemsTotal / days;
     double itemWidth = dayWidth / itemsPerDay;
@@ -29,33 +30,39 @@
         <div class="p-0 d-flex justify-content-between">
             <span>Weather for 3 days</span>
             <div class="d-flex gap-2">
+                <button id="btnLeft" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
                     <img src="/svg/arrow-left.svg" width="32" height="16" />
                 </button>
+                <button id="btnRight" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
                     <img src="/svg/arrow-right.svg" width="32" height="16" />
                 </button>
             </div>
         </div>
     </div>
     <div class="p-2 rounded bg-white mb-2">
+        <div id="grid-container" data-days="@days" data-day-width="@dayWidth" data-days-visible="@daysVisible" class="position-relative overflow-hidden">
             <div class="position-absolute" style="left: 33.33%; transform: translateX(-50%); z-index: 9999;">
                 <img src="/svg/divider.svg" height="1200" />
             </div>
             <div class="position-absolute" style="left: 66.66%; transform: translateX(-50%); z-index: 9999;">
                 <img src="/svg/divider.svg" height="1200" />
             </div>
+            <div class="slider d-grid" style="grid-template-columns: repeat(@days, @(dayWidth + "px"));">
                 @for (int day = 0; day < days; day++)
                 {
                     var date = dayDate.AddDays(day);
                     <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@day" class="text-decoration-none text-black">
-                    <div class="ps-2" style="font-size: 18px;">
-                        <date date="@date" format="dayWeekdayMonthLong"></date>
-                    </div>
+                        <div class="ps-2" style="font-size: 18px;">
+                            <date date="@date" format="dayWeekdayMonthLong"></date>
+                        </div>
                     </a>
                 }
             </div>
+            <div class="slider pt-2">
                 <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" current-local-date="currentLocalDate" day-date="dayDate"></time-grid>
             </div>
             <div class="slider pt-2">
+                <icon-grid data="iconData" step="hourStep" item-width="itemWidth" width="50"></icon-grid>
             </div>
             <div class="pt-2">
                 <p class="px-2 my-1">Air temperature, °C</p>
@@ -121,3 +128,4 @@
     </div>
 </div>
 
+<script src="/js/slider-controller.js" asp-append-version="true"></script>
