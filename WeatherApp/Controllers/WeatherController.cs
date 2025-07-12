@@ -35,6 +35,14 @@ namespace WeatherApp.Controllers
             return View(data);
         }
 
+        public async Task<IActionResult> Hourly(string city)
+        {
+            ViewData["ActiveTab"] = "hourly";
+            ViewData["City"] = city;
+            var data = await weatherService.GetOpenMeteoData(city);
+            return View(data);
+        }
+
         public async Task<IActionResult> ThreeDays(string city)
         {
             ViewData["ActiveTab"] = "threeDays";

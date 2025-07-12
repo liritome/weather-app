@@ -70,10 +70,9 @@ namespace WeatherApp.Models
             IsDay = isDay;
         }
 
-        public HourlyWeather GetHourlyWeatherByDate(DateTime dateTime, int days)
+        public HourlyWeather GetHourlyWeatherByDate(DateTime dateTime, int hours)
         {
-            int hours = days * 24;
-            int index = Time.IndexOf(dateTime);
+            int index = Time.IndexOf(dateTime.Date.AddHours(dateTime.Hour));
             return new HourlyWeather(
                 Time.GetRange(index, hours),
                 Code.GetRange(index, hours),

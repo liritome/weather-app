@@ -4,13 +4,13 @@
 @model WeatherApp.Models.OpenMeteoData
 
 @{
-    DateTime currentLocalTime = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
-    SingleDayWeather weatherToday = Model.DailyWeatherData.GetSingleDayWeather(currentLocalTime);
+    DateTime localNow = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    SingleDayWeather weatherToday = Model.DailyWeatherData.GetSingleDayWeather(localNow);
 
     DateTime sunrise = weatherToday.Sunrise;
     DateTime sunset = weatherToday.Sunset;
-    double sunAngle = WeatherHelper.GetSunAngle(currentLocalTime, sunrise, sunset);
-    bool isDay = currentLocalTime >= sunrise && currentLocalTime <= sunset;
+    double sunAngle = WeatherHelper.GetSunAngle(localNow, sunrise, sunset);
+    bool isDay = localNow >= sunrise && localNow <= sunset;
 
     CurrentWeatherData currentWeather = Model.CurrentWeatherData;
     WeatherConditionSvgPair weatherConditionPair = WeatherHelper.GetWeatherSvgPair(currentWeather.Code);
@@ -34,7 +34,7 @@
 
             <div class="p-3" style="width: 310px; background-color:rgba(0, 0, 0, 0.30);">
                 <div class="mb-2" style="font-size: 20px">
-                    @currentLocalTime.ToString("ddd, dd MMMM, HH:mm")
+                    @localNow.ToString("ddd, dd MMMM, HH:mm")
                 </div>
                 <div>
                     <div>

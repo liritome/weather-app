@@ -6,15 +6,15 @@
 @{
     var openMeteoData = Model;
 
-    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
-    DateTime dayDate = currentLocalDate.Date;
+    DateTime localNow = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
+    DateTime dayDate = localNow.Date;
 
     int days = 14;
+    int hours = days * 24;
     int daysVisible = 3;
-    HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(dayDate, days);
+    HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(dayDate, hours);
 
     int hourStep = 4;
-    int hours = days * 24;
     double parentWidth = 1000;
     double dayWidth = parentWidth / (double)daysVisible;
     int itemsTotal = (int)Math.Ceiling(24.0 / hourStep) * days;
@@ -22,7 +22,6 @@
     double itemWidth = dayWidth / itemsPerDay;
 
     List<(int, byte)> iconData = hourlyWeather.Code.Zip(hourlyWeather.IsDay, (c, d) => (c, d)).ToList();
-
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -40,7 +39,7 @@
         </div>
     </div>
     <div class="p-2 rounded bg-white mb-2">
-        <div id="grid-container" data-days="@days" data-day-width="@dayWidth" data-days-visible="@daysVisible" class="position-relative overflow-hidden">
+        <div id="grid-container" data-items="@days" data-item-width="@dayWidth" data-items-visible="@daysVisible" data-step="1" class="position-relative overflow-hidden">
             <div class="position-absolute" style="left: 33.33%; transform: translateX(-50%); z-index: 9999;">
                 <img src="/svg/divider.svg" height="1200" />
             </div>
@@ -50,7 +49,7 @@
             <div class="slider d-grid" style="grid-template-columns: repeat(@days, @(dayWidth + "px"));">
                 @for (int day = 0; day < days; day++)
                 {
-                    var date = dayDate.AddDays(day);
+                    var date = localNow.AddDays(day);
                     <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@day" class="text-decoration-none text-black">
                         <div class="ps-2" style="font-size: 18px;">
                             <date date="@date" format="dayWeekdayMonthLong"></date>
@@ -59,7 +58,7 @@
                 }
             </div>
             <div class="slider pt-2">
-                <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" current-local-date="currentLocalDate" day-date="dayDate"></time-grid>
+                <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" local-now="localNow"></time-grid>
             </div>
             <div class="slider pt-2">
                 <icon-grid data="iconData" step="hourStep" item-width="itemWidth" width="50"></icon-grid>

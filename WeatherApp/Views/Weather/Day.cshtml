@@ -7,15 +7,14 @@
     var openMeteoData = Model;
 
     int dayOffset = (int)(ViewData["DayOffset"] ?? 0);
-    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
-    DateTime dayDate = currentLocalDate.AddDays(dayOffset).Date;
-
+    DateTime localNow = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DateTime dayDate = localNow.AddDays(dayOffset).Date;
     int days = 1;
-    HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(dayDate, days);
+    int hours = days * 24;
+    HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(dayDate, hours);
 
     int hourStep = 2;
-    int hours = days * 24;
-    int itemsTotal = (int)Math.Ceiling(24.0 / hourStep) * days;
+    int itemsTotal = (int)Math.Ceiling(hours / (double)hourStep) * days;
 
     double parentWidth = 1000;
     double itemWidth = parentWidth / itemsTotal;
@@ -32,7 +31,7 @@
             }
             else
             {
-                <span>Weather @dayDate.ToString("dd MMM")</span>
+                <span>Weather @localNow.ToString("dd MMM")</span>
             }
         </div>
     </div>
@@ -42,7 +41,7 @@
     <div class="p-2 rounded bg-white mb-2">
         <div class="position-relative">
             <div>
-                <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" current-local-date="currentLocalDate" day-date="dayDate"></time-grid>
+                <time-grid data="hourlyWeather.Time" step="hourStep" item-width="itemWidth" local-now="localNow"></time-grid>
             </div>
             <div class="pt-2">
                 <icon-grid data="iconData" step="hourStep" item-width="itemWidth" width="50"></icon-grid>

@@ -6,20 +6,19 @@
 @{
     var openMeteoData = Model;
 
-    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
-    DateTime dayDate = currentLocalDate.Date;
+    DateTime localNow = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
 
     int days = 14;
     int dayStep = 1;
-    int daysVisible = 12;
-    DailyWeather dailyWeather = openMeteoData.DailyWeatherData.GetDailyWeather(dayDate, days);
+    int daysVisible = 7;
+    DailyWeather dailyWeather = openMeteoData.DailyWeatherData.GetDailyWeather(localNow, days);
 
     double parentWidth = 1000;
     double dayWidth = parentWidth / (double)daysVisible;
 
     List<(int, byte)> iconData = dailyWeather.Code.Zip(Enumerable.Repeat((byte)1, 14), (c, d) => (c, d)).ToList();
     List<(double, double)> minmaxTempData = dailyWeather.TemperatureMin.Zip(dailyWeather.TemperatureMax, (n, x) => (n, x)).ToList();
-
+    List<(double, double)> minmaxPressureData = dailyWeather.PressureMin.Zip(dailyWeather.PressureMax, (n, x) => (n, x)).ToList();
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -37,11 +36,11 @@
         </div>
     </div>
     <div class="p-2 rounded bg-white mb-2">
-        <div id="grid-container" data-days="@days" data-day-width="@dayWidth" data-days-visible="@daysVisible" class="position-relative overflow-hidden">
+        <div id="grid-container" data-items="@days" data-item-width="@dayWidth" data-items-visible="@daysVisible" data-step="1" class="position-relative overflow-hidden">
             <div class="slider d-grid" style="grid-template-columns: repeat(@days, @(dayWidth + "px"));">
                 @for (int day = 0; day < days; day++)
                 {
-                    var date = dayDate.AddDays(day);
+                    var date = localNow.AddDays(day);
                     <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@day" class="text-decoration-none text-black">
                         <div class="text-center" style="font-size: 18px;">
                             <date date="date" format="dayWeekday"></date>
@@ -91,7 +90,7 @@
             <div class="pt-2">
                 <p class="px-2 my-1">Pressure, mmhg</p>
                 <div class="slider">
-                    <pressure-grid data="dailyWeather.PressureMax" step="dayStep" item-width="dayWidth"></pressure-grid>
+                    <min-max-temperature-grid data="minmaxPressureData" step="dayStep" item-width="dayWidth"></min-max-temperature-grid>
                 </div>
             </div>
             <div class="pt-2">

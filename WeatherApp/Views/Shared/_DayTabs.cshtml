@@ -4,8 +4,8 @@
 
 @{
     int dayOffset = (int)(ViewData["DayOffset"] ?? 0);
-    DateTime currentLocalDate = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
-    DateTime dayDate = currentLocalDate.AddDays(dayOffset).Date;
+    DateTime localNow = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
+    DateTime selectedDayDate = localNow.AddDays(dayOffset).Date;
 
     var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffsetMap;
 
@@ -26,7 +26,7 @@
 <div class="d-flex gap-2">
     @for (int i = startDayIndex; i < endDayIndex; i++)
     {
-        var day = Model.DailyWeatherData.GetSingleDayWeather(dayDate.AddDays(i));
+        var day = Model.DailyWeatherData.GetSingleDayWeather(selectedDayDate.AddDays(i));
         var svgPair = WeatherHelper.GetWeatherSvgPair(day.Code);
         var weatherDescription = WeatherHelper.GetWeatherDescription(day.Code);
 
@@ -35,7 +35,7 @@
                 <div class="d-flex justify-content-between h-100">
                     <div class="d-flex flex-column me-2">
                         <div style="height: 24px; font-size: 20px">
-                            <date date="@dayDate.AddDays(i)" format="dayWeekdayMonthShort"></date>
+                            <date date="@selectedDayDate.AddDays(i)" format="dayWeekdayMonthShort"></date>
                         </div>
                         @{
                             var dayIndex = dayOffset + i;

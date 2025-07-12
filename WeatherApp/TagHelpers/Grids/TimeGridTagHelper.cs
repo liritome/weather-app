@@ -5,16 +5,16 @@ namespace WeatherApp.TagHelpers
     [HtmlTargetElement("time-grid")]
     public class TimeGridTagHelper : GridTagHelper<DateTime>
     {
-        [HtmlAttributeName("current-local-date")]
-        public DateTime CurrentLocalDate { get; set; }
+        [HtmlAttributeName("local-now")]
+        public DateTime LocalNow { get; set; }
 
         [HtmlAttributeName("day-date")]
-        public DateTime DayDate { get; set; }
+        public DateTime SelectedDayDate { get; set; }
 
         protected override string BuildGridItem(int hour)
         {
             var time = Data[hour];
-            var backgroundColor = CurrentLocalDate > DayDate.AddHours(hour) ? "#ededed" : "transparent";
+            var backgroundColor = LocalNow > time ? "#ededed" : "transparent";
             return $@"
                 <div class=""text-center"" style=""background-color:{backgroundColor}"">
                     <div>

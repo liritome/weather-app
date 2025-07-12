@@ -20,7 +20,7 @@ namespace WeatherApp.TagHelpers
                             <div>
                                 <img src=""/svg/wave.svg"" class=""w-100 d-block {display}"" />
                             </div>
-                            <div style=""width: auto; height: {precipitation * 20}px; background-color: {waterColor};""></div>
+                            <div style=""width: auto; height: {precipitation * 10}px; background-color: {waterColor};""></div>
                         </div>
                     </div>
                 </div>
