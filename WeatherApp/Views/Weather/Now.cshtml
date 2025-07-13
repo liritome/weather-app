@@ -22,7 +22,7 @@
 
 <div class="container-fluid p-0" style="width: 1016px;">
     <div class="mt-2 mb-3" style="font-size: 24px">
-        <div class="p-0">
+        <div>
             Weather now
         </div>
     </div>
@@ -31,8 +31,7 @@
 
     <div class="p-2 rounded bg-white mb-2">
         <div class="d-flex text-white text-center rounded overflow-hidden" style="background-image: url('/images/weather/@($"{weatherImage} {(isDay ? "d" : "n")}").jpg'); background-size: cover;">
-
-            <div class="p-3" style="width: 310px; background-color:rgba(0, 0, 0, 0.30);">
+            <div class="p-3" style="width: 33%; background-color:rgba(0, 0, 0, 0.30);">
                 <div class="mb-2" style="font-size: 20px">
                     @localNow.ToString("ddd, dd MMMM, HH:mm")
                 </div>

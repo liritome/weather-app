@@ -34,16 +34,16 @@
             <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayOffset"] != null ? "active-day-tab" : "day-tab")">
                 <div class="d-flex justify-content-between h-100">
                     <div class="d-flex flex-column me-2">
-                        <div style="height: 24px; font-size: 20px">
+                        <div style="height: 24px; font-size: 18px">
                             <date date="@selectedDayDate.AddDays(i)" format="dayWeekdayMonthShort"></date>
                         </div>
                         @{
                             var dayIndex = dayOffset + i;
                             var dayLabel = dayLabelByOffsetDict.ContainsKey(dayIndex) ? dayLabelByOffsetDict[dayIndex] : "";
                         }
-                        <div class="text-secondary" style="height: 20px;">@dayLabel</div>
+                        <div class="text-secondary" style="height: 20px; font-size: 16px;">@dayLabel</div>
                         <div class="flex-grow-1"></div>
-                        <div class="d-flex" style="font-size: 24px">
+                        <div class="d-flex" style="font-size: 22px">
                             @{
                                 string tempMinColor = WeatherHelper.GetTemperatureColor(day.TemperatureMin);
                                 string tempMaxColor = WeatherHelper.GetTemperatureColor(day.TemperatureMax);
