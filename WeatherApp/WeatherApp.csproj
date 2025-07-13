@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Hourly.cshtml" />
+    <Content Remove="Views\TwoWeeks.cshtml" />
     <Content Remove="Views\Weather\Menu.cshtml" />
   </ItemGroup>
 
@@ -26,10 +27,12 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Hourly.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\TwoWeeks.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Weather\Menu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Weather\TwoWeeks.cshtml" />
     <None Include="Views\Weather\Hourly.cshtml" />
     <None Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
@@ -40,6 +43,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\Hourly.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TwoWeeks.cshtml" />
   </ItemGroup>
 
 </Project>

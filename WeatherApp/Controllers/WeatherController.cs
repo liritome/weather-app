@@ -58,5 +58,13 @@ namespace WeatherApp.Controllers
             var data = await weatherService.GetOpenMeteoData(city);
             return View(data);
         }
+
+        public async Task<IActionResult> TwoWeeks(string city)
+        {
+            ViewData["ActiveTab"] = "twoWeeks";
+            ViewData["City"] = city;
+            var data = await weatherService.GetOpenMeteoData(city);
+            return View(data);
+        }
     }
 }
