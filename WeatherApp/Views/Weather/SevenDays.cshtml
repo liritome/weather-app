@@ -8,7 +8,7 @@
 
     DateTime localNow = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
 
-    int days = 14;
+    int days = WeatherHelper.Days;
     int dayStep = 1;
     int daysVisible = 7;
     DailyWeather dailyWeather = openMeteoData.DailyWeatherData.GetDailyWeather(localNow, days);

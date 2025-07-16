@@ -41,8 +41,8 @@ namespace WeatherApp.Services
                 $"&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,uv_index,wind_gusts_10m,pressure_msl,is_day" +
                 $"&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,cloud_cover,precipitation,wind_speed_10m,wind_direction_10m,pressure_msl,wind_gusts_10m" +
                 $"&timezone=auto" +
-                $"&past_days=1" +
-                $"&forecast_days=14" +
+                $"&past_days={WeatherHelper.PastDays}" +
+                $"&forecast_days={WeatherHelper.Days}" +
                 $"&wind_speed_unit=ms";
             string json = null;
             try

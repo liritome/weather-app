@@ -27,7 +27,7 @@
         <div>
             @if (dayOffset <= 1 && dayOffset >= -1)
             {
-                <span>Weather @WeatherHelper.DayLabelByOffsetMap[dayOffset]</span>
+                <span>Weather @WeatherHelper.GetDayLabel(dayOffset)</span>
             }
             else
             {

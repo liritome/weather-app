@@ -9,7 +9,7 @@
     DateTime localNow = DateTime.UtcNow.AddSeconds(openMeteoData.UtcOffsetSeconds);
     DateTime dayDate = localNow.Date;
 
-    int days = 14;
+    int days = WeatherHelper.Days;
     int hours = days * 24;
     int daysVisible = 3;
     HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(dayDate, hours);

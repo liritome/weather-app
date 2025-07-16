@@ -5,6 +5,9 @@ namespace WeatherApp.Helpers
 {
     public static class WeatherHelper
     {
+        public static readonly int PastDays= 15;
+        public static readonly int Days = 15;
+
         private static readonly Color waterDark = Color.FromArgb(28, 151, 252);
         private static readonly Color waterLight = Color.FromArgb(131, 199, 255);
         private static readonly Color gray = Color.FromArgb(173, 173, 173);
@@ -240,24 +243,16 @@ namespace WeatherApp.Helpers
             "W", "WNW", "NW", "NNW"
         };
 
-        public static readonly Dictionary<int, string> DayLabelByOffsetMap = new()
+        public static string GetDayLabel(int offset)
         {
-            { -1, "yesterday" },
-            { 0, "today" },
-            { 1, "tomorrow" },
-            { 2, "in 2 days" },
-            { 3, "in 3 days" },
-            { 4, "in 4 days" },
-            { 5, "in 5 days" },
-            { 6, "in 6 days" },
-            { 7, "in 7 days" },
-            { 8, "in 8 days" },
-            { 9, "in 9 days" },
-            { 10, "in 10 days" },
-            { 11, "in 11 days" },
-            { 12, "in 12 days" },
-            { 13, "in 13 days" }
-        };
+            return offset switch
+            {
+                -1 => "yesterday",
+                0 => "today",
+                1 => "tomorrow",
+                _ => $"in {offset} days"
+            };
+        }
 
         public static string GetWeatherDescription(int code)
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WeatherApp.TagHelpers
 {
@@ -22,11 +23,11 @@ namespace WeatherApp.TagHelpers
 
             string date = Format switch
             {
-                "day" => Date.ToString("dd"),
-                "dayWeekday" => Date.ToString("ddd, dd"),
-                "dayWeekdayMonthShort" => Date.ToString("ddd, dd MMM"),
-                "dayWeekdayMonthLong" => Date.ToString("ddd, dd MMMM"),
-                _ => Date.ToString("ddd, dd MMMM")
+                "day" => Date.Day == 1 ? Date.ToString("d MMM") : Date.ToString("%d"),
+                "dayWeekday" => Date.Day == 1 ? Date.ToString("ddd, d MMM") : Date.ToString("ddd, d"),
+                "dayWeekdayMonthShort" => Date.ToString("ddd, d MMM"),
+                "dayWeekdayMonthLong" => Date.ToString("ddd, d MMMM"),
+                _ => Date.ToString("ddd, d MMMM")
             };
             output.Content.SetContent(date);
         }

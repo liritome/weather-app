@@ -72,3 +72,8 @@ img {
     user-select: none;
     -webkit-user-drag: none;
 }
+
+.gray-out {
+    filter: grayscale(100%);
+    color: gray !important;
+}

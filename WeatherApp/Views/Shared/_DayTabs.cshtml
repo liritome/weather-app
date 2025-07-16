@@ -9,10 +9,8 @@
     DateTime localNow = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
     DateTime selectedDayDate = localNow.AddDays(dayOffset).Date;
 
-    var dayLabelByOffsetDict = WeatherHelper.DayLabelByOffsetMap;
-
-    int minDayIndex = dayLabelByOffsetDict.Keys.First();
-    int maxDayIndex = dayLabelByOffsetDict.Keys.Last();
+    int minDayIndex = -WeatherHelper.PastDays;
+    int maxDayIndex = WeatherHelper.Days - 1;
     int startDayIndex = -1;
     if (dayOffset < minDayIndex + 1)
     {
@@ -41,7 +39,7 @@
                         </div>
                         @{
                             var dayIndex = dayOffset + i;
-                            var dayLabel = dayLabelByOffsetDict.ContainsKey(dayIndex) ? dayLabelByOffsetDict[dayIndex] : "";
+                            var dayLabel = WeatherHelper.GetDayLabel(dayIndex);
                         }
                         <div class="text-secondary" style="height: 20px; font-size: 16px;">@dayLabel</div>
                         <div class="flex-grow-1"></div>
