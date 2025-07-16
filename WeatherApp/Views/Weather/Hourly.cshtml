@@ -12,7 +12,7 @@
     int daysAfterToday = 1;
     int days = daysAfterToday + 1;
     int hours = hoursLeftToday + daysAfterToday * 24;
-    int hoursVisible = 12;
+    int hoursVisible = 16;
     HourlyWeather hourlyWeather = openMeteoData.HourlyWeatherData.GetHourlyWeatherByDate(localNow, hours);
 
     int hourStep = 1;
@@ -41,13 +41,13 @@
     <div class="p-2 rounded bg-white mb-2">
         <div id="grid-container" data-items="@hours" data-item-width="@itemWidth" data-items-visible="@hoursVisible" data-step="3" class="position-relative overflow-hidden">
             <div class="slider d-grid" style="grid-template-columns: @(todayWidth + "px") @(tomorrowWidth + "px"); transition: transform 0.25s ease-in-out;">
-                <div class="ps-4" style="font-size: 18px;">
+                <div class="ps-2" style="font-size: 18px;">
                     <div class="d-flex">
                         <date date="@localNow" format="dayWeekdayMonthLong"></date>
                         <span class="ps-2" style="color: black; opacity: 0.5">today</span>
                     </div>
                 </div>
-                <div class="ps-4" style="font-size: 18px;">
+                <div class="ps-2" style="font-size: 18px;">
                     <div class="d-flex">
                         <date date="@localNow.AddDays(1)" format="dayWeekdayMonthLong"></date>
                         <span class="ps-2" style="color: black; opacity: 0.5">tomorrow</span>

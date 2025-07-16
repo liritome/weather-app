@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
+using WeatherApp.Helpers;
 
 namespace WeatherApp.TagHelpers
 {
@@ -9,8 +10,8 @@ namespace WeatherApp.TagHelpers
         protected override string BuildGridItem(int hour)
         {
             var precipitation = Data[hour];
-            var numberColor = precipitation == 0 ? "#adadad" : "#1c97fc";
-            var waterColor = "#83c7ff";
+            var numberColor = precipitation == 0 ? WeatherHelper.GetGrayColor() : WeatherHelper.GetWaterDarkColor();
+            var waterColor = WeatherHelper.GetWaterLightColor();
             var display = precipitation == 0 ? "d-none" : "";
             return $@"
                 <div class=""text-center"" style=""font-size: 20px;"">

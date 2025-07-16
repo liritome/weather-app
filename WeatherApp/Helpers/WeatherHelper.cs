@@ -5,6 +5,11 @@ namespace WeatherApp.Helpers
 {
     public static class WeatherHelper
     {
+        private static readonly Color waterDark = Color.FromArgb(28, 151, 252);
+        private static readonly Color waterLight = Color.FromArgb(131, 199, 255);
+        private static readonly Color gray = Color.FromArgb(173, 173, 173);
+        private static readonly Color grayLight = Color.FromArgb(224, 224, 224);
+
         // Temperature
         private static readonly double maxTemperaturePossible = 60;
         private static readonly double minTemperaturePossible = -90;
@@ -357,6 +362,26 @@ namespace WeatherApp.Helpers
         public static string GetCloudCoverColor(double uv)
         {
             return MapValueToColorGradient(uv, minCloudCoverPossible, maxCloudCoverPossible, CloudCoverColorRanges, 1);
+        }
+
+        public static string GetWaterDarkColor()
+        {
+            return $"rgba({waterDark.R}, {waterDark.G}, {waterDark.B}, 1)";
+        }
+
+        public static string GetWaterLightColor()
+        {
+            return $"rgba({waterLight.R}, {waterLight.G}, {waterLight.B}, 1)";
+        }
+
+        public static string GetGrayColor()
+        {
+            return $"rgba({gray.R}, {gray.G}, {gray.B}, 1)";
+        }
+
+        public static string GetGrayLightColor()
+        {
+            return $"rgba({grayLight.R}, {grayLight.G}, {grayLight.B}, 1)";
         }
     }
 
