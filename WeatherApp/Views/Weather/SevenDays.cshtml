@@ -1,7 +1,7 @@
 ﻿@using WeatherApp.Helpers
 @using WeatherApp.Models
 
-@model WeatherApp.Models.OpenMeteoData
+@model WeatherApp.Models.OpenMeteoWeatherData
 
 @{
     var openMeteoData = Model;
@@ -19,6 +19,9 @@
     List<(int, byte)> iconData = dailyWeather.Code.Zip(Enumerable.Repeat((byte)1, 14), (c, d) => (c, d)).ToList();
     List<(double, double)> minmaxTempData = dailyWeather.TemperatureMin.Zip(dailyWeather.TemperatureMax, (n, x) => (n, x)).ToList();
     List<(double, double)> minmaxPressureData = dailyWeather.PressureMin.Zip(dailyWeather.PressureMax, (n, x) => (n, x)).ToList();
+
+    var location = ViewData["Location"] as Location;
+    string locationIdString = $"{location?.Name}-{location?.Id}";
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -41,7 +44,7 @@
                 @for (int day = 0; day < days; day++)
                 {
                     var date = localNow.AddDays(day);
-                    <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@day" class="text-decoration-none text-black">
+                    <a asp-action="Day" asp-route-city="@locationIdString" asp-route-day="@day" class="text-decoration-none text-black">
                         <div class="text-center" style="font-size: 18px;">
                             <date date="date" format="dayWeekday"></date>
                         </div>
@@ -106,7 +109,7 @@
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Cloud cover</p>
+                <p class="px-2 my-1">Cloud cover, %</p>
                 <div class="slider">
                     <cloud-cover-grid data="dailyWeather.CloudCover" step="dayStep" item-width="dayWidth"></cloud-cover-grid>
                 </div>

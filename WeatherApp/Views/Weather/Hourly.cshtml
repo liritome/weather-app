@@ -1,7 +1,7 @@
 ﻿@using WeatherApp.Helpers
 @using WeatherApp.Models
 
-@model WeatherApp.Models.OpenMeteoData
+@model WeatherApp.Models.OpenMeteoWeatherData
 
 @{
     var openMeteoData = Model;
@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Cloud cover</p>
+                <p class="px-2 my-1">Cloud cover, %</p>
                 <div class="slider" style="transition: transform 0.25s ease-in-out;">
                     <cloud-cover-grid data="hourlyWeather.CloudCover" step="hourStep" item-width="itemWidth"></cloud-cover-grid>
                 </div>

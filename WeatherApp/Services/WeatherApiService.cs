@@ -4,36 +4,19 @@ using WeatherApp.Helpers;
 
 namespace WeatherApp.Services
 {
-    public class WeatherService
+    public class WeatherApiService
     {
         private readonly HttpClient httpClient;
         private readonly IConfiguration config;
 
-        public WeatherService(HttpClient httpClient, IConfiguration config)
+        public WeatherApiService(HttpClient httpClient, IConfiguration config)
         {
             this.httpClient = httpClient;
             this.config = config;
         }
 
-        public async Task<OpenMeteoData> GetOpenMeteoData(string city)
+        public async Task<OpenMeteoWeatherData> GetWeatherData(double lat, double lon)
         {
-            double lat = 0;
-            double lon = 0;
-            if(city == "Canberra")
-            {
-                lat = -36;
-                lon = 147;
-            }
-            else if(city == "New-York")
-            {
-                lat = 40.59;
-                lon = -73.97;
-            }
-            else if(city == "Krasylivka"){
-                lat = 50.51;
-                lon = 30.91;
-            }
-
             string url = $"https://api.open-meteo.com/v1/forecast?" +
                 $"latitude={lat}" +
                 $"&longitude={lon}" +
@@ -62,7 +45,39 @@ namespace WeatherApp.Services
                 string fallbackPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "fallback.json");
                 json = await File.ReadAllTextAsync(fallbackPath);
             }
-            var data = JsonSerializer.Deserialize<OpenMeteoData>(json, new JsonSerializerOptions
+            var data = JsonSerializer.Deserialize<OpenMeteoWeatherData>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            });
+            return data;
+        }
+
+        public async Task<OpenMeteoGeocodingData> GetGeocodingData(string location)
+        {
+            string url = $"https://geocoding-api.open-meteo.com/v1/search?" +
+                $"name={location}" +
+                $"&count=10" +
+                $"&language=en" +
+                $"&format=json";
+            string json = null;
+            try
+            {
+                var res = await httpClient.GetAsync(url);
+                if (res.IsSuccessStatusCode)
+                {
+                    json = await res.Content.ReadAsStringAsync();
+                }
+            }
+            catch
+            {
+                // todo: WeatherService try..catch
+            }
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                string fallbackPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "geocodingFallback.json");
+                json = await File.ReadAllTextAsync(fallbackPath);
+            }
+            var data = JsonSerializer.Deserialize<OpenMeteoGeocodingData>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
             });

@@ -1,7 +1,7 @@
 ﻿@using WeatherApp.Helpers
 @using WeatherApp.Models
 
-@model WeatherApp.Models.OpenMeteoData
+@model WeatherApp.Models.OpenMeteoWeatherData
 
 @{
     var openMeteoData = Model;
@@ -31,7 +31,7 @@
             }
             else
             {
-                <span>Weather @localNow.ToString("dd MMM")</span>
+                <span>Weather @localNow.AddDays(dayOffset).ToString("dd MMM")</span>
             }
         </div>
     </div>
@@ -83,7 +83,7 @@
                 <uv-index-grid data="hourlyWeather.UvIndex" step="hourStep" item-width="itemWidth"></uv-index-grid>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Cloud cover</p>
+                <p class="px-2 my-1">Cloud cover, %</p>
                 <cloud-cover-grid data="hourlyWeather.CloudCover" step="hourStep" item-width="itemWidth"></cloud-cover-grid>
             </div>
         </div>

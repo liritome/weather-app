@@ -1,6 +1,7 @@
 ﻿@using WeatherApp.Helpers
+@using WeatherApp.Models
 
-@model WeatherApp.Models.OpenMeteoData
+@model WeatherApp.Models.OpenMeteoWeatherData
 
 @{
     string waterColor = WeatherHelper.GetWaterDarkColor();
@@ -8,6 +9,9 @@
     int dayOffset = (int)(ViewData["DayOffset"] ?? 0);
     DateTime localNow = DateTime.UtcNow.AddSeconds(Model.UtcOffsetSeconds);
     DateTime selectedDayDate = localNow.AddDays(dayOffset).Date;
+
+    var location = ViewData["Location"] as Location;
+    string locationIdString = $"{location?.Name}-{location?.Id}";
 
     int minDayIndex = -WeatherHelper.PastDays;
     int maxDayIndex = WeatherHelper.Days - 1;
@@ -30,7 +34,7 @@
         var svgPair = WeatherHelper.GetWeatherSvgPair(day.Code);
         var weatherDescription = WeatherHelper.GetWeatherDescription(day.Code);
 
-        <a asp-action="Day" asp-route-city="@ViewData["City"]" asp-route-day="@(dayOffset + i)" class="text-decoration-none text-black">
+        <a asp-action="Day" asp-route-city="@locationIdString" asp-route-day="@(dayOffset + i)" class="text-decoration-none text-black">
             <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayOffset"] != null ? "active-day-tab" : "day-tab")">
                 <div class="d-flex justify-content-between h-100">
                     <div class="d-flex flex-column me-2">
