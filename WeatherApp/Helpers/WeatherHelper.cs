@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Text;
 
 namespace WeatherApp.Helpers
 {

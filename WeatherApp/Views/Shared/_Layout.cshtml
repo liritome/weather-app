@@ -10,6 +10,7 @@
     <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body class="d-flex flex-column h-100" style="background-color:#ededed">
+    <div id="overlay"></div>
     <header class="container-fluid p-0" style="width: 1016px;">
         <div class="d-flex justify-content-between align-items-center bg-white p-2">
             <div class="d-flex justify-content-between align-items-center gap-3">
@@ -18,18 +19,17 @@
                         <img src="/svg/logo.svg" width="180" />
                     </a>
                 </div>
-                <div>
-                    <input id="locationSearch" class="form-control border-0" style="background-color:#ededed" type="text" placeholder="Search location" autocomplete="off" />
-                    <ul id="searchResults" class="list-group position-absolute" style="z-index: 10;"></ul>
+                <div style="z-index: 20;">
+                    <div style="width: 200px;">
+                        <input id="locationSearch" class="form-control border-0" style="background-color:#ededed; transition: width 0.3s ease;" type="text" placeholder="Search location" autocomplete="off" />
+                    </div>
+                    <ul id="searchResults" class="list-group position-absolute pt-2"></ul>
                 </div>
                 <div>
                     @{
                         var location = ViewData["Location"] as Location;
                     }
                     <div id="locationLinks" class="d-flex gap-3 head-location-menu" data-active-city-id="@location?.Id">
-                        <a asp-route-city="Krasilovka-704489" id="704489">Krasilovka</a>
-                        <a asp-route-city="New_York-5128581" id="5128581">New York</a>
-                        <a asp-route-city="Canberra-2172517" id="2172517">Canberra</a>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/highlight-active-location.js" asp-append-version="true"></script>
     <script src="/js/page-reload.js" asp-append-version="true"></script>
     <script src="/js/fill-search-result.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)

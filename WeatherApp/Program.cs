@@ -1,8 +1,6 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using WeatherApp.Models;
 using WeatherApp.Services;
 
 namespace WeatherApp
