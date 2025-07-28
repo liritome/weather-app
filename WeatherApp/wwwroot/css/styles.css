@@ -2,6 +2,11 @@
     text-decoration: none;
     color: black;
     opacity: 0.6;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 24px;
 }
 
     .head-location-menu a:hover {
@@ -13,6 +18,7 @@
     opacity: 1;
     pointer-events: none;
     cursor: default;
+    border-bottom: 2px solid black;
 }
 
 .dropdown-toggle:focus,

@@ -1,5 +1,10 @@
 ﻿@using WeatherApp.Models;
 
+@{
+    var location = ViewData["Location"] as Location;
+    string locationIdString = $"{location?.Name}-{location?.Id}";
+}
+
 <!DOCTYPE html>
 
 <html class="h-100">
@@ -15,7 +20,7 @@
         <div class="d-flex justify-content-between align-items-center bg-white p-2">
             <div class="d-flex justify-content-between align-items-center gap-3">
                 <div class="ps-0">
-                    <a asp-action="Now">
+                    <a asp-action="Now" asp-route-city="@locationIdString">
                         <img src="/svg/logo.svg" width="180" />
                     </a>
                 </div>
@@ -25,11 +30,8 @@
                     </div>
                     <ul id="searchResults" class="list-group position-absolute pt-2"></ul>
                 </div>
-                <div>
-                    @{
-                        var location = ViewData["Location"] as Location;
-                    }
-                    <div id="locationLinks" class="d-flex gap-3 head-location-menu" data-active-city-id="@location?.Id">
+                <div style="width: 430px;">
+                    <div id="locationLinks" class="d-flex justify-content-start gap-2 head-location-menu" data-active-city-id="@location?.Id">
                     </div>
                 </div>
             </div>

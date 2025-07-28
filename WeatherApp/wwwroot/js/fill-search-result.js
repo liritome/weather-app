@@ -87,7 +87,7 @@ function saveLocation(locationName, locationId) {
     let recent = JSON.parse(localStorage.getItem("savedLocations")) || [];
     recent = recent.filter(loc => loc.id !== locationId);
     recent.unshift({ id: locationId, name: locationName });
-    if (recent.length > 5) recent = recent.slice(0, 5);
+    if (recent.length > 4) recent = recent.slice(0, 4);
     localStorage.setItem("savedLocations", JSON.stringify(recent));
 }
 
