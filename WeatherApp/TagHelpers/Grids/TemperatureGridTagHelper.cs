@@ -6,6 +6,9 @@ namespace WeatherApp.TagHelpers
     [HtmlTargetElement("temperature-grid")]
     public class TemperatureGridTagHelper : GridTagHelper<double>
     {
+        [HtmlAttributeName("unit")]
+        public string Unit { get; set; }
+
         protected double MinTemp => Data.Min();
         protected double MaxTemp => Data.Max();
         protected int TempBoxHeight = 30;
@@ -13,7 +16,7 @@ namespace WeatherApp.TagHelpers
         protected override string BuildGridItem(int hour)
         {
             double temperature = Data[hour];
-            string temperatureFormatted = (temperature > 0 ? "+" : "") + temperature;
+            string temperatureFormatted = Unit == "C" ? (temperature > 0 ? "+" : "") + temperature : $"{WeatherHelper.CelsiusToFahrenheit(temperature)}";
             int positionFromTop = (int)(MaxTemp - temperature) * 2;
             string tempBoxColor = WeatherHelper.GetTemperatureColor(temperature);
             return $@"

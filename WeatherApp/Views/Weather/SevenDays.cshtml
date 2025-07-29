@@ -22,12 +22,14 @@
 
     var location = ViewData["Location"] as Location;
     string locationIdString = $"{location?.Name}-{location?.Id}";
+
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
     <div class="mt-2 mb-3" style="font-size: 24px">
         <div class="d-flex justify-content-between">
-            <span>Weather for 3 days</span>
+            <span>Weather for 7 days</span>
             <div class="d-flex gap-2">
                 <button id="btnLeft" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-center align-items-center">
                     <img src="/svg/arrow-left.svg" width="32" height="16" />
@@ -55,9 +57,9 @@
                 <icon-grid data="iconData" step="dayStep" item-width="dayWidth" width="50"></icon-grid>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Air temperature, °C</p>
+                <p class="px-2 my-1">Air temperature, °@temperatureUnit</p>
                 <div class="slider">
-                    <min-max-temperature-grid data="minmaxTempData" step="dayStep" item-width="dayWidth"></min-max-temperature-grid>
+                    <min-max-temperature-grid data="minmaxTempData" step="dayStep" item-width="dayWidth" unit="@temperatureUnit"></min-max-temperature-grid>
                 </div>
             </div>
             <div class="pt-2">
@@ -93,7 +95,7 @@
             <div class="pt-2">
                 <p class="px-2 my-1">Pressure, mmhg</p>
                 <div class="slider">
-                    <min-max-temperature-grid data="minmaxPressureData" step="dayStep" item-width="dayWidth"></min-max-temperature-grid>
+                    <min-max-pressure-grid data="minmaxPressureData" step="dayStep" item-width="dayWidth"></min-max-pressure-grid>
                 </div>
             </div>
             <div class="pt-2">

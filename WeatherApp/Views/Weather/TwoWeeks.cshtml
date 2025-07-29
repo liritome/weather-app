@@ -19,6 +19,8 @@
 
     var location = ViewData["Location"] as Location;
     string locationIdString = $"{location?.Name}-{location?.Id}";
+
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -29,7 +31,7 @@
     </div>
     <div class="p-2 rounded bg-white mb-2">
         <div class="d-flex gap-2">
-            <div class="flex-grow-1 rounded-3 p-2" style="width: 33%;">
+            <div class="flex-grow-1 rounded-3 p-2" style="width: 35%;">
                 <div class="mb-2 text-center" style="font-size: 20px">
                     <span>@localNow.ToString("MMMM")</span>
                     @if (localNow.AddDays(days).Month != localNow.Month)
@@ -37,7 +39,7 @@
                         <span> - @localNow.AddDays(days).ToString("MMMM")</span>
                     }
                 </div>
-                <div class="d-flex flex-column gap-3 text-center">
+                <div class="d-flex flex-column gap-3">
                     @{
                         double maxTemp = dailyWeather.TemperatureMax.Max();
                         int maxTempIndex = dailyWeather.TemperatureMax.IndexOf(maxTemp);
@@ -75,7 +77,7 @@
                         <div style="font-size: 16px;">Highest temperature</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @maxTempColor; min-width: 37px;">
                             <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
-                                <temperature value="@maxTemp"></temperature>
+                                <temperature value="@maxTemp" unit="@temperatureUnit"></temperature>
                             </div>
                             <div style="font-size: 14px;">@hottestDay.ToString("MMM dd")</div>
                         </div>
@@ -84,17 +86,17 @@
                         <div style="font-size: 16px;">Lowest temperature</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @minTempColor; min-width: 37px;">
                             <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
-                                <temperature value="@minTemp"></temperature>
+                                <temperature value="@minTemp" unit="@temperatureUnit"></temperature>
                             </div>
                             <div style="font-size: 14px;">@coldestDay.ToString("MMM dd")</div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
-                        <div style="font-size: 16px;">Temp. swing</div>
+                        <div style="font-size: 16px;">Largest temp. swing</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-image: linear-gradient(to right, @swingMinColor, @swingMaxColor); min-width: 37px;">
                             <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
                                 <span>
-                                    <temperature value="@swingMin"></temperature> - <temperature value="@swingMax"></temperature>
+                                    <temperature value="@swingMin" unit="@temperatureUnit"></temperature> - <temperature value="@swingMax" unit="@temperatureUnit"></temperature>
                                 </span>
                             </div>
                             <div style="font-size: 14px;">@maxTempSwingDay.ToString("MMM dd")</div>
@@ -104,7 +106,7 @@
                         <div style="font-size: 16px;">Highest wind speed</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @maxWindColor; min-width: 37px;">
                             <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
-                                <span>@maxWind ms</span>
+                                <span>@maxWind m/s</span>
                             </div>
                             <div style="font-size: 14px;">@maxWindDay.ToString("MMM dd")</div>
                         </div>
@@ -117,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between text-center">
                         <div>
                             <div style="font-size: 16px;">Sunny days</div>
                             <div class="flex-grow-1 rounded-pill lh-1 p-2" style="font-size: 20px; font-weight: 500; background-color: @grayLightColor; min-width: 37px;">
@@ -177,11 +179,11 @@
                                     </div>
                                     <div class="d-flex flex-column justify-content-end">
                                         <div style="font-size: 20px">
-                                            <temperature value="@dayWeather.TemperatureMax"></temperature>
+                                            <temperature value="@dayWeather.TemperatureMax" unit="@temperatureUnit"></temperature>
                                         </div>
                                         <div class="d-flex justify-content-end">
                                             <div style="font-size: 14px; color: gray;">
-                                                <temperature value="@dayWeather.TemperatureMin"></temperature>
+                                                <temperature value="@dayWeather.TemperatureMin" unit="@temperatureUnit"></temperature>
                                             </div>
                                         </div>
                                     </div>

@@ -18,6 +18,8 @@
 
     string windDirection = WeatherHelper.GetWindDirection(currentWeather.WindDirectionDegree);
     string weatherDescription = WeatherHelper.GetWeatherDescription(currentWeather.Code);
+
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -31,7 +33,7 @@
 
     <div class="p-2 rounded bg-white mb-2">
         <div class="d-flex text-white text-center rounded overflow-hidden" style="background-image: url('/images/weather/@($"{weatherImage} {(isDay ? "d" : "n")}").jpg'); background-size: cover;">
-            <div class="p-3" style="width: 33%; background-color:rgba(0, 0, 0, 0.30);">
+            <div class="p-3" style="width: 33%; background-color:rgba(0, 0, 0, 0.3);">
                 <div class="mb-2" style="font-size: 20px">
                     @localNow.ToString("ddd, dd MMMM, HH:mm")
                 </div>
@@ -114,11 +116,11 @@
                 <div class="d-flex flex-column justify-content-center flex-fill">
                     <div>
                         <div class="lh-1 mb-3" style="font-size: 120px; font-weight: 500; letter-spacing: -5px;">
-                            <temperature value="@currentWeather.Temperature"></temperature>
+                            <temperature value="@currentWeather.Temperature" unit="@temperatureUnit"></temperature>
                         </div>
                         <div class="d-inline-flex py-1 px-2 rounded" style="font-size: 18px; background-color:rgba(255, 255, 255, 0.10);">
                             Feels like&nbsp;
-                            <temperature value="@currentWeather.ApparentTemperature"></temperature>
+                            <temperature value="@currentWeather.ApparentTemperature" unit="@temperatureUnit"></temperature>
                         </div>
                     </div>
                 </div>

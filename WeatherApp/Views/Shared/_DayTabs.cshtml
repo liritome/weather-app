@@ -25,6 +25,8 @@
         startDayIndex = maxDayIndex - 3 - dayOffset;
     }
     int endDayIndex = startDayIndex + 4;
+
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
 }
 
 <div class="d-flex gap-2">
@@ -53,10 +55,10 @@
                                 string tempMaxColor = WeatherHelper.GetTemperatureColor(day.TemperatureMax);
                             }
                             <div class="text-center" style="width: 65px; background-color:@tempMinColor;">
-                                <temperature value="@day.TemperatureMin"></temperature>
+                                <temperature value="@day.TemperatureMin" unit="@temperatureUnit"></temperature>
                             </div>
                             <div class="text-center" style="width: 65px; background-color:@tempMaxColor;">
-                                <temperature value="@day.TemperatureMax"></temperature>
+                                <temperature value="@day.TemperatureMax" unit="@temperatureUnit"></temperature>
                             </div>
                         </div>
                     </div>

@@ -22,6 +22,8 @@
     double tomorrowWidth = itemWidth * 24;
 
     List<(int, byte)> iconData = hourlyWeather.Code.Zip(hourlyWeather.IsDay, (c, d) => (c, d)).ToList();
+
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -61,9 +63,9 @@
                 <icon-grid data="iconData" step="hourStep" item-width="itemWidth" width="50"></icon-grid>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Air temperature, °C</p>
+                <p class="px-2 my-1">Air temperature, °@temperatureUnit</p>
                 <div class="slider" style="transition: transform 0.25s ease-in-out;">
-                    <temperature-grid data="hourlyWeather.Temperature" step="hourStep" item-width="itemWidth"></temperature-grid>
+                    <temperature-grid data="hourlyWeather.Temperature" step="hourStep" item-width="itemWidth" unit="@temperatureUnit"></temperature-grid>
                 </div>
             </div>
             <div class="pt-2">

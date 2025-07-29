@@ -377,6 +377,16 @@ namespace WeatherApp.Helpers
         {
             return $"rgba({grayLight.R}, {grayLight.G}, {grayLight.B}, 1)";
         }
+
+        public static double CelsiusToFahrenheit(double number)
+        {
+            return Math.Round(number * 9 / 5 + 32);
+        }
+
+        public static double MeterPerSecToMilePerHour(double number)
+        {
+            return Math.Round(number * 2.23694);
+        }
     }
 
     public record WeatherConditionSvgPair(string Clouds, string? Precipitation = "none");
