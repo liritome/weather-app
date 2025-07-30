@@ -4,7 +4,7 @@ namespace WeatherApp.Helpers
 {
     public static class WeatherHelper
     {
-        public static readonly int PastDays= 15;
+        public static readonly int PastDays = 15;
         public static readonly int Days = 15;
 
         private static readonly Color waterDark = Color.FromArgb(28, 151, 252);

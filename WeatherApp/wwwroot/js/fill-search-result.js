@@ -27,17 +27,19 @@
             locations.forEach(loc => {
                 const countryCode = loc.country_code?.toLowerCase();
                 const li = document.createElement("li");
-                li.className = "list-group-item list-group-item-action";
+                li.className = "search-result-item list-group-item list-group-item-action";
+                const locationDetails = [
+                    loc.country,
+                    loc.admin1,
+                    loc.admin2,
+                    loc.admin3,
+                    loc.admin4
+                ].filter(x => x).join(', ');
                 li.innerHTML = `
                     <img src="https://hatscripts.github.io/circle-flags/flags/${countryCode}.svg" width="24" style="margin-right: 8px;" />
-                    <span>${loc.name}${[
-                        loc.country,
-                        loc.admin1,
-                        loc.admin2,
-                        loc.admin3,
-                        loc.admin4
-                    ].filter(x => x).map(x => `, ${x}`).join('')}</span>
-`;
+                    <span style="color: black; font-size: 16px;">${loc.name}</span>
+                    <span style="font-size: 14px;">${locationDetails}</span>
+                `;
                 li.dataset.id = loc.id;
                 li.dataset.name = loc.name;
 

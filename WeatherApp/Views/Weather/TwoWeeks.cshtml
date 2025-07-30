@@ -45,33 +45,6 @@
                         int maxTempIndex = dailyWeather.TemperatureMax.IndexOf(maxTemp);
                         DateTime hottestDay = dailyWeather.Time[maxTempIndex];
                         string maxTempColor = WeatherHelper.GetTemperatureColor(maxTemp);
-
-                        double minTemp = dailyWeather.TemperatureMin.Min();
-                        int minTempIndex = dailyWeather.TemperatureMin.IndexOf(minTemp);
-                        DateTime coldestDay = dailyWeather.Time[minTempIndex];
-                        string minTempColor = WeatherHelper.GetTemperatureColor(minTemp);
-
-                        double maxWind = dailyWeather.WindGustsMax.Max();
-                        int maxWindIndex = dailyWeather.WindGustsMax.IndexOf(maxWind);
-                        DateTime maxWindDay = dailyWeather.Time[maxWindIndex];
-                        string maxWindColor = WeatherHelper.GetWindColor(maxWind);
-
-                        var tempSwing = dailyWeather.TemperatureMin.Zip(dailyWeather.TemperatureMax, (min, max) => Math.Abs(max - min)).ToList();
-                        double maxTempSwing = tempSwing.Max();
-                        int maxTempSwingIndex = tempSwing.IndexOf(maxTempSwing);
-                        DateTime maxTempSwingDay = dailyWeather.Time[maxTempSwingIndex];
-                        double swingMin = dailyWeather.TemperatureMin[maxTempSwingIndex];
-                        double swingMax = dailyWeather.TemperatureMax[maxTempSwingIndex];
-                        string swingMinColor = WeatherHelper.GetTemperatureColor(swingMin);
-                        string swingMaxColor = WeatherHelper.GetTemperatureColor(swingMax);
-
-                        double precipSum = Math.Round(dailyWeather.PrecipitationSum.Sum(), 1);
-                        string waterColor = "#83c7ff";
-
-                        int sunnyDays = dailyWeather.CloudCover.Count(cc => cc < 50);
-                        int cloudyDays = dailyWeather.CloudCover.Count(cc => cc >= 50);
-                        int rainyDays = dailyWeather.PrecipitationSum.Count(ps => ps > 0.3);
-                        string grayLightColor = WeatherHelper.GetGrayLightColor();
                     }
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Highest temperature</div>
@@ -82,6 +55,12 @@
                             <div style="font-size: 14px;">@hottestDay.ToString("MMM dd")</div>
                         </div>
                     </div>
+                    @{
+                        double minTemp = dailyWeather.TemperatureMin.Min();
+                        int minTempIndex = dailyWeather.TemperatureMin.IndexOf(minTemp);
+                        DateTime coldestDay = dailyWeather.Time[minTempIndex];
+                        string minTempColor = WeatherHelper.GetTemperatureColor(minTemp);
+                    }
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Lowest temperature</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @minTempColor; min-width: 37px;">
@@ -91,6 +70,16 @@
                             <div style="font-size: 14px;">@coldestDay.ToString("MMM dd")</div>
                         </div>
                     </div>
+                    @{
+                        var tempSwing = dailyWeather.TemperatureMin.Zip(dailyWeather.TemperatureMax, (min, max) => Math.Abs(max - min)).ToList();
+                        double maxTempSwing = tempSwing.Max();
+                        int maxTempSwingIndex = tempSwing.IndexOf(maxTempSwing);
+                        DateTime maxTempSwingDay = dailyWeather.Time[maxTempSwingIndex];
+                        double swingMin = dailyWeather.TemperatureMin[maxTempSwingIndex];
+                        double swingMax = dailyWeather.TemperatureMax[maxTempSwingIndex];
+                        string swingMinColor = WeatherHelper.GetTemperatureColor(swingMin);
+                        string swingMaxColor = WeatherHelper.GetTemperatureColor(swingMax);
+                    }
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Largest temp. swing</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-image: linear-gradient(to right, @swingMinColor, @swingMaxColor); min-width: 37px;">
@@ -102,6 +91,12 @@
                             <div style="font-size: 14px;">@maxTempSwingDay.ToString("MMM dd")</div>
                         </div>
                     </div>
+                    @{
+                        double maxWind = dailyWeather.WindGustsMax.Max();
+                        int maxWindIndex = dailyWeather.WindGustsMax.IndexOf(maxWind);
+                        DateTime maxWindDay = dailyWeather.Time[maxWindIndex];
+                        string maxWindColor = WeatherHelper.GetWindColor(maxWind);
+                    }
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Highest wind speed</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @maxWindColor; min-width: 37px;">
@@ -111,6 +106,10 @@
                             <div style="font-size: 14px;">@maxWindDay.ToString("MMM dd")</div>
                         </div>
                     </div>
+                    @{
+                        double precipSum = Math.Round(dailyWeather.PrecipitationSum.Sum(), 1);
+                        string waterColor = "#83c7ff";
+                    }
                     <div class="d-flex justify-content-between align-items-end">
                         <div style="font-size: 16px;">Precipitation sum</div>
                         <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @waterColor; min-width: 37px;">
@@ -119,6 +118,12 @@
                             </div>
                         </div>
                     </div>
+                    @{
+                        int sunnyDays = dailyWeather.CloudCover.Count(cc => cc < 50);
+                        int cloudyDays = dailyWeather.CloudCover.Count(cc => cc >= 50);
+                        int rainyDays = dailyWeather.PrecipitationSum.Count(ps => ps > 0.3);
+                        string grayLightColor = WeatherHelper.GetGrayLightColor();
+                    }
                     <div class="d-flex justify-content-between text-center">
                         <div>
                             <div style="font-size: 16px;">Sunny days</div>
@@ -158,13 +163,13 @@
                         string tempColor = "transparent";
                         if (day >= 0)
                         {
-                            tempColor = WeatherHelper.GetTemperatureColor(dayWeather.TemperatureMax);                            
+                            tempColor = WeatherHelper.GetTemperatureColor(dayWeather.TemperatureMax);
                         }
                         var svgPair = WeatherHelper.GetWeatherSvgPair(dayWeather.Code);
                         var weatherDescription = WeatherHelper.GetWeatherDescription(dayWeather.Code);
 
                         <a asp-action="Day" asp-route-city="@locationIdString" asp-route-day="@day" class="text-decoration-none text-black d-block @(day < 0 ? "gray-out" : "")" style="aspect-ratio: 1 / 1; background-color: @(tempColor); padding: 1px;">
-                            <div class="h-100 w-100 p-1 d-flex flex-column" style="background-color: rgba(255,255,255, 0.75);">
+                            <div class="h-100 w-100 px-1 pt-0 pb-1 d-flex flex-column" style="background-color: rgba(255,255,255, 0.75);">
                                 <div style="font-size: 16px;">
                                     <date date="@dayWeather.Time.Date" format="day"></date>
                                 </div>
