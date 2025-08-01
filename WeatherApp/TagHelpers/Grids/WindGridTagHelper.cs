@@ -6,13 +6,17 @@ namespace WeatherApp.TagHelpers
     [HtmlTargetElement("wind-grid")]
     public class WindGridTagHelper : GridTagHelper<double>
     {
+        [HtmlAttributeName("unit")]
+        public string Unit { get; set; }
+
         protected override string BuildGridItem(int hour)
         {
             double wind = Data[hour];
             string windColor = WeatherHelper.GetWindColor(wind);
+            string windFormatted = WeatherHelper.ConvertSpeed(wind, Unit);
             return $@"
                 <div class=""mx-2 text-center"" style=""font-size: 20px; background: linear-gradient(to right, transparent, {windColor}); transform: skew(-12deg);"">
-                    <span>{wind}</span>
+                    <span>{windFormatted}</span>
                 </div>
             ";
         }

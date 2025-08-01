@@ -17,8 +17,8 @@ namespace WeatherApp.TagHelpers
         {
             double tempMin = Data[hour].Min;
             double tempMax = Data[hour].Max;
-            string tempFormattedMin = Unit == "C" ? (tempMin > 0 ? "+" : "") + tempMin : $"{WeatherHelper.CelsiusToFahrenheit(tempMin)}";
-            string tempFormattedMax = Unit == "C" ? (tempMax > 0 ? "+" : "") + tempMax : $"{WeatherHelper.CelsiusToFahrenheit(tempMax)}";
+            string tempFormattedMin = WeatherHelper.ConvertTemperature(tempMin, Unit);
+            string tempFormattedMax = WeatherHelper.ConvertTemperature(tempMax, Unit);
             int positionFromTop = (int)(MaxTempInData - tempMax) * 2;
             string tempBoxColor = WeatherHelper.GetTemperatureColor(tempMax);
             int TempBoxHeight = (int)(tempMax - tempMin) * 2;

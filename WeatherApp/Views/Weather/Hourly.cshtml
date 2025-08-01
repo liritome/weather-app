@@ -23,7 +23,10 @@
 
     List<(int, byte)> iconData = hourlyWeather.Code.Zip(hourlyWeather.IsDay, (c, d) => (c, d)).ToList();
 
-    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
+    string speedUnit = Context.Request.Cookies["speedUnit"] ?? WeatherHelper.DefaultSpeedUnit;
+    string precipUnit = Context.Request.Cookies["precipUnit"] ?? WeatherHelper.DefaultPrecipUnit;
+    string pressureUnit = Context.Request.Cookies["pressureUnit"] ?? WeatherHelper.DefaultPressureUnit;
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -43,17 +46,17 @@
     <div class="p-2 rounded bg-white mb-2">
         <div id="grid-container" data-items="@hours" data-item-width="@itemWidth" data-items-visible="@hoursVisible" data-step="3" class="position-relative overflow-hidden">
             <div class="slider d-grid" style="grid-template-columns: @(todayWidth + "px") @(tomorrowWidth + "px"); transition: transform 0.25s ease-in-out;">
-                <div class="ps-2" style="font-size: 18px;">
-                    <div class="d-flex">
-                        <date date="@localNow" format="dayWeekdayMonthLong"></date>
-                        <span class="ps-2" style="color: black; opacity: 0.5">today</span>
-                    </div>
+                @{
+                    string displayTodayDate = localNow.Hour > 22 ? "display: none;" : "";
+                    string displayToday = localNow.Hour > 21 ? "display: none;" : "";
+                }
+                <div class="ps-2 d-flex" style="font-size: 18px; white-space: nowrap; overflow: hidden;">
+                    <date date="@localNow" format="dayWeekdayMonthLong" style="@displayTodayDate"></date>
+                    <span class="ps-2" style="color: black; opacity: 0.5; @displayToday">today</span>
                 </div>
-                <div class="ps-2" style="font-size: 18px;">
-                    <div class="d-flex">
-                        <date date="@localNow.AddDays(1)" format="dayWeekdayMonthLong"></date>
-                        <span class="ps-2" style="color: black; opacity: 0.5">tomorrow</span>
-                    </div>
+                <div class="ps-2 d-flex" style="font-size: 18px; white-space: nowrap; overflow: hidden;">
+                    <date date="@localNow.AddDays(1)" format="dayWeekdayMonthLong"></date>
+                    <span class="ps-2" style="color: black; opacity: 0.5;">tomorrow</span>
                 </div>
             </div>
             <div class="slider pt-2" style="transition: transform 0.25s ease-in-out;">
@@ -75,15 +78,15 @@
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Wind speed, m/s</p>
+                <p class="px-2 my-1">Wind speed, @speedUnit</p>
                 <div class="slider" style="transition: transform 0.25s ease-in-out;">
-                    <wind-grid data="hourlyWeather.WindSpeed" step="hourStep" item-width="itemWidth"></wind-grid>
+                    <wind-grid data="hourlyWeather.WindSpeed" step="hourStep" item-width="itemWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Wind gusts, m/s</p>
+                <p class="px-2 my-1">Wind gusts, @speedUnit</p>
                 <div class="slider" style="transition: transform 0.25s ease-in-out;">
-                    <wind-grid data="hourlyWeather.WindGusts" step="hourStep" item-width="itemWidth"></wind-grid>
+                    <wind-grid data="hourlyWeather.WindGusts" step="hourStep" item-width="itemWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
             <div class="pt-2">
@@ -93,15 +96,15 @@
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Precipitation, mm</p>
+                <p class="px-2 my-1">Precipitation, @precipUnit</p>
                 <div class="slider" style="transition: transform 0.25s ease-in-out;">
-                    <precipitation-grid data="hourlyWeather.Precipitation" step="hourStep" item-width="itemWidth"></precipitation-grid>
+                    <precipitation-grid data="hourlyWeather.Precipitation" step="hourStep" item-width="itemWidth" unit="@precipUnit"></precipitation-grid>
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Pressure, mmhg</p>
+                <p class="px-2 my-1">Pressure, @pressureUnit</p>
                 <div class="slider" style="transition: transform 0.25s ease-in-out;">
-                    <pressure-grid data="hourlyWeather.Pressure" step="hourStep" item-width="itemWidth"></pressure-grid>
+                    <pressure-grid data="hourlyWeather.Pressure" step="hourStep" item-width="itemWidth" unit="@pressureUnit"></pressure-grid>
                 </div>
             </div>
             <div class="pt-2">

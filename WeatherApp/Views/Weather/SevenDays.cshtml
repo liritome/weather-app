@@ -23,7 +23,10 @@
     var location = ViewData["Location"] as Location;
     string locationIdString = $"{location?.Name}-{location?.Id}";
 
-    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
+    string speedUnit = Context.Request.Cookies["speedUnit"] ?? WeatherHelper.DefaultSpeedUnit;
+    string precipUnit = Context.Request.Cookies["precipUnit"] ?? WeatherHelper.DefaultPrecipUnit;
+    string pressureUnit = Context.Request.Cookies["pressureUnit"] ?? WeatherHelper.DefaultPressureUnit;
 }
 
 <div class="container-fluid p-0" style="width: 1016px;">
@@ -69,15 +72,15 @@
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Wind speed, m/s</p>
+                <p class="px-2 my-1">Wind speed, @speedUnit</p>
                 <div class="slider">
-                    <wind-grid data="dailyWeather.WindSpeedMax" step="dayStep" item-width="dayWidth"></wind-grid>
+                    <wind-grid data="dailyWeather.WindSpeedMax" step="dayStep" item-width="dayWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Wind gusts, m/s</p>
+                <p class="px-2 my-1">Wind gusts, @speedUnit</p>
                 <div class="slider">
-                    <wind-grid data="dailyWeather.WindGustsMax" step="dayStep" item-width="dayWidth"></wind-grid>
+                    <wind-grid data="dailyWeather.WindGustsMax" step="dayStep" item-width="dayWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
             <div class="pt-2">
@@ -87,15 +90,15 @@
                 </div>
             </div>
             <div class="pt-2">
-                <p class="px-2 my-1">Precipitation, mm</p>
+                <p class="px-2 my-1">Precipitation, @precipUnit</p>
                 <div class="slider">
-                    <precipitation-grid data="dailyWeather.PrecipitationSum" step="dayStep" item-width="dayWidth"></precipitation-grid>
+                    <precipitation-grid data="dailyWeather.PrecipitationSum" step="dayStep" item-width="dayWidth" unit="@precipUnit"></precipitation-grid>
                 </div>
             </div>
             <div class="pt-2">
                 <p class="px-2 my-1">Pressure, mmhg</p>
                 <div class="slider">
-                    <min-max-pressure-grid data="minmaxPressureData" step="dayStep" item-width="dayWidth"></min-max-pressure-grid>
+                    <min-max-pressure-grid data="minmaxPressureData" step="dayStep" item-width="dayWidth" unit="@pressureUnit"></min-max-pressure-grid>
                 </div>
             </div>
             <div class="pt-2">

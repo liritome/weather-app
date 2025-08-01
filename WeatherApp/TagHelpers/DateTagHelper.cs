@@ -23,8 +23,8 @@ namespace WeatherApp.TagHelpers
 
             string date = Format switch
             {
-                "day" => Date.Day == 1 ? Date.ToString("d MMM") : Date.ToString("%d"),
-                "dayWeekday" => Date.Day == 1 ? Date.ToString("ddd, d MMM") : Date.ToString("ddd, d"),
+                "day" => (Date.Day == 1 || Date.Day == DateTime.DaysInMonth(Date.Year, Date.Month)) ? Date.ToString("d MMM") : Date.ToString("%d"),
+                "dayWeekday" => (Date.Day == 1 || Date.Day == DateTime.DaysInMonth(Date.Year, Date.Month)) ? Date.ToString("ddd, d MMM") : Date.ToString("ddd, d"),
                 "dayWeekdayMonthShort" => Date.ToString("ddd, d MMM"),
                 "dayWeekdayMonthLong" => Date.ToString("ddd, d MMMM"),
                 _ => Date.ToString("ddd, d MMMM")

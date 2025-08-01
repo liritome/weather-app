@@ -16,7 +16,7 @@
     var location = ViewData["Location"] as Location;
     string locationIdString = $"{location?.Name}-{location?.Id}";
 
-    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? "C";
+    string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
 }
 
 <div class="mb-2 rounded-bottom-3 overflow-hidden" style="height: 130px; background-image: url('/images/weather/@($"{weatherImage} {(isDay ? "d" : "n")}").jpg'); background-size: cover; background-position: 0px -400px">

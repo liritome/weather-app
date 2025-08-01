@@ -16,7 +16,7 @@ namespace WeatherApp.TagHelpers
         protected override string BuildGridItem(int hour)
         {
             double temperature = Data[hour];
-            string temperatureFormatted = Unit == "C" ? (temperature > 0 ? "+" : "") + temperature : $"{WeatherHelper.CelsiusToFahrenheit(temperature)}";
+            string temperatureFormatted = WeatherHelper.ConvertTemperature(temperature, Unit);
             int positionFromTop = (int)(MaxTemp - temperature) * 2;
             string tempBoxColor = WeatherHelper.GetTemperatureColor(temperature);
             return $@"

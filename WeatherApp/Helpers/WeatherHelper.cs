@@ -7,6 +7,11 @@ namespace WeatherApp.Helpers
         public static readonly int PastDays = 15;
         public static readonly int Days = 15;
 
+        public static readonly string DefaultTemperatureUnit = "C";
+        public static readonly string DefaultSpeedUnit = "m/s";
+        public static readonly string DefaultPrecipUnit = "mm";
+        public static readonly string DefaultPressureUnit = "mmHg";
+
         private static readonly Color waterDark = Color.FromArgb(28, 151, 252);
         private static readonly Color waterLight = Color.FromArgb(131, 199, 255);
         private static readonly Color gray = Color.FromArgb(173, 173, 173);
@@ -383,9 +388,63 @@ namespace WeatherApp.Helpers
             return Math.Round(number * 9 / 5 + 32);
         }
 
+        public static double MeterPerSecToKmeterPerHour(double number)
+        {
+            return Math.Round(number * 3.6);
+        }
+
         public static double MeterPerSecToMilePerHour(double number)
         {
             return Math.Round(number * 2.23694);
+        }
+
+        public static double MilimeterToInch(double number)
+        {
+            return Math.Round(number / 25.4, 3);
+        }
+
+        public static double MmhgToHpa(double number)
+        {
+            return Math.Round(number * 1.33322);
+        }
+
+        public static string ConvertTemperature(double value, string unit)
+        {
+            return unit switch
+            {
+                "F" => $"{WeatherHelper.CelsiusToFahrenheit(value)}",
+                _ => (value > 0 ? "+" : "") + value
+            };
+        }
+
+        public static string ConvertSpeed(double value, string unit)
+        {
+            return unit switch
+            {
+                "km/h" => WeatherHelper.MeterPerSecToKmeterPerHour(value).ToString(),
+                "mph" => WeatherHelper.MeterPerSecToMilePerHour(value).ToString(),
+                _ => value.ToString()
+            };
+        }
+
+        public static string ConvertPrecip(double value, string unit)
+        {
+            return unit switch
+            {
+                "in" when WeatherHelper.MilimeterToInch(value) > 0 && WeatherHelper.MilimeterToInch(value) < 0.01 => "< 0.01",
+                "in" => Math.Round(WeatherHelper.MilimeterToInch(value), 2).ToString(),
+                _ => value.ToString()
+            };
+        }
+
+        public static string ConvertPressure(double value, string unit)
+        {
+            return unit switch
+            {
+                "hPa" => WeatherHelper.MmhgToHpa(value).ToString(),
+                "inHg" => Math.Round(WeatherHelper.MilimeterToInch(value), 1).ToString(),
+                _ => value.ToString()
+            };
         }
     }
 

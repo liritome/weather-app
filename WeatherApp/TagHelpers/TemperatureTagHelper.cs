@@ -15,17 +15,9 @@ namespace WeatherApp.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            string temperature = "";
-            if (Unit == "F")
-            {
-                temperature = $"{WeatherHelper.CelsiusToFahrenheit(Value)}";
-            }
-            else
-            {
-                temperature = (Value > 0 ? "+" : "") + Value;
-            }
+            string temp = WeatherHelper.ConvertTemperature(Value, Unit);
             output.TagName = "span";
-            output.Content.SetContent(temperature);
+            output.Content.SetContent(temp);
         }
     }
 }

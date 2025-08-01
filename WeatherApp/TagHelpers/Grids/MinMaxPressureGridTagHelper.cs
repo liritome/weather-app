@@ -7,6 +7,9 @@ namespace WeatherApp.TagHelpers.Grids
 
     public class MinMaxPressureGridTagHelper : GridTagHelper<(double Min, double Max)>
     {
+        [HtmlAttributeName("unit")]
+        public string Unit { get; set; }
+
         protected double MinPressureInData => Data.Min(d => d.Min);
         protected double MaxPressureInData => Data.Max(d => d.Max);
 
@@ -14,15 +17,17 @@ namespace WeatherApp.TagHelpers.Grids
         {
             double pressureMin = Data[hour].Min;
             double pressureMax = Data[hour].Max;
+            string pressureFormattedMin = WeatherHelper.ConvertPressure(pressureMin, Unit);
+            string pressureFormattedMax = WeatherHelper.ConvertPressure(pressureMax, Unit);
             int positionFromTop = (int)(MaxPressureInData - pressureMax) * 2;
             string pressureBoxColor = WeatherHelper.GetPressureColor(pressureMax);
             int PressureBoxHeight = (int)(pressureMax - pressureMin) * 2;
             return $@"
                 <div class=""position-relative"">
                     <div class=""position-absolute w-100 text-center"" style=""font-size: 20px; top: {positionFromTop}px;"">
-                        <span>{pressureMax}</span>
+                        <span>{pressureFormattedMax}</span>
                         <div style=""background-color: {pressureBoxColor}; height: {PressureBoxHeight}px;""></div>
-                        <span>{pressureMin}</span>
+                        <span>{pressureFormattedMin}</span>
                     </div>
                 </div>
             ";

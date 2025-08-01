@@ -6,6 +6,9 @@ namespace WeatherApp.TagHelpers
     [HtmlTargetElement("pressure-grid")]
     public class PressureGridTagHelper : GridTagHelper<double>
     {
+        [HtmlAttributeName("unit")]
+        public string Unit { get; set; }
+
         protected double MaxPressure => Data.Max();
         protected double MinPressure => Data.Min();
         protected int PressureBoxHeight = 30;
@@ -13,12 +16,13 @@ namespace WeatherApp.TagHelpers
         protected override string BuildGridItem(int hour)
         {
             double pressure = Data[hour];
-            int positionFromTop = (int)(MaxPressure - pressure) * 2;
             string pressureBoxColor = WeatherHelper.GetPressureColor(pressure);
+            string pressureFormatted = WeatherHelper.ConvertPressure(pressure, Unit);
+            int positionFromTop = (int)(MaxPressure - pressure) * 2;
             return $@"
                 <div class=""position-relative"">
                     <div class=""position-absolute w-100 text-center"" style=""background-color: {pressureBoxColor}; font-size: 20px; height: {PressureBoxHeight}px; top: {positionFromTop}px;"">
-                        <span>{pressure}</span>
+                        <span>{pressureFormatted}</span>
                     </div>
                 </div>
             ";
