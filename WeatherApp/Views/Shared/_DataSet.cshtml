@@ -1,0 +1,67 @@
+﻿<button id="datasetBtn" type="button" class="btn btn-light rounded px-2 py-0 shadow-sm d-flex justify-content-between gap-2 align-items-center">
+    <i class="bi bi-sliders"></i>
+    <span>Data set</span>
+</button>
+<div id="datasetWindow" class="position-fixed p-3 bg-white" style="width: 350px; height: stretch; right: 0; top: 0; z-index: 10; display: none; box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);">
+    <div class="position-relative mb-4">
+        <div style="font-size: 20px; font-weight: 500;">Data set in forecast</div>
+        <div class="me-4" style="font-size: 16px; font-weight: 400;">Select data you want to include in the forecast</div>
+        <button id="datasetCloseBtn" class="p-0 btn position-absolute" style="top: 0; right: 0;">
+            <i class="bi bi-x-lg" style="font-size: 20px;"></i>
+        </button>
+    </div>
+    <div class="d-flex flex-column gap-2 user-select-none" style="font-size: 16px;">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="temperatureSwitch">
+            <label class="form-check-label" for="temperatureSwitch">Temperature</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="apparentTemperatureSwitch">
+            <label class="form-check-label" for="apparentTemperatureSwitch">Apparent temperature</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="windDirectionSwitch">
+            <label class="form-check-label" for="windDirectionSwitch">Wind direction</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="windSpeedSwitch">
+            <label class="form-check-label" for="windSpeedSwitch">Wind speed</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="windGustsSwitch">
+            <label class="form-check-label" for="windGustsSwitch">Wind gusts</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="precipitationProbabilitySwitch">
+            <label class="form-check-label" for="precipitationProbabilitySwitch">Precipitation probability</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="precipitationSwitch">
+            <label class="form-check-label" for="precipitationSwitch">Precipitation</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="pressureSwitch">
+            <label class="form-check-label" for="pressureSwitch">Pressure</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="humiditySwitch">
+            <label class="form-check-label" for="humiditySwitch">Humidity</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="uvIndexSwitch">
+            <label class="form-check-label" for="uvIndexSwitch">UV index</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="cloudCoverSwitch">
+            <label class="form-check-label" for="cloudCoverSwitch">Cloud cover</label>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button id="resetDatasetsBtn" type="button" class="btn btn-secondary rounded p-2">
+            <span>Reset to default</span>
+        </button>
+    </div>
+</div>
+
+<script src="/js/open-dataset.js" asp-append-version="true"></script>
+<script src="/js/change-dataset.js" asp-append-version="true"></script>

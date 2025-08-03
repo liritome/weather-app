@@ -28,12 +28,12 @@
                         <img src="/svg/logo.svg" width="180" />
                     </a>
                 </div>
-                <div style="z-index: 20;">
+                <div id="searchContainer">
                     <div class="position-relative" style="width: 200px;">
                         <i class="bi bi-search position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%); color: gray;"></i>
-                        <input id="locationSearch" class="form-control border-0" style="background-color:#ededed; transition: width 0.3s ease; padding-inline-start: 35px;" type="text" placeholder="Search location" autocomplete="off" />
+                        <input id="search" class="form-control border-0" style="background-color:#ededed; transition: width 0.3s ease; padding-inline-start: 35px;" type="text" placeholder="Search location" autocomplete="off" />
                     </div>
-                    <ul id="searchResults" class="list-group position-absolute pt-2"></ul>
+                    <ul id="searchResults" class="list-group position-absolute pt-2" style="box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);"></ul>
                 </div>
                 <div style="width: 450px;">
                     <div id="locationLinks" class="d-inline-flex gap-2 head-location-menu" style="box-shadow: inset 0 -1px 0 0 lightgrey;" data-active-city-id="@location?.Id">
@@ -45,7 +45,7 @@
                     <span>°@temperatureUnit,</span>
                     <span>EN</span>
                 </button>
-                <div id="settings" class="p-2 rounded bg-white position-absolute pt-2" style="width: 380px; display: none; transform: translate(-85%); box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3); z-index: 10">
+                <div id="settings" class="p-3 rounded bg-white position-absolute" style="width: 400px; display: none; transform: translate(-85%); box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3); z-index: 10">
                     <div class="text-center position-relative" style="font-size: 20px; font-weight: 500;">
                         <span>Settings</span>
                         <button id="settingsCloseBtn" class="p-0 btn position-absolute" style="top: 0; right: 0;">
@@ -112,6 +112,7 @@
     <script src="/js/page-reload.js" asp-append-version="true"></script>
     <script src="/js/fill-search-result.js" asp-append-version="true"></script>
     <script src="/js/change-units.js" asp-append-version="true"></script>
+    <script src="/js/open-search.js" asp-append-version="true"></script>
     <script src="/js/open-settings.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)
 </body>

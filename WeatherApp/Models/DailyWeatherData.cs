@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using WeatherApp.Helpers;
 
 namespace WeatherApp.Models
 {
@@ -22,6 +21,12 @@ namespace WeatherApp.Models
 
         [JsonPropertyName("temperature_2m_min")]
         public List<double> TemperatureMin { get; set; }
+
+        [JsonPropertyName("apparent_temperature_max")]
+        public List<double> ApparentTemperatureMax { get; set; }
+
+        [JsonPropertyName("apparent_temperature_min")]
+        public List<double> ApparentTemperatureMin { get; set; }
 
         [JsonPropertyName("wind_speed_10m_max")]
         public List<double> WindSpeedMax { get; set; }
@@ -54,7 +59,7 @@ namespace WeatherApp.Models
         public List<int> CloudCover { get; set; }
 
         public DailyWeatherData(List<DateTime> time, List<DateTime> sunrise, List<DateTime> sunset, List<int> code,
-            List<double> temperatureMax, List<double> windSpeedMax, List<double> windGustsMax, List<double> temperatureMin,
+            List<double> temperatureMax, List<double> temperatureMin, List<double> apparentTemperatureMax, List<double> apparentTemperatureMin, List<double> windSpeedMax, List<double> windGustsMax,
             List<int> windDirectionDegreeDominant, List<double> uvIndexMax, List<double> precipitationSum, List<int> precipitationProbabilityMax,
             List<double> pressureMax, List<double> pressureMin, List<int> humidity, List<int> cloudCover)
         {
@@ -64,6 +69,8 @@ namespace WeatherApp.Models
             Code = code;
             TemperatureMax = temperatureMax.Select(t => Math.Round(t)).ToList();
             TemperatureMin = temperatureMin.Select(t => Math.Round(t)).ToList();
+            ApparentTemperatureMax = apparentTemperatureMax.Select(t => Math.Round(t)).ToList();
+            ApparentTemperatureMin = apparentTemperatureMin.Select(t => Math.Round(t)).ToList();
             WindSpeedMax = windSpeedMax.Select(t => Math.Round(t)).ToList();
             WindGustsMax = windGustsMax.Select(t => Math.Round(t)).ToList();
             WindDirectionDegreeDominant = windDirectionDegreeDominant;
@@ -81,7 +88,7 @@ namespace WeatherApp.Models
         {
             int index = Time.IndexOf(dateTime.Date);
             return new SingleDayWeather(Time[index], Sunrise[index], Sunset[index], Code[index], TemperatureMax[index],
-                TemperatureMin[index], WindSpeedMax[index], WindGustsMax[index], WindDirectionDegreeDominant[index],
+                TemperatureMin[index], ApparentTemperatureMax[index], ApparentTemperatureMin[index], WindSpeedMax[index], WindGustsMax[index], WindDirectionDegreeDominant[index],
                 UvIndexMax[index], PrecipitationSum[index], PrecipitationProbabilityMax[index],
                 PressureMax[index], PressureMin[index], Humidity[index], CloudCover[index]);
         }
@@ -96,6 +103,8 @@ namespace WeatherApp.Models
                 Code.GetRange(index, days),
                 TemperatureMax.GetRange(index, days),
                 TemperatureMin.GetRange(index, days),
+                ApparentTemperatureMax.GetRange(index, days),
+                ApparentTemperatureMin.GetRange(index, days),
                 WindSpeedMax.GetRange(index, days),
                 WindGustsMax.GetRange(index, days),
                 WindDirectionDegreeDominant.GetRange(index, days),
@@ -127,14 +136,20 @@ namespace WeatherApp.Models
         [JsonPropertyName("temperature_2m_max")]
         public string TemperatureMax { get; set; }
 
+        [JsonPropertyName("temperature_2m_min")]
+        public string TemperatureMin { get; set; }
+
+        [JsonPropertyName("apparent_temperature_max")]
+        public string ApparentTemperatureMax { get; set; }
+
+        [JsonPropertyName("apparent_temperature_min")]
+        public string ApparentTemperatureMin { get; set; }
+
         [JsonPropertyName("wind_speed_10m_max")]
         public string WindSpeedMax { get; set; }
 
         [JsonPropertyName("wind_gusts_10m_max")]
         public string WindGustsMax { get; set; }
-
-        [JsonPropertyName("temperature_2m_min")]
-        public string TemperatureMin { get; set; }
 
         [JsonPropertyName("wind_direction_10m_dominant")]
         public string WindDirectionDegreeDominant { get; set; }
@@ -168,6 +183,8 @@ namespace WeatherApp.Models
         int Code,
         double TemperatureMax,
         double TemperatureMin,
+        double ApparentTemperatureMax,
+        double ApparentTemperatureMin,
         double WindSpeedMax,
         double WindGustsMax,
         int WindDirectionDegreeDominant,
@@ -187,6 +204,8 @@ namespace WeatherApp.Models
         List<int> Code,
         List<double> TemperatureMax,
         List<double> TemperatureMin,
+        List<double> ApparentTemperatureMax,
+        List<double> ApparentTemperatureMin,
         List<double> WindSpeedMax,
         List<double> WindGustsMax,
         List<int> WindDirectionDegreeDominant,

@@ -13,7 +13,7 @@
             {
                 return null;
             }
-            string name = location.Substring(0, lastDashIndex).Replace('_', ' ');
+            string name = location.Substring(0, lastDashIndex);
             string id = location.Substring(lastDashIndex + 1);
             if (int.TryParse(id, out int idNum))
             {

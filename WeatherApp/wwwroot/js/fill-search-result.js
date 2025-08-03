@@ -1,7 +1,6 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    const input = document.getElementById("locationSearch");
+    const input = document.getElementById("search");
     const results = document.getElementById("searchResults");
-    const overlay = document.getElementById("overlay");
 
     //localStorage.clear();
     fillSavedLocations();
@@ -57,31 +56,6 @@
         } catch (error) {
             results.innerHTML = "<li class='list-group-item text-danger'>No locations found</li>";
         }
-    });
-
-    document.addEventListener("click", (e) => {
-        if (e.target == input) {
-            overlay.classList.add("active");
-            
-        }
-        else if (!results.contains(e.target)) {
-            results.innerHTML = "";
-            overlay.classList.remove("active");
-        }
-    });
-
-    input.addEventListener("click", () => {
-        if (input.value.trim().length >= 2) {
-            input.dispatchEvent(new Event("input"));
-        }
-    });
-
-    input.addEventListener("focus", () => {
-        input.style.width = "400px";
-    });
-
-    input.addEventListener("blur", () => {
-        input.style.width = "200px";
     });
 });
 
