@@ -16,9 +16,9 @@ namespace WeatherApp.TagHelpers
         protected override string BuildGridItem(int hour)
         {
             double temperature = Data[hour];
+            string tempBoxColor = WeatherHelper.GetTemperatureColor(temperature);
             string temperatureFormatted = WeatherHelper.ConvertTemperature(temperature, Unit);
             int positionFromTop = (int)(MaxTemp - temperature) * 2;
-            string tempBoxColor = WeatherHelper.GetTemperatureColor(temperature);
             return $@"
                 <div class=""position-relative"">
                     <div class=""position-absolute w-100 text-center"" style=""background-color: {tempBoxColor}; font-size: 20px; height: {TempBoxHeight}px; top: {positionFromTop}px;"">

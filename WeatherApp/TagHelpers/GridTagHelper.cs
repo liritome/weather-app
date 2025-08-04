@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
-using WeatherApp.Helpers;
 
 namespace WeatherApp.TagHelpers
 {

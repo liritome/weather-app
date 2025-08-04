@@ -12,6 +12,7 @@ namespace WeatherApp
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<LocationService>();
+            builder.Services.AddMemoryCache();
             builder.Services.AddHttpClient<WeatherApiService>();
 
             var supportedCultures = new[] { new CultureInfo("en-US") };

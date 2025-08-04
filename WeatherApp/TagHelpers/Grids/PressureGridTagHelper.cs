@@ -31,7 +31,7 @@ namespace WeatherApp.TagHelpers
         protected override string GetAdditionalStyle()
         {
             double pressureDifferenceDay = MaxPressure - MinPressure;
-            return $"height: {PressureBoxHeight + pressureDifferenceDay}px;";
+            return $"height: {PressureBoxHeight + pressureDifferenceDay * 2}px;";
         }
     }
 }

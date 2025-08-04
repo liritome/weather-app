@@ -16,7 +16,7 @@
     double parentWidth = 1000;
     double dayWidth = parentWidth / (double)daysVisible;
 
-    List<(int, byte)> iconData = dailyWeather.Code.Zip(Enumerable.Repeat((byte)1, 14), (c, d) => (c, d)).ToList();
+    List<(int, byte)> iconData = dailyWeather.Code.Zip(Enumerable.Repeat((byte)1, days), (c, d) => (c, d)).ToList();
     List<(double, double)> minmaxTempData = dailyWeather.TemperatureMin.Zip(dailyWeather.TemperatureMax, (n, x) => (n, x)).ToList();
     List<(double, double)> minmaxApparentTempData = dailyWeather.ApparentTemperatureMin.Zip(dailyWeather.ApparentTemperatureMax, (n, x) => (n, x)).ToList();
     List<(double, double)> minmaxPressureData = dailyWeather.PressureMin.Zip(dailyWeather.PressureMax, (n, x) => (n, x)).ToList();
@@ -61,67 +61,67 @@
             <div class="slider pt-2">
                 <icon-grid data="iconData" step="dayStep" item-width="dayWidth" width="50"></icon-grid>
             </div>
-            <div id="temperatureContainer" class="pt-2 display-none">
+            <div id="temperatureContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Air temperature, °@temperatureUnit</p>
                 <div class="slider">
                     <min-max-temperature-grid data="minmaxTempData" step="dayStep" item-width="dayWidth" unit="@temperatureUnit"></min-max-temperature-grid>
                 </div>
             </div>
-            <div id="apparentTemperatureContainer" class="pt-2 display-none">
+            <div id="apparentTemperatureContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Feels like, °@temperatureUnit</p>
                 <div class="slider">
                     <min-max-temperature-grid data="minmaxApparentTempData" step="dayStep" item-width="dayWidth" unit="@temperatureUnit"></min-max-temperature-grid>
                 </div>
             </div>
-            <div id="windDirectionContainer" class="pt-2 display-none">
+            <div id="windDirectionContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Wind direction</p>
                 <div class="slider">
                     <wind-direction-grid data="dailyWeather.WindDirectionDegreeDominant" step="dayStep" item-width="dayWidth"></wind-direction-grid>
                 </div>
             </div>
-            <div id="windSpeedContainer" class="pt-2 display-none">
+            <div id="windSpeedContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Wind speed, @speedUnit</p>
                 <div class="slider">
                     <wind-grid data="dailyWeather.WindSpeedMax" step="dayStep" item-width="dayWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
-            <div id="windGustsContainer" class="pt-2 display-none">
+            <div id="windGustsContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Wind gusts, @speedUnit</p>
                 <div class="slider">
                     <wind-grid data="dailyWeather.WindGustsMax" step="dayStep" item-width="dayWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
-            <div id="precipitationProbabilityContainer" class="pt-2 display-none">
+            <div id="precipitationProbabilityContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Precipitation probability, %</p>
                 <div class="slider">
                     <precip-probab-grid data="dailyWeather.PrecipitationProbabilityMax" step="dayStep" item-width="dayWidth"></precip-probab-grid>
                 </div>
             </div>
-            <div id="precipitationContainer" class="pt-2 display-none">
+            <div id="precipitationContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Precipitation, @precipUnit</p>
                 <div class="slider">
                     <precipitation-grid data="dailyWeather.PrecipitationSum" step="dayStep" item-width="dayWidth" unit="@precipUnit"></precipitation-grid>
                 </div>
             </div>
-            <div id="pressureContainer" class="pt-2 display-none">
+            <div id="pressureContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Pressure, mmhg</p>
                 <div class="slider">
                     <min-max-pressure-grid data="minmaxPressureData" step="dayStep" item-width="dayWidth" unit="@pressureUnit"></min-max-pressure-grid>
                 </div>
             </div>
-            <div id="humidityContainer" class="pt-2 display-none">
+            <div id="humidityContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Humidity, %</p>
                 <div class="slider">
                     <humidity-grid data="dailyWeather.Humidity" step="dayStep" item-width="dayWidth"></humidity-grid>
                 </div>
             </div>
-            <div id="uvIndexContainer" class="pt-2 display-none">
+            <div id="uvIndexContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">UV index</p>
                 <div class="slider">
                     <uv-index-grid data="dailyWeather.UvIndexMax" step="dayStep" item-width="dayWidth"></uv-index-grid>
                 </div>
             </div>
-            <div id="cloudCoverContainer" class="pt-2 display-none">
+            <div id="cloudCoverContainer" class="pt-2" style="display: none">
                 <p class="px-2 my-1">Cloud cover, %</p>
                 <div class="slider">
                     <cloud-cover-grid data="dailyWeather.CloudCover" step="dayStep" item-width="dayWidth"></cloud-cover-grid>

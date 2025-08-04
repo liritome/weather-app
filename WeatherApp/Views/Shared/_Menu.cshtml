@@ -19,7 +19,7 @@
     string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
 }
 
-<div class="mb-2 rounded-bottom-3 overflow-hidden" style="height: 130px; background-image: url('/images/weather/@($"{weatherImage} {(isDay ? "d" : "n")}").jpg'); background-size: cover; background-position: 0px -400px">
+<div class="mb-2 rounded-bottom-3 overflow-hidden" style="height: 130px; background-image: url('/images/weather/@($"{weatherImage} {(isDay ? "d" : "n")}").webp'); background-size: cover; background-position: 0px -400px">
     <div class="p-2 pt-1 d-flex flex-column text-white h-100" style="background-color:rgba(0, 0, 0, 0.1);">
         @{
             var pathParts = new List<string>();

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using WeatherApp.Models;
 using WeatherApp.Helpers;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace WeatherApp.Services
 {
@@ -8,15 +9,23 @@ namespace WeatherApp.Services
     {
         private readonly HttpClient httpClient;
         private readonly IConfiguration config;
+        private readonly IMemoryCache memoryCache;
 
-        public WeatherApiService(HttpClient httpClient, IConfiguration config)
+        public WeatherApiService(HttpClient httpClient, IConfiguration config, IMemoryCache memoryCache)
         {
             this.httpClient = httpClient;
             this.config = config;
+            this.memoryCache = memoryCache;
         }
 
         public async Task<OpenMeteoWeatherData> GetWeatherData(double lat, double lon)
         {
+            string cacheKey = $"weather_{lat}_{lon}";
+            if(memoryCache.TryGetValue(cacheKey, out OpenMeteoWeatherData cachedData))
+            {
+                return cachedData;
+            }
+
             string url = $"https://api.open-meteo.com/v1/forecast?" +
                 $"latitude={lat}" +
                 $"&longitude={lon}" +
@@ -49,11 +58,18 @@ namespace WeatherApp.Services
             {
                 PropertyNameCaseInsensitive = true,
             });
+            memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(15));
             return data;
         }
 
         public async Task<OpenMeteoGeocodingData> GetGeocodingData(string location)
         {
+            string cacheKey = $"geocoding_{location.Trim().ToLower()}";
+            if (memoryCache.TryGetValue(cacheKey, out OpenMeteoGeocodingData cachedData))
+            {
+                return cachedData;
+            }
+
             string url = $"https://geocoding-api.open-meteo.com/v1/search?" +
                 $"name={location}" +
                 $"&count=10" +
@@ -81,6 +97,7 @@ namespace WeatherApp.Services
             {
                 PropertyNameCaseInsensitive = true,
             });
+            memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(15));
             return data;
         }
     }
