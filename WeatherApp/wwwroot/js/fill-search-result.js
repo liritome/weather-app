@@ -71,6 +71,7 @@ function fillSavedLocations() {
     const saved = JSON.parse(localStorage.getItem("savedLocations")) || [];
     const container = document.getElementById("locationLinks");
     const activeCityId = container.dataset.activeCityId;
+    container.innerHTML = "";
 
     saved.forEach(loc => {
         const a = document.createElement("a");

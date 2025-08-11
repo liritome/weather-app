@@ -1,7 +1,8 @@
-﻿using System.Text.Json;
-using WeatherApp.Models;
+﻿using Microsoft.Extensions.Caching.Memory;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using WeatherApp.Helpers;
-using Microsoft.Extensions.Caching.Memory;
+using WeatherApp.Models;
 
 namespace WeatherApp.Services
 {
@@ -100,5 +101,54 @@ namespace WeatherApp.Services
             memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(15));
             return data;
         }
+
+        public async Task<Coordinates> GetGeocodingByIp(string ip)
+        {
+            string baseUrl = "http://ip-api.com";
+            string url;
+            if (string.IsNullOrEmpty(ip))
+            {
+                url = $"{baseUrl}/json?fields=city,lat,lon";
+            }
+            else
+            {
+                url = $"{baseUrl}/{ip}/json?fields=city,lat,lon";
+            }
+                string json = null;
+            try
+            {
+                var res = await httpClient.GetAsync(url);
+                if (res.IsSuccessStatusCode)
+                {
+                    json = await res.Content.ReadAsStringAsync();
+                }
+            }
+            catch
+            {
+
+            }
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                string fallbackPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "geocodingByIpFallback.json");
+                json = await File.ReadAllTextAsync(fallbackPath);
+            }
+            var data = JsonSerializer.Deserialize<Coordinates>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            });
+            return data;
+        }
+    }
+
+    public class Coordinates
+    {
+        [JsonPropertyName("city")]
+        public string City { get; set; }
+
+        [JsonPropertyName("lat")]
+        public double Latitude { get; set; }
+
+        [JsonPropertyName("lon")]
+        public double Longitude { get; set; }
     }
 }
