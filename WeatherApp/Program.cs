@@ -33,8 +33,15 @@ namespace WeatherApp
             app.UseStaticFiles();
 
             app.MapControllerRoute(
+                name: "geocoder",
+                pattern: "Geocoder/{action}/{id?}",
+                defaults: new { controller = "Geocoder" }
+            );
+
+            app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Weather}/{action=Now}");
+                pattern: "{controller=Weather}/{city?}/{action}"
+            );
 
             app.Run();
         }

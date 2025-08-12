@@ -1,8 +1,11 @@
 ﻿saveLocationFromUrl();
 
 async function saveLocationFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const location = urlParams.get("city");
+    const pathParts = window.location.pathname.split('/').filter(p => p);
+    let location = null;
+    if (pathParts.length >= 2 && pathParts[0].toLowerCase() === "weather") {
+        location = pathParts[1];
+    }
     const existsResponse = await fetch(`/Geocoder/LocationExists?location=${encodeURIComponent(location)}`);
     const exists = await existsResponse.json();
     if (exists) {

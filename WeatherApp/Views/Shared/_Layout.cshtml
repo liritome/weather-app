@@ -3,9 +3,9 @@
 
 @{
     var location = ViewData["Location"] as Location;
-    string locationIdString = $"{location?.Name}-{location?.Id}";
 
     string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
+    string speedUnit = Context.Request.Cookies["speedUnit"] ?? WeatherHelper.DefaultSpeedUnit;
 }
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
         <div class="d-flex justify-content-between align-items-center bg-white p-2">
             <div class="d-flex justify-content-between align-items-center gap-3">
                 <div class="ps-0">
-                    <a asp-action="Now" asp-route-city="@locationIdString">
+                    <a asp-action="Now">
                         <img src="/svg/logo.svg" width="180" />
                     </a>
                 </div>
@@ -43,7 +43,7 @@
             <div>
                 <button class="btn" id="settingsBtn">
                     <span>°@temperatureUnit,</span>
-                    <span>EN</span>
+                    <span>@speedUnit</span>
                 </button>
                 <div id="settings" class="p-3 rounded bg-white position-absolute" style="width: 400px; display: none; transform: translate(-85%); box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3); z-index: 10">
                     <div class="text-center position-relative" style="font-size: 20px; font-weight: 500;">
@@ -84,15 +84,6 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="my-2">
-                            <span>Language</span>
-                        </div>
-                        <div class="dropdown">
-                            <select id="languageSwitcher" class="form-select" style="width: auto;">
-                                <option value="EN">English</option>
-                                <option value="UA">Ukrainian</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -112,7 +103,6 @@
     <script src="/js/page-reload.js" asp-append-version="true"></script>
     <script src="/js/fill-search-result.js" asp-append-version="true"></script>
     <script src="/js/save-location-from-url.js" asp-append-version="true"></script>
-    <script src="/js/geolocation-by-ip.js" asp-append-version="true"></script>
     <script src="/js/change-units.js" asp-append-version="true"></script>
     <script src="/js/open-search.js" asp-append-version="true"></script>
     <script src="/js/open-settings.js" asp-append-version="true"></script>

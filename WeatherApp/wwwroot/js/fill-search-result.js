@@ -2,7 +2,6 @@
     const input = document.getElementById("search");
     const results = document.getElementById("searchResults");
 
-    //localStorage.clear();
     fillSavedLocations();
 
     input.addEventListener("input", async function () {
@@ -94,11 +93,9 @@ function fillSavedLocations() {
 
 function buildLocationUrl(locationName, locationId) {
     const cityString = `${locationName}-${locationId}`;
-    const currentPath = window.location.pathname;
-
-    const params = new URLSearchParams(window.location.search);
-    params.delete("city");
-    params.set("city", cityString);
-
-    return `${currentPath}?${params.toString()}`;
+    const pathParts = window.location.pathname.split("/").filter(p => p);
+    if (pathParts.length >= 3) {
+        pathParts[1] = cityString;
+    }
+    return "/" + pathParts.join("/") + window.location.search;
 }
