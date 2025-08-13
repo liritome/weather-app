@@ -16,6 +16,18 @@ namespace WeatherApp.Controllers
 
         public async Task<IActionResult> Now(string city)
         {
+            if (string.IsNullOrEmpty(city))
+            {
+                using var client = new HttpClient();
+                var locationByIp = await client.GetFromJsonAsync<Location>(
+                    $"{Request.Scheme}://{Request.Host}/Geocoder/GetLocationByIp"
+                );
+                if (locationByIp != null)
+                {
+                    return RedirectToAction("Now", new { city = $"{locationByIp.Name}-{locationByIp.Id}" });
+                }
+                return RedirectToAction("Error");
+            }
             ViewData["ActiveTab"] = "now";
             var (location, data) = await GetLocationWeatherAsync(city);
             ViewData["Location"] = location;

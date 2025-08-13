@@ -17,6 +17,9 @@
     double averageTemp = (dailyWeather.TemperatureMax.Average() + dailyWeather.TemperatureMin.Average()) / 2;
     string color = WeatherHelper.GetTemperatureColor(averageTemp);
 
+    var location = ViewData["Location"] as Location;
+    var locationWithId = $"{location.Name}-{location.Id}";
+
     string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
     string speedUnit = Context.Request.Cookies["speedUnit"] ?? WeatherHelper.DefaultSpeedUnit;
     string precipUnit = Context.Request.Cookies["precipUnit"] ?? WeatherHelper.DefaultPrecipUnit;
@@ -169,7 +172,7 @@
                         var svgPair = WeatherHelper.GetWeatherSvgPair(dayWeather.Code);
                         var weatherDescription = WeatherHelper.GetWeatherDescription(dayWeather.Code);
 
-                        <a asp-action="Day" asp-route-day="@day" class="text-decoration-none text-black d-block @(day < 0 ? "gray-out" : "")" style="aspect-ratio: 1 / 1; background-color: @(tempColor); padding: 1px;">
+                        <a asp-action="Day" asp-route-city="@locationWithId" asp-route-day="@day" class="text-decoration-none text-black d-block @(day < 0 ? "gray-out" : "")" style="aspect-ratio: 1 / 1; background-color: @(tempColor); padding: 1px;">
                             <div class="h-100 w-100 px-1 pt-0 pb-1 d-flex flex-column" style="background-color: rgba(255,255,255, 0.75);">
                                 <span style="font-size: 16px;">
                                     <date date="@dayWeather.Time.Date" format="day"></date>

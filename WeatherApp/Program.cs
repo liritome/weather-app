@@ -40,7 +40,7 @@ namespace WeatherApp
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Weather}/{city?}/{action}"
+                pattern: "{controller=Weather}/{action=Now}/{city?}"
             );
 
             app.Run();

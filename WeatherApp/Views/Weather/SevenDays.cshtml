@@ -21,6 +21,9 @@
     List<(double, double)> minmaxApparentTempData = dailyWeather.ApparentTemperatureMin.Zip(dailyWeather.ApparentTemperatureMax, (n, x) => (n, x)).ToList();
     List<(double, double)> minmaxPressureData = dailyWeather.PressureMin.Zip(dailyWeather.PressureMax, (n, x) => (n, x)).ToList();
 
+    var location = ViewData["Location"] as Location;
+    var locationWithId = $"{location.Name}-{location.Id}";
+
     string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
     string speedUnit = Context.Request.Cookies["speedUnit"] ?? WeatherHelper.DefaultSpeedUnit;
     string precipUnit = Context.Request.Cookies["precipUnit"] ?? WeatherHelper.DefaultPrecipUnit;
@@ -48,7 +51,7 @@
                 @for (int day = 0; day < days; day++)
                 {
                     var date = localNow.AddDays(day);
-                    <a asp-action="Day" asp-route-day="@day" class="text-decoration-none text-black">
+                    <a asp-action="Day" asp-route-city="@locationWithId" asp-route-day="@day" class="text-decoration-none text-black">
                         <div class="text-center" style="font-size: 18px;">
                             <date date="date" format="dayWeekday"></date>
                         </div>

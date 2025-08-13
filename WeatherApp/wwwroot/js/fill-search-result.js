@@ -43,10 +43,8 @@
 
                 li.addEventListener("click", () => {
                     saveLocation(loc.name, loc.id);
-
                     input.value = "";
                     results.innerHTML = "";
-
                     window.location.href = buildLocationUrl(loc.name, loc.id);
                 });
 
@@ -95,7 +93,7 @@ function buildLocationUrl(locationName, locationId) {
     const cityString = `${locationName}-${locationId}`;
     const pathParts = window.location.pathname.split("/").filter(p => p);
     if (pathParts.length >= 3) {
-        pathParts[1] = cityString;
+        pathParts[2] = cityString;
     }
     return "/" + pathParts.join("/") + window.location.search;
 }

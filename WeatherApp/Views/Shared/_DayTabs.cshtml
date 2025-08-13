@@ -23,6 +23,9 @@
     }
     int endDayIndex = startDayIndex + 4;
 
+    var location = ViewData["Location"] as Location;
+    var locationWithId = $"{location.Name}-{location.Id}";
+
     string temperatureUnit = Context.Request.Cookies["temperatureUnit"] ?? WeatherHelper.DefaultTemperatureUnit;
     string precipUnit = Context.Request.Cookies["precipUnit"] ?? WeatherHelper.DefaultPrecipUnit;
 }
@@ -34,7 +37,7 @@
         var svgPair = WeatherHelper.GetWeatherSvgPair(day.Code);
         var weatherDescription = WeatherHelper.GetWeatherDescription(day.Code);
 
-        <a asp-action="Day" asp-route-day="@(dayOffset + i)" class="text-decoration-none text-black">
+        <a asp-action="Day" asp-route-city="@locationWithId" asp-route-day="@(dayOffset + i)" class="text-decoration-none text-black">
             <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayOffset"] != null ? "active-day-tab" : "day-tab")">
                 <div class="d-flex justify-content-between h-100">
                     <div class="d-flex flex-column me-2">
