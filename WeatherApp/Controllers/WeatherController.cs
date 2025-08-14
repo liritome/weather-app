@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Models;
 using WeatherApp.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WeatherApp.Controllers
 {
@@ -16,27 +17,12 @@ namespace WeatherApp.Controllers
 
         public async Task<IActionResult> Now(string city)
         {
-            if (string.IsNullOrEmpty(city))
-            {
-                using var client = new HttpClient();
-                var locationByIp = await client.GetFromJsonAsync<Location>(
-                    $"{Request.Scheme}://{Request.Host}/Geocoder/GetLocationByIp"
-                );
-                if (locationByIp != null)
-                {
-                    return RedirectToAction("Now", new { city = $"{locationByIp.Name}-{locationByIp.Id}" });
-                }
-                return RedirectToAction("Error");
-            }
-            ViewData["ActiveTab"] = "now";
-            var (location, data) = await GetLocationWeatherAsync(city);
-            ViewData["Location"] = location;
-            return View(data);
+            return await ShowWeatherAsync(city, "now", "Now");
         }
 
         public async Task<IActionResult> Day(string city, int day = 0)
         {
-            ViewData["ActiveTab"] = day switch
+            string activeTab = day switch
             {
                 -1 => "yesterday",
                 0 => "today",
@@ -44,41 +30,68 @@ namespace WeatherApp.Controllers
                 _ => ""
             };
             ViewData["DayOffset"] = day;
-            var (location, data) = await GetLocationWeatherAsync(city);
-            ViewData["Location"] = location;
-            return View(data);
+            return await ShowWeatherAsync(city, activeTab, "Day");
         }
 
         public async Task<IActionResult> Hourly(string city)
         {
-            ViewData["ActiveTab"] = "hourly";
-            var (location, data) = await GetLocationWeatherAsync(city);
-            ViewData["Location"] = location;
-            return View(data);
+            return await ShowWeatherAsync(city, "hourly", "Hourly");
         }
 
         public async Task<IActionResult> ThreeDays(string city)
         {
-            ViewData["ActiveTab"] = "threeDays";
-            var (location, data) = await GetLocationWeatherAsync(city);
-            ViewData["Location"] = location;
-            return View(data);
+            return await ShowWeatherAsync(city, "threeDays", "ThreeDays");
         }
 
         public async Task<IActionResult> SevenDays(string city)
         {
-            ViewData["ActiveTab"] = "sevenDays";
-            var (location, data) = await GetLocationWeatherAsync(city);
-            ViewData["Location"] = location;
-            return View(data);
+            return await ShowWeatherAsync(city, "sevenDays", "SevenDays");
         }
 
         public async Task<IActionResult> TwoWeeks(string city)
         {
-            ViewData["ActiveTab"] = "twoWeeks";
-            var (location, data) = await GetLocationWeatherAsync(city);
-            ViewData["Location"] = location;
-            return View(data);
+            return await ShowWeatherAsync(city, "twoWeeks", "TwoWeeks");
+        }
+
+        private async Task<IActionResult> ShowWeatherAsync(string city, string activeTab, string viewName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(city))
+                {
+                    var lastValidCity = HttpContext.Session.GetString("LastValidCity");
+                    if (lastValidCity != null)
+                    {
+                        return RedirectToAction("Now", new { city = lastValidCity });
+                    }
+                    using var client = new HttpClient();
+                    var locationByIp = await client.GetFromJsonAsync<Location>(
+                        $"{Request.Scheme}://{Request.Host}/Geocoder/GetLocationByIp"
+                    );
+                    if (locationByIp != null)
+                    {
+                        return RedirectToAction("Now", new { city = $"{locationByIp.Name}-{locationByIp.Id}" });
+                    }
+                    return RedirectTo404();
+                }            
+                ViewData["ActiveTab"] = activeTab;
+                var (location, data) = await GetLocationWeatherAsync(city);
+                ViewData["Location"] = location;
+                return View(viewName, data);
+            }
+            catch
+            {
+                return RedirectTo404();
+            }
+        }
+
+        private IActionResult RedirectTo404()
+        {
+            return RedirectToAction(
+                actionName: "HttpStatusCodeHandler",
+                controllerName: "Error",
+                routeValues: new { statusCode = 404 }
+            );
         }
 
         private async Task<(Location location, OpenMeteoWeatherData data)> GetLocationWeatherAsync(string city)
@@ -90,8 +103,9 @@ namespace WeatherApp.Controllers
             var geocodingData = await weatherApiService.GetGeocodingData(cityName);
             var location = geocodingData.Locations.First(l => l.Id == cityId);
 
-            var data = await weatherApiService.GetWeatherData(location.Latitude, location.Longitude);
+            HttpContext.Session.SetString("LastValidCity", $"{location.Name}-{location.Id}");
 
+            var data = await weatherApiService.GetWeatherData(location.Latitude, location.Longitude);
             return (location, data);
         }
     }
