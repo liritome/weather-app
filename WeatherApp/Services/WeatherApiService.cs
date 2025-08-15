@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using WeatherApp.Helpers;
@@ -19,51 +20,60 @@ namespace WeatherApp.Services
             this.memoryCache = memoryCache;
         }
 
-        public async Task<OpenMeteoWeatherData> GetWeatherData(double lat, double lon)
+        public async Task<OpenMeteoWeatherData?> GetWeatherData(double lat, double lon)
         {
             string cacheKey = $"weather_{lat}_{lon}";
-            if(memoryCache.TryGetValue(cacheKey, out OpenMeteoWeatherData cachedData))
+            if (memoryCache.TryGetValue(cacheKey, out OpenMeteoWeatherData cachedData))
             {
                 return cachedData;
             }
 
-            string url = $"https://api.open-meteo.com/v1/forecast?" +
-                $"latitude={lat}" +
-                $"&longitude={lon}" +
-                $"&daily=sunrise,sunset,weather_code,temperature_2m_max,wind_speed_10m_max,wind_direction_10m_dominant,uv_index_max,precipitation_sum,temperature_2m_min,wind_gusts_10m_max,precipitation_probability_max,pressure_msl_max,pressure_msl_min,relative_humidity_2m_mean,cloud_cover_mean,apparent_temperature_max,apparent_temperature_min" +
-                $"&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,uv_index,wind_gusts_10m,pressure_msl,is_day" +
-                $"&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,cloud_cover,precipitation,wind_speed_10m,wind_direction_10m,pressure_msl,wind_gusts_10m" +
-                $"&timezone=auto" +
-                $"&past_days={WeatherHelper.PastDays}" +
-                $"&forecast_days={WeatherHelper.Days}" +
-                $"&wind_speed_unit=ms";
-            string json = null;
+            var queryParams = new Dictionary<string, string?>
+            {
+                ["latitude"] = lat.ToString(),
+                ["longitude"] = lon.ToString(),
+                ["daily"] = "sunrise,sunset,weather_code,temperature_2m_max,wind_speed_10m_max,wind_direction_10m_dominant,uv_index_max,precipitation_sum,temperature_2m_min,wind_gusts_10m_max,precipitation_probability_max,pressure_msl_max,pressure_msl_min,relative_humidity_2m_mean,cloud_cover_mean,apparent_temperature_max,apparent_temperature_min",
+                ["hourly"] = "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,uv_index,wind_gusts_10m,pressure_msl,is_day",
+                ["current"] = "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,cloud_cover,precipitation,wind_speed_10m,wind_direction_10m,pressure_msl,wind_gusts_10m",
+                ["timezone"] = "auto",
+                ["past_days"] = WeatherHelper.PastDays.ToString(),
+                ["forecast_days"] = WeatherHelper.Days.ToString(),
+                ["wind_speed_unit"] = "ms"
+            };
+            string url = QueryHelpers.AddQueryString("https://api.open-meteo.com/v1/forecast", queryParams);
+
             try
             {
                 var res = await httpClient.GetAsync(url);
-                if (res.IsSuccessStatusCode)
+                if (!res.IsSuccessStatusCode)
                 {
-                    json = await res.Content.ReadAsStringAsync();
+                    return null;
                 }
+
+                var json = await res.Content.ReadAsStringAsync();
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    return null;
+                }
+
+                var data = JsonSerializer.Deserialize<OpenMeteoWeatherData>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                });
+                if(data != null)
+                {
+                    memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(15));
+                }
+                return data;
             }
-            catch
+            catch (Exception ex)
             {
-                // todo: WeatherService try..catch
+                Console.Error.WriteLine($"Weather API error: {ex.ToString()}");
+                return null;
             }
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                string fallbackPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "fallback.json");
-                json = await File.ReadAllTextAsync(fallbackPath);
-            }
-            var data = JsonSerializer.Deserialize<OpenMeteoWeatherData>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-            });
-            memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(15));
-            return data;
         }
 
-        public async Task<OpenMeteoGeocodingData> GetGeocodingData(string location)
+        public async Task<OpenMeteoGeocodingData?> GetGeocodingData(string location)
         {
             string cacheKey = $"geocoding_{location.Trim().ToLower()}";
             if (memoryCache.TryGetValue(cacheKey, out OpenMeteoGeocodingData cachedData))
@@ -71,79 +81,85 @@ namespace WeatherApp.Services
                 return cachedData;
             }
 
-            string url = $"https://geocoding-api.open-meteo.com/v1/search?" +
-                $"name={location}" +
-                $"&count=10" +
-                $"&language=en" +
-                $"&format=json";
-            string json = null;
+            var queryParams = new Dictionary<string, string?>
+            {
+                ["name"] = location,
+                ["count"] = "10",
+                ["language"] = "en",
+                ["format"] = "json"
+            };
+            string url = QueryHelpers.AddQueryString("https://geocoding-api.open-meteo.com/v1/search", queryParams);
+
             try
             {
                 var res = await httpClient.GetAsync(url);
-                if (res.IsSuccessStatusCode)
+                if (!res.IsSuccessStatusCode)
                 {
-                    json = await res.Content.ReadAsStringAsync();
+                    return null;
                 }
+
+                var json = await res.Content.ReadAsStringAsync();
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    return null;
+                }
+
+                var data = JsonSerializer.Deserialize<OpenMeteoGeocodingData>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                });
+                if(data != null)
+                {
+                    memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(15));
+                }
+                return data;
             }
-            catch
+            catch (Exception ex)
             {
-                // todo: WeatherService try..catch
+                Console.Error.WriteLine($"Geocoding API error: {ex.ToString()}");
+                return null;
             }
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                string fallbackPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "geocodingFallback.json");
-                json = await File.ReadAllTextAsync(fallbackPath);
-            }
-            var data = JsonSerializer.Deserialize<OpenMeteoGeocodingData>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-            });
-            memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(15));
-            return data;
         }
 
-        public async Task<Coordinates> GetGeocodingByIp(string ip)
+        public async Task<Coordinates?> GetGeocodingByIp(string ip)
         {
             string baseUrl = "http://ip-api.com";
-            string url;
-            if (string.IsNullOrEmpty(ip))
-            {
-                url = $"{baseUrl}/json?fields=city,lat,lon";
-            }
-            else
-            {
-                url = $"{baseUrl}/{ip}/json?fields=city,lat,lon";
-            }
-                string json = null;
+            string url = string.IsNullOrEmpty(ip)
+                ? $"{baseUrl}/json?fields=city,lat,lon"
+                : $"{baseUrl}/{ip}/json?fields=city,lat,lon";
+
             try
             {
                 var res = await httpClient.GetAsync(url);
-                if (res.IsSuccessStatusCode)
+                if (!res.IsSuccessStatusCode)
                 {
-                    json = await res.Content.ReadAsStringAsync();
+                    return null;
                 }
-            }
-            catch
-            {
 
+                var json = await res.Content.ReadAsStringAsync();
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    return null;
+                }
+
+                var data = JsonSerializer.Deserialize<Coordinates>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                });
+                return data;
             }
-            if (string.IsNullOrWhiteSpace(json))
+            catch (Exception ex)
             {
-                string fallbackPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "geocodingByIpFallback.json");
-                json = await File.ReadAllTextAsync(fallbackPath);
+                Console.Error.WriteLine($"Geocoding by IP API error: {ex.ToString()}");
+                return null;
             }
-            var data = JsonSerializer.Deserialize<Coordinates>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-            });
-            return data;
         }
     }
 
     public class Coordinates
     {
         [JsonPropertyName("city")]
-        public string City { get; set; }
+        public string City { get; set; } = string.Empty;
 
         [JsonPropertyName("lat")]
         public double Latitude { get; set; }

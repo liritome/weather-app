@@ -10,6 +10,7 @@ namespace WeatherApp.Controllers
             ViewData["ErrorMessage"] = statusCode switch
             {
                 404 => "The page you are looking for could not be found.",
+                400 => "Bad request. Please check your input.",
                 _ => "An unexpected error occurred."
             };
             var lastValidCity = HttpContext.Session.GetString("LastValidCity");

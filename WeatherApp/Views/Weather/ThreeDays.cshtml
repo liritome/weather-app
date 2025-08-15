@@ -32,8 +32,8 @@
     string pressureUnit = Context.Request.Cookies["pressureUnit"] ?? WeatherHelper.DefaultPressureUnit;
 }
 
-<div class="container-fluid p-0" style="width: 1016px;">
-    <div class="mt-2 mb-3" style="font-size: 24px">
+<div class="container-fluid p-0 main-width">
+    <div class="mt-2 mb-3 font-24">
         <div class="d-flex gap-3">
             <span class="me-auto">Weather for 3 days</span>
             <partial name="_DataSet" />
@@ -49,10 +49,10 @@
     </div>
     <div class="p-2 rounded bg-white mb-2">
         <div id="grid-container" data-items="@days" data-item-width="@dayWidth" data-items-visible="@daysVisible" data-step="1" class="position-relative overflow-hidden">
-            <div class="position-absolute" style="left: 33.33%; transform: translateX(-50%); z-index: 5;">
+            <div class="position-absolute three-days-line-first">
                 <img src="/svg/divider.svg" height="1200" />
             </div>
-            <div class="position-absolute" style="left: 66.66%; transform: translateX(-50%); z-index: 5;">
+            <div class="position-absolute three-days-line-second">
                 <img src="/svg/divider.svg" height="1200" />
             </div>
             <div class="slider d-grid" style="grid-template-columns: repeat(@days, @(dayWidth + "px"));">
@@ -60,7 +60,7 @@
                 {
                     var date = localNow.AddDays(day);
                     <a asp-action="Day" asp-route-city="@locationWithId" asp-route-day="@day" class="text-decoration-none text-black">
-                        <div class="ps-2" style="font-size: 18px;">
+                        <div class="ps-2 font-18">
                             <date date="@date" format="dayWeekdayMonthLong"></date>
                         </div>
                     </a>
@@ -72,67 +72,67 @@
             <div class="slider pt-2">
                 <icon-grid data="iconData" step="hourStep" item-width="itemWidth" width="50"></icon-grid>
             </div>
-            <div id="temperatureContainer" class="pt-2" style="display: none">
+            <div id="temperatureContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Air temperature, °@temperatureUnit</p>
                 <div class="slider">
                     <temperature-grid data="hourlyWeather.Temperature" step="hourStep" item-width="itemWidth" unit="@temperatureUnit"></temperature-grid>
                 </div>
             </div>
-            <div id="apparentTemperatureContainer" class="pt-2" style="display: none">
+            <div id="apparentTemperatureContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Feels like, °@temperatureUnit</p>
                 <div class="slider">
                     <temperature-grid data="hourlyWeather.ApparentTemperature" step="hourStep" item-width="itemWidth" unit="@temperatureUnit"></temperature-grid>
                 </div>
             </div>
-            <div id="windDirectionContainer" class="pt-2" style="display: none">
+            <div id="windDirectionContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Wind direction</p>
                 <div class="slider">
                     <wind-direction-grid data="hourlyWeather.WindDirectionDegree" step="hourStep" item-width="itemWidth"></wind-direction-grid>
                 </div>
             </div>
-            <div id="windSpeedContainer" class="pt-2" style="display: none">
+            <div id="windSpeedContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Wind speed, @speedUnit</p>
                 <div class="slider">
                     <wind-grid data="hourlyWeather.WindSpeed" step="hourStep" item-width="itemWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
-            <div id="windGustsContainer" class="pt-2" style="display: none">
+            <div id="windGustsContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Wind gusts, @speedUnit</p>
                 <div class="slider">
                     <wind-grid data="hourlyWeather.WindGusts" step="hourStep" item-width="itemWidth" unit="@speedUnit"></wind-grid>
                 </div>
             </div>
-            <div id="precipitationProbabilityContainer" class="pt-2" style="display: none">
+            <div id="precipitationProbabilityContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Precipitation probability, %</p>
                 <div class="slider">
                     <precip-probab-grid data="hourlyWeather.PrecipitationProbability" step="hourStep" item-width="itemWidth"></precip-probab-grid>
                 </div>
             </div>
-            <div id="precipitationContainer" class="pt-2" style="display: none">
+            <div id="precipitationContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Precipitation, @precipUnit</p>
                 <div class="slider">
                     <precipitation-grid data="hourlyWeather.Precipitation" step="hourStep" item-width="itemWidth" unit="@precipUnit"></precipitation-grid>
                 </div>
             </div>
-            <div id="pressureContainer" class="pt-2" style="display: none">
+            <div id="pressureContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Pressure, @pressureUnit</p>
                 <div class="slider">
                     <pressure-grid data="hourlyWeather.Pressure" step="hourStep" item-width="itemWidth" unit="@pressureUnit"></pressure-grid>
                 </div>
             </div>
-            <div id="humidityContainer" class="pt-2" style="display: none">
+            <div id="humidityContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Humidity, %</p>
                 <div class="slider">
                     <humidity-grid data="hourlyWeather.Humidity" step="hourStep" item-width="itemWidth"></humidity-grid>
                 </div>
             </div>
-            <div id="uvIndexContainer" class="pt-2" style="display: none">
+            <div id="uvIndexContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">UV index</p>
                 <div class="slider">
                     <uv-index-grid data="hourlyWeather.UvIndex" step="hourStep" item-width="itemWidth"></uv-index-grid>
                 </div>
             </div>
-            <div id="cloudCoverContainer" class="pt-2" style="display: none">
+            <div id="cloudCoverContainer" class="pt-2 grid-container-hidden">
                 <p class="px-2 my-1">Cloud cover, %</p>
                 <div class="slider">
                     <cloud-cover-grid data="hourlyWeather.CloudCover" step="hourStep" item-width="itemWidth"></cloud-cover-grid>

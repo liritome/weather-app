@@ -122,58 +122,58 @@ namespace WeatherApp.Models
     public class DailyWeatherUnits
     {
         [JsonPropertyName("time")]
-        public string Time { get; set; }
+        public string Time { get; set; } = string.Empty;
 
         [JsonPropertyName("sunrise")]
-        public string Sunrise { get; set; }
+        public string Sunrise { get; set; } = string.Empty;
 
         [JsonPropertyName("sunset")]
-        public string Sunset { get; set; }
+        public string Sunset { get; set; } = string.Empty;
 
         [JsonPropertyName("weather_code")]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         [JsonPropertyName("temperature_2m_max")]
-        public string TemperatureMax { get; set; }
+        public string TemperatureMax { get; set; } = string.Empty;
 
         [JsonPropertyName("temperature_2m_min")]
-        public string TemperatureMin { get; set; }
+        public string TemperatureMin { get; set; } = string.Empty;
 
         [JsonPropertyName("apparent_temperature_max")]
-        public string ApparentTemperatureMax { get; set; }
+        public string ApparentTemperatureMax { get; set; } = string.Empty;
 
         [JsonPropertyName("apparent_temperature_min")]
-        public string ApparentTemperatureMin { get; set; }
+        public string ApparentTemperatureMin { get; set; } = string.Empty;
 
         [JsonPropertyName("wind_speed_10m_max")]
-        public string WindSpeedMax { get; set; }
+        public string WindSpeedMax { get; set; } = string.Empty;
 
         [JsonPropertyName("wind_gusts_10m_max")]
-        public string WindGustsMax { get; set; }
+        public string WindGustsMax { get; set; } = string.Empty;
 
         [JsonPropertyName("wind_direction_10m_dominant")]
-        public string WindDirectionDegreeDominant { get; set; }
+        public string WindDirectionDegreeDominant { get; set; } = string.Empty;
 
         [JsonPropertyName("uv_index_max")]
-        public string UvIndexMax { get; set; }
+        public string UvIndexMax { get; set; } = string.Empty;
 
         [JsonPropertyName("precipitation_sum")]
-        public string PrecipitationSum { get; set; }
+        public string PrecipitationSum { get; set; } = string.Empty;
 
         [JsonPropertyName("precipitation_probability_max")]
-        public string PrecipitationProbabilityMax { get; set; }
+        public string PrecipitationProbabilityMax { get; set; } = string.Empty;
 
         [JsonPropertyName("pressure_msl_max")]
-        public string PressureMax { get; set; }
+        public string PressureMax { get; set; } = string.Empty;
 
         [JsonPropertyName("pressure_msl_min")]
-        public string PressureMin { get; set; }
+        public string PressureMin { get; set; } = string.Empty;
 
         [JsonPropertyName("relative_humidity_2m_mean")]
-        public string Humidity { get; set; }
+        public string Humidity { get; set; } = string.Empty;
 
         [JsonPropertyName("cloud_cover_mean")]
-        public string CloudCover { get; set; }
+        public string CloudCover { get; set; } = string.Empty;
     }
 
     public record SingleDayWeather(

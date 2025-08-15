@@ -9,7 +9,7 @@
     btn.addEventListener("click", function (e) {
         e.stopPropagation();
         overlay.classList.add("active");
-        datasetWindow.style.display = datasetWindow.style.display == "none" ? "block" : "none";
+        datasetWindow.style.display = "block";
     });
 
     overlay.addEventListener("click", function () {

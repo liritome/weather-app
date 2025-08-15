@@ -98,3 +98,264 @@ img {
         opacity: 1;
         visibility: visible;
     }
+
+.main-body {
+    background-color: #ededed;
+}
+
+.main-width {
+    width: 1016px;
+}
+
+.search-box {
+    width: 200px;
+}
+
+    .search-box input {
+        background-color: #ededed;
+        transition: width 0.3s ease;
+        padding-inline-start: 35px;
+    }
+
+    .search-box i {
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: gray;
+    }
+
+#searchResults {
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+}
+
+.location-links-box {
+    width: 450px;
+}
+
+#locationLinks {
+    box-shadow: inset 0 -1px 0 0 lightgrey;
+}
+
+#settings {
+    width: 400px;
+    display: none;
+    transform: translate(-85%);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.settings-header {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.close-btn {
+    top: 0;
+    right: 0;
+}
+
+    .close-btn i {
+        font-size: 20px;
+    }
+
+.footer-text-box {
+    font-size: 12px;
+    color: gray
+}
+
+.menu-container {
+    height: 130px;
+    background-size: cover;
+    background-position: 0px -400px;
+}
+
+.menu-inner {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.font-14 {
+    font-size: 14px;
+}
+
+.font-16 {
+    font-size: 16px;
+}
+
+.font-18 {
+    font-size: 18px;
+}
+
+.font-20 {
+    font-size: 20px;
+}
+
+.font-22 {
+    font-size: 22px;
+}
+
+.font-24 {
+    font-size: 24px;
+}
+
+.error-image {
+    margin-top: 200px;
+}
+
+.error-text {
+    margin: 50px;
+}
+
+#datasetWindow {
+    width: 350px;
+    height: stretch;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    display: none;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+}
+
+.dataset-header {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.dataset-text {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.daytab-date {
+    height: 24px;
+    font-size: 18px
+}
+
+.daytab-label {
+    height: 20px;
+    font-size: 16px;
+}
+
+.daytab-temperature {
+    width: 65px;
+}
+
+.grid-container-hidden {
+    display: none;
+}
+
+.grid-transition {
+    transition: transform 0.25s ease-in-out;
+}
+.grid-date {
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.grid-date-today {
+    color: black;
+    opacity: 0.5;
+}
+
+.three-days-line-first {
+    left: 33.33%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.three-days-line-second {
+    left: 66.66%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+.month-left {
+    width: 35%;
+}
+
+.month-right {
+    width: 75%;
+}
+
+.pill-box {
+    min-width: 37px;
+}
+.month-statistics-value {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.month-grid {
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.weekday-text {
+    color: red;
+}
+
+.month-cell {
+    aspect-ratio: 1 / 1;
+    padding: 1px;
+}
+
+.month-cell-overlay {
+    background-color: rgba(255,255,255, 0.75);
+}
+
+.month-cell-temp-min {
+    font-size: 14px;
+    color: gray;
+}
+.now-background {
+    background-size: cover;
+}
+
+.now-left {
+    width: 33%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.now-description {
+    font-size: 24px;
+    min-height: 75px;
+}
+
+.now-left-value {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.now-left-unit {
+    font-size: 16px;
+    margin-bottom: 1.7px;
+}
+
+.now-wind-arrow {
+    margin-bottom: 1.7px;
+    width: fit-content;
+}
+
+.now-right-overlay {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.now-sun-container {
+    transform: translate(-50%, 22%)
+}
+
+.now-sun {
+    background-image: url('/svg/sun.svg');
+    background-size: 380px 380px;
+    width: 380px;
+    height: 380px;
+}
+
+.now-temperature {
+    font-size: 120px;
+    font-weight: 500;
+    letter-spacing: -5px;
+}
+
+.now-feels-like {
+    font-size: 18px;
+    background-color: rgba(255, 255, 255, 0.10);
+}

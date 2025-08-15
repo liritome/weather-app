@@ -1,5 +1,4 @@
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using WeatherApp.Services;
 
@@ -21,14 +20,6 @@ namespace WeatherApp
                 options.IdleTimeout = TimeSpan.FromDays(1);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
-            });
-
-            var supportedCultures = new[] { new CultureInfo("en-US") };
-            builder.Services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("en-US");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
             });
 
             var app = builder.Build();

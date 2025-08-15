@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Models;
 using WeatherApp.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WeatherApp.Controllers
 {
@@ -76,6 +75,10 @@ namespace WeatherApp.Controllers
                 }            
                 ViewData["ActiveTab"] = activeTab;
                 var (location, data) = await GetLocationWeatherAsync(city);
+                if(location == null || data == null)
+                {
+                    return RedirectTo400();
+                }
                 ViewData["Location"] = location;
                 return View(viewName, data);
             }
@@ -94,13 +97,30 @@ namespace WeatherApp.Controllers
             );
         }
 
-        private async Task<(Location location, OpenMeteoWeatherData data)> GetLocationWeatherAsync(string city)
+        private IActionResult RedirectTo400()
         {
-            var cityParsed = locationService.ParseLocation(city)!;
+            return RedirectToAction(
+                actionName: "HttpStatusCodeHandler",
+                controllerName: "Error",
+                routeValues: new { statusCode = 400 }
+            );
+        }
+
+        private async Task<(Location? location, OpenMeteoWeatherData? data)> GetLocationWeatherAsync(string city)
+        {
+            var cityParsed = locationService.ParseLocation(city);
+            if(cityParsed == null)
+            {
+                return (null, null);
+            }
             string cityName = cityParsed.Value.name;
             int cityId = cityParsed.Value.id;
 
             var geocodingData = await weatherApiService.GetGeocodingData(cityName);
+            if(geocodingData == null)
+            {
+                return (null, null);
+            }
             var location = geocodingData.Locations.First(l => l.Id == cityId);
 
             HttpContext.Session.SetString("LastValidCity", $"{location.Name}-{location.Id}");

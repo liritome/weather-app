@@ -41,24 +41,24 @@
             <div class="p-2 mb-2 pt-1 rounded bg-white @(i == 0 && ViewData["DayOffset"] != null ? "active-day-tab" : "day-tab")">
                 <div class="d-flex justify-content-between h-100">
                     <div class="d-flex flex-column me-2">
-                        <div style="height: 24px; font-size: 18px">
+                        <div class="daytab-date">
                             <date date="@selectedDayDate.AddDays(i)" format="dayWeekdayMonthShort"></date>
                         </div>
                         @{
                             var dayIndex = dayOffset + i;
                             var dayLabel = WeatherHelper.GetDayLabel(dayIndex);
                         }
-                        <div class="text-secondary" style="height: 20px; font-size: 16px;">@dayLabel</div>
+                        <div class="text-secondary daytab-label">@dayLabel</div>
                         <div class="flex-grow-1"></div>
-                        <div class="d-flex" style="font-size: 22px">
+                        <div class="d-flex font-22">
                             @{
                                 string tempMinColor = WeatherHelper.GetTemperatureColor(day.TemperatureMin);
                                 string tempMaxColor = WeatherHelper.GetTemperatureColor(day.TemperatureMax);
                             }
-                            <div class="text-center" style="width: 65px; background-color:@tempMinColor;">
+                            <div class="text-center daytab-temperature" style="background-color:@tempMinColor;">
                                 <temperature value="@day.TemperatureMin" unit="@temperatureUnit"></temperature>
                             </div>
-                            <div class="text-center" style="width: 65px; background-color:@tempMaxColor;">
+                            <div class="text-center daytab-temperature" style="background-color:@tempMaxColor;">
                                 <temperature value="@day.TemperatureMax" unit="@temperatureUnit"></temperature>
                             </div>
                         </div>

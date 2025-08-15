@@ -17,30 +17,30 @@ namespace WeatherApp.Models
         public int UtcOffsetSeconds { get; set; }
 
         [JsonPropertyName("timezone")]
-        public string Timezone { get; set; }
+        public required string Timezone { get; set; }
 
         [JsonPropertyName("timezone_abbreviation")]
-        public string TimezoneAbbreviation { get; set; }
+        public required string TimezoneAbbreviation { get; set; }
 
         [JsonPropertyName("elevation")]
         public double Elevation { get; set; }
 
         [JsonPropertyName("current_units")]
-        public CurrentWeatherUnits CurrentWeatherUnits { get; set; }
+        public required CurrentWeatherUnits CurrentWeatherUnits { get; set; }
 
         [JsonPropertyName("current")]
-        public CurrentWeatherData CurrentWeatherData { get; set; }
+        public required CurrentWeatherData CurrentWeatherData { get; set; }
 
         [JsonPropertyName("hourly_units")]
-        public HourlyWeatherUnits HourlyWeatherUnits { get; set; }
+        public required HourlyWeatherUnits HourlyWeatherUnits { get; set; }
 
         [JsonPropertyName("hourly")]
-        public HourlyWeatherData HourlyWeatherData { get; set; }
+        public required HourlyWeatherData HourlyWeatherData { get; set; }
 
         [JsonPropertyName("daily_units")]
-        public DailyWeatherUnits DailyWeatherUnits { get; set; }
+        public required DailyWeatherUnits DailyWeatherUnits { get; set; }
 
         [JsonPropertyName("daily")]
-        public DailyWeatherData DailyWeatherData { get; set; }
+        public required DailyWeatherData DailyWeatherData { get; set; }
     }
 }

@@ -2,15 +2,15 @@
     <i class="bi bi-sliders"></i>
     <span>Data set</span>
 </button>
-<div id="datasetWindow" class="position-fixed p-3 bg-white" style="width: 350px; height: stretch; right: 0; top: 0; z-index: 10; display: none; box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);">
+<div id="datasetWindow" class="position-fixed p-3 bg-white">
     <div class="position-relative mb-4">
-        <div style="font-size: 20px; font-weight: 500;">Data set in forecast</div>
-        <div class="me-4" style="font-size: 16px; font-weight: 400;">Select data you want to include in the forecast</div>
-        <button id="datasetCloseBtn" class="p-0 btn position-absolute" style="top: 0; right: 0;">
-            <i class="bi bi-x-lg" style="font-size: 20px;"></i>
+        <div class="dataset-header">Data set in forecast</div>
+        <div class="me-4 dataset-text">Select data you want to include in the forecast</div>
+        <button id="datasetCloseBtn" class="p-0 btn position-absolute close-btn">
+            <i class="bi bi-x-lg"></i>
         </button>
     </div>
-    <div class="d-flex flex-column gap-2 user-select-none" style="font-size: 16px;">
+    <div class="d-flex flex-column gap-2 user-select-none font-16">
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="temperatureSwitch">
             <label class="form-check-label" for="temperatureSwitch">Temperature</label>

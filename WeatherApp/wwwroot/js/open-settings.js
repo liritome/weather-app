@@ -9,7 +9,7 @@
     btn.addEventListener("click", function (e) {
         e.stopPropagation();
         overlay.classList.add("active");
-        settings.style.display = settings.style.display == "none" ? "block" : "none";
+        settings.style.display = "block";
     });
 
     overlay.addEventListener("click", function () {

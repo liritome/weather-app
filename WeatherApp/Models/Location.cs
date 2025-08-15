@@ -8,7 +8,7 @@ namespace WeatherApp.Models
         public int Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
@@ -20,10 +20,10 @@ namespace WeatherApp.Models
         public double Elevation { get; set; }
 
         [JsonPropertyName("feature_code")]
-        public string FeatureCode { get; set; }
+        public string FeatureCode { get; set; } = string.Empty;
 
         [JsonPropertyName("country_code")]
-        public string CountryCode { get; set; }
+        public string CountryCode { get; set; } = string.Empty;
 
         [JsonPropertyName("admin1_id")]
         public int Admin1Id { get; set; }
@@ -38,30 +38,30 @@ namespace WeatherApp.Models
         public int Admin4Id { get; set; }
 
         [JsonPropertyName("timezone")]
-        public string Timezone { get; set; }
+        public string Timezone { get; set; } = string.Empty;
 
         [JsonPropertyName("population")]
         public int Population { get; set; }
 
         [JsonPropertyName("postcodes")]
-        public List<string> Postcodes { get; set; }
+        public List<string> Postcodes { get; set; } = new List<string>();
 
         [JsonPropertyName("country_id")]
         public int CountryId { get; set; }
 
         [JsonPropertyName("country")]
-        public string Country { get; set; }
+        public required string Country { get; set; }
 
         [JsonPropertyName("admin1")]
-        public string Admin1 { get; set; }
+        public string Admin1 { get; set; } = string.Empty;
 
         [JsonPropertyName("admin2")]
-        public string Admin2 { get; set; }
+        public string Admin2 { get; set; } = string.Empty;
 
         [JsonPropertyName("admin3")]
-        public string Admin3 { get; set; }
+        public string Admin3 { get; set; } = string.Empty;
 
         [JsonPropertyName("admin4")]
-        public string Admin4 { get; set; }
+        public string Admin4 { get; set; } = string.Empty;
     }
 }

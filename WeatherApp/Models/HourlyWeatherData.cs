@@ -92,46 +92,46 @@ namespace WeatherApp.Models
     public class HourlyWeatherUnits
     {
         [JsonPropertyName("time")]
-        public string Time { get; set; }
+        public string Time { get; set; } = string.Empty;
 
         [JsonPropertyName("temperature_2m")]
-        public string Temperature { get; set; }
+        public string Temperature { get; set; } = string.Empty;
 
         [JsonPropertyName("relative_humidity_2m")]
-        public string Humidity { get; set; }
+        public string Humidity { get; set; } = string.Empty;
 
         [JsonPropertyName("apparent_temperature")]
-        public string ApparentTemperature { get; set; }
+        public string ApparentTemperature { get; set; } = string.Empty;
 
         [JsonPropertyName("precipitation_probability")]
-        public string PrecipitationProbability { get; set; }
+        public string PrecipitationProbability { get; set; } = string.Empty;
 
         [JsonPropertyName("precipitation")]
-        public string Precipitation { get; set; }
+        public string Precipitation { get; set; } = string.Empty;
 
         [JsonPropertyName("weather_code")]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         [JsonPropertyName("surface_pressure")]
-        public string Pressure { get; set; }
+        public string Pressure { get; set; } = string.Empty;
 
         [JsonPropertyName("cloud_cover")]
-        public string CloudCover { get; set; }
+        public string CloudCover { get; set; } = string.Empty;
 
         [JsonPropertyName("uv_index")]
-        public string UvIndex { get; set; }
+        public string UvIndex { get; set; } = string.Empty;
 
         [JsonPropertyName("wind_speed_10m")]
-        public string WindSpeed { get; set; }
+        public string WindSpeed { get; set; } = string.Empty;
 
         [JsonPropertyName("wind_gusts_10m")]
-        public string WindGusts { get; set; }
+        public string WindGusts { get; set; } = string.Empty;
 
         [JsonPropertyName("wind_direction_10m")]
-        public string WindDirectionDegree { get; set; }
+        public string WindDirectionDegree { get; set; } = string.Empty;
 
         [JsonPropertyName("is_day")]
-        public string IsDay { get; set; }
+        public string IsDay { get; set; } = string.Empty;
     }
 
     public record HourlyWeather(

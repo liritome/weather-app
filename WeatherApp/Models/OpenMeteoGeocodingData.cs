@@ -5,7 +5,7 @@ namespace WeatherApp.Models
     public class OpenMeteoGeocodingData
     {
         [JsonPropertyName("results")]
-        public List<Location> Locations { get; set; }
+        public List<Location> Locations { get; set; } = new List<Location>();
 
         [JsonPropertyName("generationtime_ms")]
         public double GenerationTime { get; set; }

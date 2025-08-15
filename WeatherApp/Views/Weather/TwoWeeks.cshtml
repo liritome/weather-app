@@ -26,16 +26,16 @@
     string pressureUnit = Context.Request.Cookies["pressureUnit"] ?? WeatherHelper.DefaultPressureUnit;
 }
 
-<div class="container-fluid p-0" style="width: 1016px;">
-    <div class="mt-2 mb-3" style="font-size: 24px">
+<div class="container-fluid p-0 main-width">
+    <div class="mt-2 mb-3 font-24">
         <div>
             <span>Weather for 2 weeks</span>
         </div>
     </div>
     <div class="p-2 rounded bg-white mb-2">
         <div class="d-flex gap-2">
-            <div class="flex-grow-1 rounded-3 p-2" style="width: 35%;">
-                <div class="mb-2 text-center" style="font-size: 20px">
+            <div class="flex-grow-1 rounded-3 p-2 month-left">
+                <div class="mb-2 text-center font-20">
                     <span>@localNow.ToString("MMMM")</span>
                     @if (localNow.AddDays(days).Month != localNow.Month)
                     {
@@ -50,12 +50,12 @@
                         string maxTempColor = WeatherHelper.GetTemperatureColor(maxTemp);
                     }
                     <div class="d-flex justify-content-between align-items-end">
-                        <span style="font-size: 16px;">Highest temperature</span>
-                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @maxTempColor; min-width: 37px;">
-                            <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
+                        <span class="font-16">Highest temperature</span>
+                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill pill-box" style="background-color: @maxTempColor;">
+                            <div class="flex-grow-1 month-statistics-value">
                                 <temperature value="@maxTemp" unit="@temperatureUnit"></temperature>
                             </div>
-                            <div style="font-size: 14px;">@hottestDay.ToString("MMM dd")</div>
+                            <div class="font-14">@hottestDay.ToString("MMM dd")</div>
                         </div>
                     </div>
                     @{
@@ -65,12 +65,12 @@
                         string minTempColor = WeatherHelper.GetTemperatureColor(minTemp);
                     }
                     <div class="d-flex justify-content-between align-items-end">
-                        <span style="font-size: 16px;">Lowest temperature</span>
-                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @minTempColor; min-width: 37px;">
-                            <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
+                        <span class="font-16">Lowest temperature</span>
+                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill pill-box" style="background-color: @minTempColor;">
+                            <div class="flex-grow-1 month-statistics-value">
                                 <temperature value="@minTemp" unit="@temperatureUnit"></temperature>
                             </div>
-                            <div style="font-size: 14px;">@coldestDay.ToString("MMM dd")</div>
+                            <div class="font-14">@coldestDay.ToString("MMM dd")</div>
                         </div>
                     </div>
                     @{
@@ -84,14 +84,14 @@
                         string swingMaxColor = WeatherHelper.GetTemperatureColor(swingMax);
                     }
                     <div class="d-flex justify-content-between align-items-end">
-                        <span style="font-size: 16px;">Largest temp. swing</span>
-                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-image: linear-gradient(to right, @swingMinColor, @swingMaxColor); min-width: 37px;">
-                            <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
+                        <span class="font-16">Largest temp. swing</span>
+                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill pill-box" style="background-image: linear-gradient(to right, @swingMinColor, @swingMaxColor);">
+                            <div class="flex-grow-1 month-statistics-value">
                                 <span>
                                     <temperature value="@swingMin" unit="@temperatureUnit"></temperature> - <temperature value="@swingMax" unit="@temperatureUnit"></temperature>
                                 </span>
                             </div>
-                            <div style="font-size: 14px;">@maxTempSwingDay.ToString("MMM dd")</div>
+                            <div class="font-14">@maxTempSwingDay.ToString("MMM dd")</div>
                         </div>
                     </div>
                     @{
@@ -101,12 +101,12 @@
                         string maxWindColor = WeatherHelper.GetWindColor(maxWind);
                     }
                     <div class="d-flex justify-content-between align-items-end">
-                        <span style="font-size: 16px;">Highest wind speed</span>
-                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @maxWindColor; min-width: 37px;">
-                            <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
+                        <span class="font-16">Highest wind speed</span>
+                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill pill-box" style="background-color: @maxWindColor;">
+                            <div class="flex-grow-1 month-statistics-value">
                                 <wind-speed value="@maxWind" unit="@speedUnit"></wind-speed>
                             </div>
-                            <div style="font-size: 14px;">@maxWindDay.ToString("MMM dd")</div>
+                            <div class="font-14">@maxWindDay.ToString("MMM dd")</div>
                         </div>
                     </div>
                     @{
@@ -114,9 +114,9 @@
                         string waterColor = "#83c7ff";
                     }
                     <div class="d-flex justify-content-between align-items-end">
-                        <span style="font-size: 16px;">Precipitation sum</span>
-                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill" style="background-color: @waterColor; min-width: 37px;">
-                            <div class="flex-grow-1" style="font-size: 20px; font-weight: 500;">
+                        <span class="font-16">Precipitation sum</span>
+                        <div class="d-flex gap-1 align-items-end lh-1 p-2 rounded-pill pill-box" style="background-color: @waterColor;">
+                            <div class="flex-grow-1 month-statistics-value">
                                 <precipitation value="@precipSum" unit="@precipUnit"></precipitation>
                                 <span> @precipUnit</span>
                             </div>
@@ -130,37 +130,37 @@
                     }
                     <div class="d-flex justify-content-between text-center">
                         <div>
-                            <span style="font-size: 16px;">Sunny days</span>
-                            <div class="flex-grow-1 rounded-pill lh-1 p-2" style="font-size: 20px; font-weight: 500; background-color: @grayLightColor; min-width: 37px;">
+                            <span class="font-16">Sunny days</span>
+                            <div class="flex-grow-1 rounded-pill lh-1 p-2 pill-box month-statistics-value" style="background-color: @grayLightColor;">
                                 <span>@sunnyDays</span>
                             </div>
                         </div>
                         <div>
-                            <span style="font-size: 16px;">Cloudy days</span>
-                            <div class="flex-grow-1 rounded-pill lh-1 p-2" style="font-size: 20px; font-weight: 500; background-color: @grayLightColor; min-width: 37px;">
+                            <span class="font-16">Cloudy days</span>
+                            <div class="flex-grow-1 rounded-pill lh-1 p-2 pill-box month-statistics-value" style="background-color: @grayLightColor;">
                                 <span>@cloudyDays</span>
                             </div>
                         </div>
                         <div>
-                            <span style="font-size: 16px;">Rainy days</span>
-                            <div class="flex-grow-1 rounded-pill lh-1 p-2" style="font-size: 20px; font-weight: 500; background-color: @grayLightColor; min-width: 37px;">
+                            <span class="font-16">Rainy days</span>
+                            <div class="flex-grow-1 rounded-pill lh-1 p-2 pill-box month-statistics-value" style="background-color: @grayLightColor;">
                                 <span>@rainyDays</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="width: 75%">
-                <div class="d-grid" style="grid-template-columns: repeat(7, 1fr); font-size: 18px;">
+            <div class="month-right">
+                <div class="d-grid month-grid">
                     <span>Mon</span>
                     <span>Tue</span>
                     <span>Wed</span>
                     <span>Thu</span>
                     <span>Fri</span>
-                    <span style="color: red;">Sat</span>
-                    <span style="color: red;">Sun</span>
+                    <span class="weekday-text">Sat</span>
+                    <span class="weekday-text">Sun</span>
                 </div>
-                <div class="d-grid pt-1" style="grid-template-columns: repeat(7, 1fr);">
+                <div class="d-grid pt-1 month-grid">
                     @for (int day = -pastDays; day < days; day++)
                     {
                         var dayWeather = Model.DailyWeatherData.GetSingleDayWeather(localNow.AddDays(day));
@@ -172,9 +172,9 @@
                         var svgPair = WeatherHelper.GetWeatherSvgPair(dayWeather.Code);
                         var weatherDescription = WeatherHelper.GetWeatherDescription(dayWeather.Code);
 
-                        <a asp-action="Day" asp-route-city="@locationWithId" asp-route-day="@day" class="text-decoration-none text-black d-block @(day < 0 ? "gray-out" : "")" style="aspect-ratio: 1 / 1; background-color: @(tempColor); padding: 1px;">
-                            <div class="h-100 w-100 px-1 pt-0 pb-1 d-flex flex-column" style="background-color: rgba(255,255,255, 0.75);">
-                                <span style="font-size: 16px;">
+                        <a asp-action="Day" asp-route-city="@locationWithId" asp-route-day="@day" class="text-decoration-none text-black d-block month-cell @(day < 0 ? "gray-out" : "")" style="background-color: @(tempColor);">
+                            <div class="h-100 w-100 px-1 pt-0 pb-1 d-flex flex-column month-cell-overlay">
+                                <span class="font-16">
                                     <date date="@dayWeather.Time.Date" format="day"></date>
                                 </span>
                                 <div class="d-flex justify-content-between flex-grow-1">
@@ -187,11 +187,11 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column justify-content-end">
-                                        <span style="font-size: 20px">
+                                        <span class="font-20">
                                             <temperature value="@dayWeather.TemperatureMax" unit="@temperatureUnit"></temperature>
                                         </span>
                                         <div class="d-flex justify-content-end">
-                                            <span style="font-size: 14px; color: gray;">
+                                            <span class="month-cell-temp-min">
                                                 <temperature value="@dayWeather.TemperatureMin" unit="@temperatureUnit"></temperature>
                                             </span>
                                         </div>
@@ -202,7 +202,7 @@
                     }
                     @for (int i = 0; i < trailingEmptyCells; i++)
                     {
-                        <div class="p-1" style="aspect-ratio: 1 / 1; font-size: 16px;">
+                        <div class="px-1 pt-0 pb-1 font-16 month-cell">
                             <date date="@localNow.AddDays(i + days).Date" format="day"></date>
                         </div>
                     }
